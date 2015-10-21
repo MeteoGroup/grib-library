@@ -1,5 +1,6 @@
 package com.meteogroup.general.grib.grib1;
 
+import com.meteogroup.general.grib.exception.BinaryNumberConversionException;
 import com.meteogroup.general.grib.exception.GribReaderException;
 import com.meteogroup.general.grib.grib1.model.Grib1Record;
 import com.meteogroup.general.grib.util.FileChannelPartReader;
@@ -21,6 +22,8 @@ public class Grib1CollectionReaderService {
     public long fileLength = -1;
     public FileChannel fc = null;
 
+    private static final int HEADER_LENGTH = 8;
+
     public ArrayList<Grib1Record> readFileFromFileName(String url) throws IOException {
         this.fc = this.getFileChannelFromURL(url);
         return new ArrayList<Grib1Record>();
@@ -41,14 +44,17 @@ public class Grib1CollectionReaderService {
         return fileLength;
     }
 
-    public ArrayList<Grib1Record> readAllRecords(FileChannel fileChannel) throws IOException, GribReaderException {
+    public ArrayList<Grib1Record> readAllRecords(FileChannel fileChannel) throws IOException, GribReaderException, BinaryNumberConversionException {
         ArrayList<Grib1Record> response = new ArrayList<Grib1Record>();
         while (gribRecordOffset < fileLength){
-            byte[] recordHeader = partReader.readPartOfFileChannel(fileChannel, gribRecordOffset, 8);
+            byte[] recordHeader = partReader.readPartOfFileChannel(fileChannel, gribRecordOffset, HEADER_LENGTH);
             if (!recordReader.checkIfGribFileIsValidGrib1(recordHeader)){
                 throw new GribReaderException ("Attempted to read invalid grib record");
             }
             Grib1Record record = new Grib1Record();
+            record.setLength(recordReader.readRecordLength(recordHeader));
+            byte[] recordAsByteArray = partReader.readPartOfFileChannel(fileChannel,gribRecordOffset,record.getLength());
+            record = recordReader.readCompleteRecord(record,recordAsByteArray, HEADER_LENGTH);
             response.add(record);
             gribRecordOffset += recordReader.readRecordLength(recordHeader);
         }

@@ -1,5 +1,6 @@
 package com.meteogroup.general.grib.grib1;
 
+import com.meteogroup.general.grib.exception.BinaryNumberConversionException;
 import com.meteogroup.general.grib.exception.GribReaderException;
 import com.meteogroup.general.grib.grib1.model.Grib1Record;
 import com.meteogroup.general.grib.util.FileChannelPartReader;
@@ -24,7 +25,7 @@ public class Grib1CollectionReaderServiceTest {
     private Grib1CollectionReaderService collectionReader;
 
 
-    @DataProvider(name = "simpleFileLocation")
+    @DataProvider(name = "goodPDSArray")
     public static Object[][] simpleFileLocation(){
         return new Object[][]{
                 new Object[]{VERY_SIMPLE_TEXT_FILE_LOCATION}
@@ -59,7 +60,7 @@ public class Grib1CollectionReaderServiceTest {
     }
 
     @Test
-    public void testReadRecords() throws GribReaderException, IOException {
+    public void testReadRecords() throws GribReaderException, IOException, BinaryNumberConversionException {
 
         collectionReader.partReader = mock(FileChannelPartReader.class);
         collectionReader.recordReader = mock(Grib1RecordReaderService.class);
@@ -80,7 +81,6 @@ public class Grib1CollectionReaderServiceTest {
     private static final String NOT_EXISTING_FILE_LOCATION = "/dev/null/doesnotexist.txt";
 
     private static final byte[] SIMULATED_BYTE_ARRAY = new byte[]{'G','R','I','B',19,84,-26,1};
-
     private static FileChannel SIMULATED_FILE_CHANNEL() throws FileNotFoundException {
         String fileName = Grib1CollectionReaderServiceTest.class.getClass().getResource("/grib1test/samplefiles/VerySimpleSampleFile.txt").toString().trim().replace("file:/","");
         RandomAccessFile raf = new RandomAccessFile(fileName, "r");

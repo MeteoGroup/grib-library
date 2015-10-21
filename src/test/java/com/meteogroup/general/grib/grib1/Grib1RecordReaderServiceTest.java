@@ -1,11 +1,17 @@
 package com.meteogroup.general.grib.grib1;
 
+import com.meteogroup.general.grib.exception.BinaryNumberConversionException;
 import com.meteogroup.general.grib.exception.GribReaderException;
+import com.meteogroup.general.grib.grib1.model.Grib1PDS;
+import com.meteogroup.general.grib.grib1.model.Grib1Record;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by roijen on 19-Oct-15.
@@ -65,11 +71,28 @@ public class Grib1RecordReaderServiceTest {
         reader.readRecordLength(bufferValues);
     }
 
+    @Test
+    public void testReadOutCoordination() throws BinaryNumberConversionException {
+        reader.pdsReader = mock(Grib1PDSReader.class);
+        when(reader.pdsReader.readPDSLength(any(byte[].class),anyInt())).thenReturn(SIMULATED_PDS_LENGTH);
+        when(reader.pdsReader.readPDSValues(any(byte[].class), anyInt(), any(Grib1PDS.class))).thenReturn(new Grib1PDS());
+
+        Grib1Record record = reader.readCompleteRecord(new Grib1Record(),SIMULATED_BYTE_ARRAY, SIMULATED_OFFSET);
+
+        verify(reader.pdsReader, times(1)).readPDSLength(any(byte[].class),anyInt());
+        verify(reader.pdsReader, times(1)).readPDSValues(any(byte[].class), anyInt(), any(Grib1PDS.class));
+
+        assertThat(record).isNotNull();
+    }
+
+
+    private static final int SIMULATED_OFFSET = 8;
+    private static final int SIMULATED_PDS_LENGTH = 28;
+    private static final byte[] SIMULATED_BYTE_ARRAY = new byte[]{'G','R','I','B',19,84,-26,1};
+
     private static final byte[] GOOD_HEADER = new byte[]{'G','R','I','B',19,84,-26,1};
 
     private static final byte[] WRONG_HEADER = new byte[]{'M','G','F','S',0,0,0,1};
-
     private static final byte[] WRONG_VERSION_NUMBER = new byte[]{'G','R','I','B',0,0,0,2};
-
     private static final byte[] LENGTH_TO_SHORT = new byte[]{'G','R','I','B',0,0,7,1};
 }

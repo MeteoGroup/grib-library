@@ -5,13 +5,23 @@ package com.meteogroup.general.grib.grib1.model;
  */
 public class Grib1Record {
 
-    long length;
+    int length;
 
-    public long getLength() {
+    Grib1PDS pds = new Grib1PDS();
+
+    public int getLength() {
         return length;
     }
 
-    public void setLength(long length) {
+    public void setLength(int length) {
         this.length = length;
+    }
+
+    public Grib1PDS getPds() {
+        return pds;
+    }
+
+    public void setPds(Grib1PDS pds) {
+        this.pds = pds;
     }
 }
