@@ -79,10 +79,13 @@ public class Grib1RecordReaderServiceTest {
 
         Grib1Record record = reader.readCompleteRecord(new Grib1Record(),SIMULATED_BYTE_ARRAY, SIMULATED_OFFSET);
 
+        assertThat(record).isNotNull();
+
         verify(reader.pdsReader, times(1)).readPDSLength(any(byte[].class),anyInt());
         verify(reader.pdsReader, times(1)).readPDSValues(any(byte[].class), anyInt(), any(Grib1PDS.class));
 
-        assertThat(record).isNotNull();
+        assertThat(record.getPds()).isNotNull();
+
     }
 
 

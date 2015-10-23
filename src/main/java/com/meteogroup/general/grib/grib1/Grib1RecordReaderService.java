@@ -4,7 +4,7 @@ import com.meteogroup.general.grib.exception.BinaryNumberConversionException;
 import com.meteogroup.general.grib.exception.GribReaderException;
 import com.meteogroup.general.grib.grib1.model.Grib1PDS;
 import com.meteogroup.general.grib.grib1.model.Grib1Record;
-import com.meteogroup.general.grib.util.BytesToIntegerHelper;
+import com.meteogroup.general.grib.util.BytesToPrimitiveHelper;
 
 /**
  * Created by roijen on 19-Oct-15.
@@ -26,7 +26,7 @@ public class Grib1RecordReaderService {
     }
 
     public int readRecordLength(byte[] bufferValues) throws GribReaderException {
-        int length = (((bufferValues[4] & BytesToIntegerHelper.BYTE_MASK) << 8) | (bufferValues[5] & BytesToIntegerHelper.BYTE_MASK)) << 8 | (bufferValues[6] & BytesToIntegerHelper.BYTE_MASK);
+        int length = (((bufferValues[4] & BytesToPrimitiveHelper.BYTE_MASK) << 8) | (bufferValues[5] & BytesToPrimitiveHelper.BYTE_MASK)) << 8 | (bufferValues[6] & BytesToPrimitiveHelper.BYTE_MASK);
         if (length < 8){
             throw new GribReaderException("The suggested length in the record header is invalid.");
         }
@@ -35,8 +35,9 @@ public class Grib1RecordReaderService {
 
     public Grib1Record readCompleteRecord(Grib1Record grib1Record, byte[] bufferValues, int headerOffSet) throws BinaryNumberConversionException {
         Grib1PDS pds = new Grib1PDS();
-        pds.setLength(pdsReader.readPDSLength(bufferValues, headerOffSet));
+        pds.setPdsLenght(pdsReader.readPDSLength(bufferValues, headerOffSet));
         pds = pdsReader.readPDSValues(bufferValues, headerOffSet, pds);
+        grib1Record.setPds(pds);
         return grib1Record;
     }
 }

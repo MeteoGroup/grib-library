@@ -2,19 +2,70 @@ package com.meteogroup.general.grib.grib1;
 
 import com.meteogroup.general.grib.exception.BinaryNumberConversionException;
 import com.meteogroup.general.grib.grib1.model.Grib1PDS;
-import com.meteogroup.general.grib.util.BytesToIntegerHelper;
+import com.meteogroup.general.grib.util.BytesToPrimitiveHelper;
+
+import java.util.ArrayList;
 
 /**
  * Created by roijen on 21-Oct-15.
  */
 public class Grib1PDSReader {
 
+    private static final ArrayList<Integer> HEIGHT_LAYERS_WITH_DOUBLE_OCTET_VALUES = new ArrayList<Integer>(){{add(100);add(103);add(105);add(107);add(109);add(111);add(113);add(125);add(160);add(200);add(201);}};
+
     public int readPDSLength(byte[] values, int headerOffSet) throws BinaryNumberConversionException {
-        return BytesToIntegerHelper.bytesToInteger(values[0+headerOffSet], values[1+headerOffSet], values[2+headerOffSet]);
+        return BytesToPrimitiveHelper.bytesToInteger(values[0 + headerOffSet], values[1 + headerOffSet], values[2 + headerOffSet]);
     }
 
-    public Grib1PDS readPDSValues(byte[] values, int headerOffSet, Grib1PDS objectToReadInto){
+    public Grib1PDS readPDSValues(byte[] values, int headerOffSet, Grib1PDS objectToReadInto) throws BinaryNumberConversionException {
+        objectToReadInto.setParameterTableVerionNumber((short)(values[3+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        objectToReadInto.setIdentificationOfCentre((short)(values[4+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        objectToReadInto.setGeneratingProcessIdNumber((short)(values[5+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        objectToReadInto.setGridIdentification((short)(values[6+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+
+        objectToReadInto.setHasGDS(this.readGds(values[7+headerOffSet]));
+        objectToReadInto.setHasBMS(this.readBms(values[7+headerOffSet]));
+
+        objectToReadInto.setIdenticatorOfParameterAndUnit((short)(values[8+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        objectToReadInto.setIdenticatorOfTypeOfLevelOrLayer((short)(values[9+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+
+        if(HEIGHT_LAYERS_WITH_DOUBLE_OCTET_VALUES.contains(objectToReadInto.getIdenticatorOfTypeOfLevelOrLayer())){
+            objectToReadInto.setHasOnlyOneLevelOrLayerValue(true);
+            objectToReadInto.setLevelOrLayerValue1(BytesToPrimitiveHelper.bytesToShort(values[10+headerOffSet], values[11+headerOffSet]));
+        }
+        else{
+            objectToReadInto.setHasOnlyOneLevelOrLayerValue(false);
+            objectToReadInto.setLevelOrLayerValue1((short)(values[10+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+            objectToReadInto.setLevelOrLayerValue2((short)(values[11+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        }
+
+        objectToReadInto.setIssueTimeYearOfCentury((short)(values[12+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        objectToReadInto.setIssueTimeMonth((short)(values[13+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        objectToReadInto.setIssueTimeDay((short)(values[14+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        objectToReadInto.setIssueTimeHour((short)(values[15+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        objectToReadInto.setIssueTimeMinute((short)(values[16+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        objectToReadInto.setForecastTimeUnit((short)(values[17+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        objectToReadInto.setForecastPeriodOfTime1((short)(values[18+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        objectToReadInto.setForecastPeriodOfTime2((short)(values[19+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        objectToReadInto.setTimeRangeIndicator((short)(values[20+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+
+        objectToReadInto.setNumberIncludedInAverageOrAccumulation(BytesToPrimitiveHelper.bytesToShort(values[21+headerOffSet], values[22+headerOffSet]));
+
+        objectToReadInto.setNumberOfMissingFromAverageOrAcummulation((short) (values[23 + headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        objectToReadInto.setIssueTimeCentury((short)(values[24+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        objectToReadInto.setIdentificationOfSubCentre((short)(values[25+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+
+        objectToReadInto.setDecimalScaleFactor(BytesToPrimitiveHelper.bytesToShort(values[26+headerOffSet], values[27+headerOffSet]));
+
         return objectToReadInto;
     }
 
+    public boolean readGds(byte inputByte) {
+        return ((inputByte >> 7) & 1) == 1;
+
+    }
+
+    public boolean readBms(byte inputByte) {
+        return ((inputByte >> 6) & 1) == 1;
+    }
 }
