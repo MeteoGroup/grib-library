@@ -2,6 +2,7 @@ package com.meteogroup.general.grib.grib1;
 
 import com.meteogroup.general.grib.exception.BinaryNumberConversionException;
 import com.meteogroup.general.grib.exception.GribReaderException;
+import com.meteogroup.general.grib.grib1.model.Grib1GDS;
 import com.meteogroup.general.grib.grib1.model.Grib1PDS;
 import com.meteogroup.general.grib.grib1.model.Grib1Record;
 import org.testng.annotations.BeforeMethod;
@@ -74,8 +75,12 @@ public class Grib1RecordReaderServiceTest {
     @Test
     public void testReadOutCoordination() throws BinaryNumberConversionException {
         reader.pdsReader = mock(Grib1PDSReader.class);
+        reader.gdsReader = mock(Grib1GDSReader.class);
+
         when(reader.pdsReader.readPDSLength(any(byte[].class),anyInt())).thenReturn(SIMULATED_PDS_LENGTH);
         when(reader.pdsReader.readPDSValues(any(byte[].class), anyInt(), any(Grib1PDS.class))).thenReturn(new Grib1PDS());
+
+        when(reader.gdsReader.readGDSLength(any(byte[].class), anyInt())).thenReturn(SIMULATED_GDS_LENGTH);
 
         Grib1Record record = reader.readCompleteRecord(new Grib1Record(),SIMULATED_BYTE_ARRAY, SIMULATED_OFFSET);
 
@@ -86,11 +91,19 @@ public class Grib1RecordReaderServiceTest {
 
         assertThat(record.getPds()).isNotNull();
 
+        verify(reader.gdsReader, times(1)).readGDSLength(any(byte[].class), anyInt());
+        verify(reader.gdsReader, times(1)).readGDSValues(any(byte[].class), anyInt(), any(Grib1GDS.class));
+
+        assertThat(record.getPds()).isNotNull();
+
+
     }
 
 
     private static final int SIMULATED_OFFSET = 8;
     private static final int SIMULATED_PDS_LENGTH = 28;
+    private static final int SIMULATED_GDS_LENGTH = 1632;
+
     private static final byte[] SIMULATED_BYTE_ARRAY = new byte[]{'G','R','I','B',19,84,-26,1};
 
     private static final byte[] GOOD_HEADER = new byte[]{'G','R','I','B',19,84,-26,1};

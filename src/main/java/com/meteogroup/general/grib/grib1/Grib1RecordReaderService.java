@@ -2,6 +2,7 @@ package com.meteogroup.general.grib.grib1;
 
 import com.meteogroup.general.grib.exception.BinaryNumberConversionException;
 import com.meteogroup.general.grib.exception.GribReaderException;
+import com.meteogroup.general.grib.grib1.model.Grib1GDS;
 import com.meteogroup.general.grib.grib1.model.Grib1PDS;
 import com.meteogroup.general.grib.grib1.model.Grib1Record;
 import com.meteogroup.general.grib.util.BytesToPrimitiveHelper;
@@ -12,6 +13,7 @@ import com.meteogroup.general.grib.util.BytesToPrimitiveHelper;
 public class Grib1RecordReaderService {
 
     public Grib1PDSReader pdsReader;
+    public Grib1GDSReader gdsReader;
 
     public boolean checkIfGribFileIsValidGrib1(byte[] bufferValues) {
         String headerString = new String();
@@ -38,6 +40,10 @@ public class Grib1RecordReaderService {
         pds.setPdsLenght(pdsReader.readPDSLength(bufferValues, headerOffSet));
         pds = pdsReader.readPDSValues(bufferValues, headerOffSet, pds);
         grib1Record.setPds(pds);
+
+        Grib1GDS gds = new Grib1GDS();
+        gds.setGdsLenght(gdsReader.readGDSLength(bufferValues,headerOffSet+pds.getPdsLenght()));
+        gds = gdsReader.readGDSValues(bufferValues, headerOffSet, gds);
         return grib1Record;
     }
 }
