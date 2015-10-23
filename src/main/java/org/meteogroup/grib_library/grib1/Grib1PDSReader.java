@@ -1,8 +1,8 @@
-package com.meteogroup.general.grib.grib1;
+package org.meteogroup.grib_library.grib1;
 
-import com.meteogroup.general.grib.exception.BinaryNumberConversionException;
-import com.meteogroup.general.grib.grib1.model.Grib1PDS;
-import com.meteogroup.general.grib.util.BytesToPrimitiveHelper;
+import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
+import org.meteogroup.grib_library.grib1.model.Grib1PDS;
+import org.meteogroup.grib_library.util.BytesToPrimitiveHelper;
 
 import java.util.ArrayList;
 

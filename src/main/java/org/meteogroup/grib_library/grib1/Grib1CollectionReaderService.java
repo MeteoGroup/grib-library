@@ -1,9 +1,9 @@
-package com.meteogroup.general.grib.grib1;
+package org.meteogroup.grib_library.grib1;
 
-import com.meteogroup.general.grib.exception.BinaryNumberConversionException;
-import com.meteogroup.general.grib.exception.GribReaderException;
-import com.meteogroup.general.grib.grib1.model.Grib1Record;
-import com.meteogroup.general.grib.util.FileChannelPartReader;
+import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
+import org.meteogroup.grib_library.exception.GribReaderException;
+import org.meteogroup.grib_library.grib1.model.Grib1Record;
+import org.meteogroup.grib_library.util.FileChannelPartReader;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;

@@ -1,4 +1,4 @@
-package com.meteogroup.general.grib.exception;
+package org.meteogroup.grib_library.exception;
 
 /**
  * Created by roijen on 20-Oct-15.

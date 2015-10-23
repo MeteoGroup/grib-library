@@ -1,6 +1,6 @@
-package com.meteogroup.general.grib.util;
+package org.meteogroup.grib_library.util;
 
-import com.meteogroup.general.grib.exception.BinaryNumberConversionException;
+import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 

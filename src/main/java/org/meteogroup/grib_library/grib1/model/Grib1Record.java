@@ -1,4 +1,4 @@
-package com.meteogroup.general.grib.grib1.model;
+package org.meteogroup.grib_library.grib1.model;
 
 /**
  * Created by roijen on 20-Oct-15.

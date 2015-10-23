@@ -1,6 +1,6 @@
-package com.meteogroup.general.grib.util;
+package org.meteogroup.grib_library.util;
 
-import com.meteogroup.general.grib.exception.GribReaderException;
+import org.meteogroup.grib_library.exception.GribReaderException;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

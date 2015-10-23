@@ -1,6 +1,6 @@
-package com.meteogroup.general.grib.grib1;
+package org.meteogroup.grib_library.grib1;
 
-import com.meteogroup.general.grib.grib1.model.Grib1GDS;
+import org.meteogroup.grib_library.grib1.model.Grib1GDS;
 
 /**
  * Created by roijen on 23-Oct-15.
