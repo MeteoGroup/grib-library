@@ -25,6 +25,14 @@ public class BytesToPrimitiveHelperTest {
         };
     }
 
+    @DataProvider(name = "goodValueForSignedIntTest")
+    public static Object[][] goodValueForSignedIntTest(){
+        return new Object[][]{
+                new Object[]{THREE_SIGNED_LAT_ARRAY_FOR_VALUE1, 89892},
+                new Object[]{THREE_SIGNED_LAT_ARRAY_FOR_VALUE2, -89892}
+        };
+    }
+
     @Test
     public void testBitMask(){
         assertThat(BytesToPrimitiveHelper.BYTE_MASK).isEqualTo(BYTE_MASK);
@@ -48,10 +56,19 @@ public class BytesToPrimitiveHelperTest {
         assertThat(value).isEqualTo(expectedValue);
     }
 
+    @Test(dataProvider = "goodValueForSignedIntTest")
+    public void testSignedInWithLengthOfThree(byte[] inputValues, int expectedValue) throws BinaryNumberConversionException {
+        int value = BytesToPrimitiveHelper.signedBytesToInt(inputValues);
+        assertThat(value).isEqualTo(expectedValue);
+    }
+
     private static final byte[] THREE_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,0,28};
     private static final byte[] TWO_LENGTH_ARRAY_FOR_VALUE28 = new byte[]{0,28};
 
     private static final int BYTE_MASK = 0xff;
+
+    private static final byte[] THREE_SIGNED_LAT_ARRAY_FOR_VALUE1 = new byte[]{1,95,36};
+    private static final byte[] THREE_SIGNED_LAT_ARRAY_FOR_VALUE2 = new byte[]{-127,95,36};
 
 
 

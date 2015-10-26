@@ -15,7 +15,7 @@ public class Grib1PDSReaderTest {
 
     private Grib1PDSReader pdsReader;
 
-    @DataProvider(name = "goodGDSArray")
+    @DataProvider(name = "goodPDSDataSet")
     public static Object[][] goodPDSArray(){
         return new Object[][]{
                 new Object[]{GOOD_PDS_ARRAY,0,28,GOOD_PDS_OBJECT()},

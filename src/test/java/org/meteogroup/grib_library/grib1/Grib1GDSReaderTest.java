@@ -32,6 +32,27 @@ public class Grib1GDSReaderTest {
 		};
 	}
 
+	@DataProvider(name = "findNorthDataSet")
+	public static Object[][] findNorthDataSet() throws IOException, URISyntaxException {
+		return new Object[][]{
+				new Object[]{VALUE_FOR_NORTH_SOUTH_TEST1, VALUE_FOR_NORTH_SOUTH_TEST2,-89.892f}
+		};
+	}
+
+	@DataProvider(name = "findSouthDataSet")
+	public static Object[][] findSouthDataSet() throws IOException, URISyntaxException {
+		return new Object[][]{
+				new Object[]{VALUE_FOR_NORTH_SOUTH_TEST1, VALUE_FOR_NORTH_SOUTH_TEST2, 89.892f}
+		};
+	}
+
+	@DataProvider(name = "testSetForGausianCoordinateReadOut")
+	public static Object[][] testSetForGausianCoordinateReadOut() throws IOException, URISyntaxException {
+		return new Object[][]{
+				new Object[]{GDS_FOR_GAUSSIAN_COORDINATE_READOUT(), BYTE_ARRAY_FOR_GAUUSION_COORDINATE_READOUT, 0, EXPECTED_ARRAY_FOR_GAUSSIAN_COORDINATE_READOUT, EXPECTED_LENGTH_FOR_GAUSSIAN_COORDINATE_READOUT}
+		};
+	}
+
 	@Test(dataProvider = "goodGDSDataSet")
 	public void testReadGDS(byte[] testArray, int headerOffSet, int expectedValue, Grib1GDS expectedResponseObject) throws BinaryNumberConversionException {
 		int length = gdsReader.readGDSLength(testArray, headerOffSet);
@@ -42,10 +63,45 @@ public class Grib1GDSReaderTest {
 		assertThat(gds).isEqualTo(expectedResponseObject);
 	}
 
+	@Test(dataProvider = "findNorthDataSet")
+	public void testFindNorth(int inputValue1, int inputValue2, float expectedResult){
+		float actualValue = gdsReader.getNorth(inputValue1, inputValue2);
+		assertThat(actualValue).isEqualTo(expectedResult);
+	}
+
+	@Test(dataProvider = "findSouthDataSet")
+	public void testFindSouth(int inputValue1, int inputValue2, float expectedResult){
+		float actualValue = gdsReader.getSouth(inputValue1, inputValue2);
+		assertThat(actualValue).isEqualTo(expectedResult);
+	}
+
+	@Test(dataProvider = "testSetForGausianCoordinateReadOut")
+	public void testGaussianReadout(Grib1GDS objectToWriteInto, byte[] inputValues, int offSet, short[] expectedResult, short expectedLength) throws BinaryNumberConversionException {
+		Grib1GDS result = gdsReader.generateNisAndNumberOfPoints(objectToWriteInto, inputValues,offSet);
+		assertThat(result.getNumberOfPoints()).isEqualTo(expectedLength);
+		assertThat(result.getPointsAlongLatitudeCircleForGaussian()).isEqualTo(expectedResult);
+	}
 
 	private static final Grib1GDS GOOD_GDS_OBJECT(){
 		Grib1GDS gds = new Grib1GDS();
 		gds.setGdsLenght(2592);
+		gds.setNumberOfVerticalsCoordinateParams((short) 0);
+		gds.setLocationOfVerticalCoordinateParams((short) 33);
+		gds.setLocationListPer((short) 0);
+		gds.setRepresentationType((short) 4);
+		gds.setNumberOfPoints(2140702);
+		gds.setNorth(-89.892f);
+		gds.setSouth(89.892f);
+		gds.setLat1(89892);
+		gds.setLat2(-89892);
+		gds.setLon1(0);
+		gds.setLon2(359900);
+		gds.setResolution((short) 0);
+		gds.setLongitudeIncrement(-0.001f);
+		gds.setNumberOfCirclesBetweenPoleAndEquator((short) 640);
+		gds.setScanningMode((short) 0);
+		gds.setPointsAlongLatitudeCircle((short) -1);
+		gds.setPointsAlongLongitudeMeridian((short) 1280);
 		return gds;
 	}
 
@@ -69,5 +125,20 @@ public class Grib1GDSReaderTest {
 		raFile.close();
 		return response;
 	};
+
+	private static final int VALUE_FOR_NORTH_SOUTH_TEST1 = 89892;
+	private static final int VALUE_FOR_NORTH_SOUTH_TEST2 = -89892;
+
+	private static final Grib1GDS GDS_FOR_GAUSSIAN_COORDINATE_READOUT(){
+		Grib1GDS gds = new Grib1GDS();
+		gds.setPointsAlongLongitudeMeridian((short) 3);
+		gds.setLocationOfVerticalCoordinateParams((short) 1);
+		return gds;
+	}
+
+	private static final byte[] BYTE_ARRAY_FOR_GAUUSION_COORDINATE_READOUT = new byte[]{0,1,0,2,0,1};
+	private static final short[] EXPECTED_ARRAY_FOR_GAUSSIAN_COORDINATE_READOUT = new short[]{1,2,1};
+	private static final short EXPECTED_LENGTH_FOR_GAUSSIAN_COORDINATE_READOUT = 4;
+
 
 }

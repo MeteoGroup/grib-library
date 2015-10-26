@@ -25,7 +25,7 @@ public class Grib1CollectionReaderServiceTest {
     private Grib1CollectionReaderService collectionReader;
 
 
-    @DataProvider(name = "goodGDSArray")
+    @DataProvider(name = "goodGDSDataSet")
     public static Object[][] simpleFileLocation(){
         return new Object[][]{
                 new Object[]{VERY_SIMPLE_TEXT_FILE_LOCATION}
