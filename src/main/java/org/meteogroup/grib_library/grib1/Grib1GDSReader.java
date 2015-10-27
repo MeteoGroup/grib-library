@@ -12,7 +12,9 @@ public class Grib1GDSReader {
         return BytesToPrimitiveHelper.bytesToInteger(inputValues[0 + offSet], inputValues[1 + offSet], inputValues[2 + offSet]);
     }
 
-    public Grib1GDS readGDSValues(byte[] inputValues, int offSet, Grib1GDS objectToWriteInto) throws BinaryNumberConversionException {
+    public Grib1GDS readGDSValues(byte[] inputValues, int offSet) throws BinaryNumberConversionException {
+        Grib1GDS objectToWriteInto= new Grib1GDS();
+        objectToWriteInto.setGdsLenght(this.readGDSLength(inputValues, offSet));
         objectToWriteInto.setNumberOfVerticalsCoordinateParams((short) (inputValues[3 + offSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToWriteInto.setLocationOfVerticalCoordinateParams((short) (inputValues[4 + offSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToWriteInto.setRepresentationType((short) (inputValues[5 + offSet] & BytesToPrimitiveHelper.BYTE_MASK));

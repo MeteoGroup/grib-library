@@ -43,8 +43,7 @@ public class Grib1PDSReaderTest {
         int length = pdsReader.readPDSLength(testArray,headerOffSet);
         assertThat(length).isEqualTo(expectedValue);
         Grib1PDS pds = new Grib1PDS();
-        pds.setPdsLenght(length);
-        pds = pdsReader.readPDSValues(testArray,headerOffSet,pds);
+        pds = pdsReader.readPDSValues(testArray,headerOffSet);
         assertThat(pds).isEqualTo(expectedResponseObject);
     }
 

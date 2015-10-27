@@ -38,12 +38,12 @@ public class Grib1RecordReaderService {
     public Grib1Record readCompleteRecord(Grib1Record grib1Record, byte[] bufferValues, int headerOffSet) throws BinaryNumberConversionException {
         Grib1PDS pds = new Grib1PDS();
         pds.setPdsLenght(pdsReader.readPDSLength(bufferValues, headerOffSet));
-        pds = pdsReader.readPDSValues(bufferValues, headerOffSet, pds);
+        pds = pdsReader.readPDSValues(bufferValues, headerOffSet);
         grib1Record.setPds(pds);
 
         Grib1GDS gds = new Grib1GDS();
-        gds.setGdsLenght(gdsReader.readGDSLength(bufferValues,headerOffSet+pds.getPdsLenght()));
-        gds = gdsReader.readGDSValues(bufferValues, headerOffSet, gds);
+        gds = gdsReader.readGDSValues(bufferValues, headerOffSet);
+        //TODO add GDS
         return grib1Record;
     }
 }

@@ -88,8 +88,7 @@ public class Grib1GDSReaderTest {
 		int length = gdsReader.readGDSLength(testArray, headerOffSet);
 		assertThat(length).isEqualTo(expectedValue);
 		Grib1GDS gds = new Grib1GDS();
-		gds.setGdsLenght(length);
-		gds = gdsReader.readGDSValues(testArray,headerOffSet,gds);
+		gds = gdsReader.readGDSValues(testArray,headerOffSet);
 		assertThat(gds).isEqualTo(expectedResponseObject);
 	}
 

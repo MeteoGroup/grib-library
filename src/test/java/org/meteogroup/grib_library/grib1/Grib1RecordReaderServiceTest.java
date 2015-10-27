@@ -77,28 +77,37 @@ public class Grib1RecordReaderServiceTest {
         reader.pdsReader = mock(Grib1PDSReader.class);
         reader.gdsReader = mock(Grib1GDSReader.class);
 
-        when(reader.pdsReader.readPDSLength(any(byte[].class),anyInt())).thenReturn(SIMULATED_PDS_LENGTH);
-        when(reader.pdsReader.readPDSValues(any(byte[].class), anyInt(), any(Grib1PDS.class))).thenReturn(new Grib1PDS());
+        when(reader.pdsReader.readPDSValues(any(byte[].class), anyInt())).thenReturn(LENGTH_ONLY_PDS());
 
-        when(reader.gdsReader.readGDSLength(any(byte[].class), anyInt())).thenReturn(SIMULATED_GDS_LENGTH);
+        when(reader.gdsReader.readGDSValues(any(byte[].class), anyInt())).thenReturn(LENGTH_ONLY_GDS());
 
         Grib1Record record = reader.readCompleteRecord(new Grib1Record(),SIMULATED_BYTE_ARRAY, SIMULATED_OFFSET);
 
         assertThat(record).isNotNull();
 
-        verify(reader.pdsReader, times(1)).readPDSLength(any(byte[].class),anyInt());
-        verify(reader.pdsReader, times(1)).readPDSValues(any(byte[].class), anyInt(), any(Grib1PDS.class));
+        verify(reader.pdsReader, times(1)).readPDSValues(any(byte[].class), anyInt());
 
         assertThat(record.getPds()).isNotNull();
 
-        verify(reader.gdsReader, times(1)).readGDSLength(any(byte[].class), anyInt());
-        verify(reader.gdsReader, times(1)).readGDSValues(any(byte[].class), anyInt(), any(Grib1GDS.class));
+        verify(reader.gdsReader, times(1)).readGDSValues(any(byte[].class), anyInt());
 
         assertThat(record.getPds()).isNotNull();
 
 
     }
 
+
+    private static final Grib1PDS LENGTH_ONLY_PDS(){
+        Grib1PDS pds = new Grib1PDS();
+        pds.setPdsLenght(8);
+        return pds;
+    }
+
+    private static final Grib1GDS LENGTH_ONLY_GDS(){
+        Grib1GDS gds = new Grib1GDS();
+        gds.setGdsLenght(8);
+        return gds;
+    }
 
     private static final int SIMULATED_OFFSET = 8;
     private static final int SIMULATED_PDS_LENGTH = 28;

@@ -17,7 +17,9 @@ public class Grib1PDSReader {
         return BytesToPrimitiveHelper.bytesToInteger(values[0 + headerOffSet], values[1 + headerOffSet], values[2 + headerOffSet]);
     }
 
-    public Grib1PDS readPDSValues(byte[] values, int headerOffSet, Grib1PDS objectToReadInto) throws BinaryNumberConversionException {
+    public Grib1PDS readPDSValues(byte[] values, int headerOffSet) throws BinaryNumberConversionException {
+        Grib1PDS objectToReadInto = new Grib1PDS();
+        objectToReadInto.setPdsLenght(this.readPDSLength(values,headerOffSet));
         objectToReadInto.setParameterTableVerionNumber((short)(values[3+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToReadInto.setIdentificationOfCentre((short)(values[4+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToReadInto.setGeneratingProcessIdNumber((short)(values[5+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
