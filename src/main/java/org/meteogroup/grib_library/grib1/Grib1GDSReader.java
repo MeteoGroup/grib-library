@@ -33,7 +33,7 @@ public class Grib1GDSReader {
         //REWRITE TO PROPER BOOLEAN MAPPERS...
         objectToWriteInto.setScanModeIIsPositive(this.readScanningModeIDirection(inputValues[27+offSet]));
         objectToWriteInto.setScanModeJIsPositve(this.readScanningModeJDirection(inputValues[27+offSet]));
-        objectToWriteInto.setScanModeJIsConsectuve(this.readScanningModeIDirection(inputValues[27+offSet]));
+        objectToWriteInto.setScanModeJIsConsectuve(this.readScanningModeConsecutiveDirection(inputValues[27+offSet]));
 
         objectToWriteInto.setNorth(this.getNorth(objectToWriteInto.getLat1(), objectToWriteInto.getLat2()));
         objectToWriteInto.setSouth(this.getSouth(objectToWriteInto.getLat1(), objectToWriteInto.getLat2()));
