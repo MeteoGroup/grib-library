@@ -43,7 +43,7 @@ public class Grib1RecordReaderService {
 
         Grib1GDS gds = new Grib1GDS();
         gds = gdsReader.readGDSValues(bufferValues, headerOffSet);
-        //TODO add GDS
+        grib1Record.setGds(gds);
         return grib1Record;
     }
 }
