@@ -2,6 +2,7 @@ package org.meteogroup.grib_library.grib1;
 
 import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
 import org.meteogroup.grib_library.grib1.model.Grib1GDS;
+import org.meteogroup.grib_library.util.BitChecker;
 import org.meteogroup.grib_library.util.BytesToPrimitiveHelper;
 
 /**
@@ -64,15 +65,15 @@ public class Grib1GDSReader {
 
     public boolean readScanningModeIDirection(byte inputByte) {
         //0 or false == i step is positive
-        return !(((inputByte >> 7) & 1) == 1);
+        return ! BitChecker.testBit(inputByte,1);
     }
 
     public boolean readScanningModeJDirection(byte inputByte) {
         //1 or true == j step is positive
-        return ((inputByte >> 6) & 1) == 1;
+        return BitChecker.testBit(inputByte,2);
     }
 
     public boolean readScanningModeConsecutiveDirection(byte inputByte) {
-        return ((inputByte >> 5) & 1) == 1;
+        return BitChecker.testBit(inputByte,3);
     }
 }

@@ -61,36 +61,6 @@ public class Grib1GDSReaderTest {
 		};
 	}
 
-	@DataProvider(name = "scanModeI")
-	public static Object[][] scanModeI() throws IOException, URISyntaxException {
-		return new Object[][]{
-				new Object[]{SCANIPOSITIVEJPOSITIVEJDIRECTION, true},
-				new Object[]{SCANINEGATIVEJNEGATIVEIDIRECTION, false},
-				new Object[]{SCANINEGATIVEJPOSITIVEIDERCTION, false},
-				new Object[]{SCANIPOSITIVEJNEGATIVEIDIRECTION, true}
-		};
-	}
-
-	@DataProvider(name = "scanModeJ")
-	public static Object[][] scanModeJ() throws IOException, URISyntaxException {
-		return new Object[][]{
-				new Object[]{SCANIPOSITIVEJPOSITIVEJDIRECTION, true},
-				new Object[]{SCANINEGATIVEJNEGATIVEIDIRECTION, false},
-				new Object[]{SCANINEGATIVEJPOSITIVEIDERCTION, true},
-				new Object[]{SCANIPOSITIVEJNEGATIVEIDIRECTION, false}
-		};
-	}
-
-	@DataProvider(name = "scanModeConsecutive")
-	public static Object[][] scanModeConsecutive() throws IOException, URISyntaxException {
-		return new Object[][]{
-				new Object[]{SCANIPOSITIVEJPOSITIVEJDIRECTION, true},
-				new Object[]{SCANINEGATIVEJNEGATIVEIDIRECTION, false},
-				new Object[]{SCANINEGATIVEJPOSITIVEIDERCTION, false},
-				new Object[]{SCANIPOSITIVEJNEGATIVEIDIRECTION, false}
-		};
-	}
-
 	@Test(dataProvider = "goodGDSDataSetForLength")
 	public void testReadGDSLength(byte[] testArray, int headerOffSet, int expectedValue) throws BinaryNumberConversionException {
 		int length = gdsReader.readGDSLength(testArray, headerOffSet);
@@ -122,24 +92,6 @@ public class Grib1GDSReaderTest {
 		assertThat(result.getPointsAlongLatitudeCircleForGaussian()).isEqualTo(expectedResult);
 	}
 
-	@Test(dataProvider = "scanModeI")
-	public void testScanModeI(byte inputByte, boolean expectedResult){
-		boolean response = gdsReader.readScanningModeIDirection(inputByte);
-		assertThat(response).isEqualTo(expectedResult);
-	}
-
-	@Test(dataProvider = "scanModeJ")
-	public void testScanModeJ(byte inputByte, boolean expectedResult){
-		boolean response = gdsReader.readScanningModeJDirection(inputByte);
-		assertThat(response).isEqualTo(expectedResult);
-	};
-
-	@Test(dataProvider = "scanModeConsecutive")
-	public void testScanModeConsecutive(byte inputByte, boolean expectedResult){
-		boolean response = gdsReader.readScanningModeConsecutiveDirection(inputByte);
-		assertThat(response).isEqualTo(expectedResult);
-	}
-
 	private static final Grib1GDS GOOD_GDS_OBJECT(){
 		Grib1GDS gds = new Grib1GDS();
 		gds.setGdsLenght(2592);
@@ -161,7 +113,7 @@ public class Grib1GDSReaderTest {
 		gds.setPointsAlongLongitudeMeridian((short) 1280);
 		gds.setScanModeIIsPositive(true);
 		gds.setScanModeJIsPositve(false);
-		gds.setScanModeJIsConsectuve(true);
+		gds.setScanModeJIsConsectuve(false);
 		return gds;
 	}
 
@@ -199,13 +151,6 @@ public class Grib1GDSReaderTest {
 	private static final byte[] BYTE_ARRAY_FOR_GAUUSION_COORDINATE_READOUT = new byte[]{0,1,0,2,0,1};
 	private static final short[] EXPECTED_ARRAY_FOR_GAUSSIAN_COORDINATE_READOUT = new short[]{1,2,1};
 	private static final short EXPECTED_LENGTH_FOR_GAUSSIAN_COORDINATE_READOUT = 4;
-
-	private static byte SCANIPOSITIVEJNEGATIVEIDIRECTION = 0b0000_0000;
-	private static byte SCANIPOSITIVEJPOSITIVEJDIRECTION = 0b0110_0000;
-	//Signature Java... sigh... unsigning...
-	private static byte SCANINEGATIVEJNEGATIVEIDIRECTION = 0b1000_0000 - 256;
-	private static byte SCANINEGATIVEJPOSITIVEIDERCTION = 0b1100_0000 - 256;
-
 
 
 }

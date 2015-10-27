@@ -2,6 +2,7 @@ package org.meteogroup.grib_library.grib1;
 
 import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
 import org.meteogroup.grib_library.grib1.model.Grib1PDS;
+import org.meteogroup.grib_library.util.BitChecker;
 import org.meteogroup.grib_library.util.BytesToPrimitiveHelper;
 
 import java.util.ArrayList;
@@ -63,11 +64,11 @@ public class Grib1PDSReader {
     }
 
     public boolean readGds(byte inputByte) {
-        return ((inputByte >> 7) & 1) == 1;
+        return BitChecker.testBit(inputByte,1);
 
     }
 
     public boolean readBms(byte inputByte) {
-        return ((inputByte >> 6) & 1) == 1;
+        return BitChecker.testBit(inputByte,2);
     }
 }
