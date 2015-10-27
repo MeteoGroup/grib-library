@@ -11,7 +11,14 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class BytesToPrimitiveHelperTest {
 
-    @DataProvider(name = "goodValueForIntegerWithLengthOf3Array")
+	@DataProvider(name = "goodValueForIntegerWithLengthOf4Array")
+    public static Object[][] goodValueForIntegerWithLengthOf4Array() {
+        return new Object[][]{
+                new Object[]{FOUR_LENGTH_ARRAY_FOR_VALUE_28, 28},
+        };
+    }
+	
+	@DataProvider(name = "goodValueForIntegerWithLengthOf3Array")
     public static Object[][] goodValueForIntegerWithLengthOf3Array() {
         return new Object[][]{
                 new Object[]{THREE_LENGTH_ARRAY_FOR_VALUE_28, 28},
@@ -62,6 +69,7 @@ public class BytesToPrimitiveHelperTest {
         assertThat(value).isEqualTo(expectedValue);
     }
 
+    private static final byte[] FOUR_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,0,0,28};
     private static final byte[] THREE_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,0,28};
     private static final byte[] TWO_LENGTH_ARRAY_FOR_VALUE28 = new byte[]{0,28};
 
