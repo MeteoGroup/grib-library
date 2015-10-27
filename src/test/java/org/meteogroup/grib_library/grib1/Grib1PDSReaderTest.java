@@ -18,8 +18,16 @@ public class Grib1PDSReaderTest {
     @DataProvider(name = "goodPDSDataSet")
     public static Object[][] goodPDSArray(){
         return new Object[][]{
-                new Object[]{GOOD_PDS_ARRAY,0,28,GOOD_PDS_OBJECT()},
-                new Object[]{GOOD_PDS_ARRAY_WITH_HEADER,8,28,GOOD_PDS_OBJECT()}
+                new Object[]{GOOD_PDS_ARRAY,0,GOOD_PDS_OBJECT()},
+                new Object[]{GOOD_PDS_ARRAY_WITH_HEADER,8,GOOD_PDS_OBJECT()}
+        };
+    }
+
+    @DataProvider(name = "goodPDSDataSetForLength")
+    public static Object[][] goodPDSDataSetForLength(){
+        return new Object[][]{
+                new Object[]{GOOD_PDS_ARRAY,0,28},
+                new Object[]{GOOD_PDS_ARRAY_WITH_HEADER,8,28}
         };
     }
 
@@ -38,12 +46,16 @@ public class Grib1PDSReaderTest {
         pdsReader = new Grib1PDSReader();
     }
 
-    @Test(dataProvider = "goodPDSArray")
-    public void testReadPDS(byte[] testArray, int headerOffSet, int expectedValue, Grib1PDS expectedResponseObject) throws BinaryNumberConversionException {
-        int length = pdsReader.readPDSLength(testArray,headerOffSet);
+    @Test(dataProvider = "goodPDSDataSetForLength")
+    public void testReadPDSLength(byte[] testArray, int headerOffSet, int expectedValue) throws BinaryNumberConversionException {
+        int length = pdsReader.readPDSLength(testArray, headerOffSet);
         assertThat(length).isEqualTo(expectedValue);
-        Grib1PDS pds = new Grib1PDS();
-        pds = pdsReader.readPDSValues(testArray,headerOffSet);
+    }
+
+
+    @Test(dataProvider = "goodPDSArray")
+    public void testReadPDS(byte[] testArray, int headerOffSet, Grib1PDS expectedResponseObject) throws BinaryNumberConversionException {
+        Grib1PDS pds = pdsReader.readPDSValues(testArray,headerOffSet);
         assertThat(pds).isEqualTo(expectedResponseObject);
     }
 

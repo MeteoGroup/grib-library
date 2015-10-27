@@ -28,7 +28,15 @@ public class Grib1GDSReaderTest {
 	@DataProvider(name = "goodGDSDataSet")
 	public static Object[][] goodGDSDataSet() throws IOException, URISyntaxException {
 		return new Object[][]{
-				new Object[]{GOOD_GDS_ARRAY(), 0, 2592, GOOD_GDS_OBJECT()}
+				new Object[]{GOOD_GDS_ARRAY(), 0, GOOD_GDS_OBJECT()}
+		};
+	}
+
+	@DataProvider(name = "goodGDSDataSetForLength")
+	public static Object[][] goodGDSDataSetForLength() throws IOException, URISyntaxException {
+		return new Object[][]{
+				new Object[]{GOOD_GDS_ARRAY(), 0, 2592},
+				new Object[]{GOOD_SHORT_GDS_ARRAY_FOR_LENGTH_ONLY,0,28}
 		};
 	}
 
@@ -83,12 +91,15 @@ public class Grib1GDSReaderTest {
 		};
 	}
 
-	@Test(dataProvider = "goodGDSDataSet")
-	public void testReadGDS(byte[] testArray, int headerOffSet, int expectedValue, Grib1GDS expectedResponseObject) throws BinaryNumberConversionException {
+	@Test(dataProvider = "goodGDSDataSetForLength")
+	public void testReadGDSLength(byte[] testArray, int headerOffSet, int expectedValue) throws BinaryNumberConversionException {
 		int length = gdsReader.readGDSLength(testArray, headerOffSet);
 		assertThat(length).isEqualTo(expectedValue);
-		Grib1GDS gds = new Grib1GDS();
-		gds = gdsReader.readGDSValues(testArray,headerOffSet);
+	}
+
+	@Test(dataProvider = "goodGDSDataSet")
+	public void testReadGDS(byte[] testArray, int headerOffSet, Grib1GDS expectedResponseObject) throws BinaryNumberConversionException {
+		Grib1GDS gds = gdsReader.readGDSValues(testArray,headerOffSet);
 		assertThat(gds).isEqualTo(expectedResponseObject);
 	}
 
