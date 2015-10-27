@@ -37,6 +37,11 @@ public class Grib1GDSReaderTest {
         raFile.close();
 	}
 	
+	@Test
+	public void test(){
+		
+	}
+	
 
 	
 	private static byte[] GOOD_GDS_ARRAY;
