@@ -15,11 +15,23 @@ public class BytesToPrimitiveHelper {
         if (inputValue.length == 3){
             return bytes3ToInt(inputValue);
         }
+        else if(inputValue.length == 4){
+            return bytes4ToInt(inputValue);
+        }
         throw new BinaryNumberConversionException("Invalid length of input value in an attempt to convert byte array to int");
     }
 
     private static int bytes3ToInt(byte... values){
         return (((values[0] & BYTE_MASK) << 8) | (values[1] & BYTE_MASK)) << 8 | (values[2] & BYTE_MASK);
+    }
+
+    private static int bytes4ToInt(byte[] values) {
+        int value = 0;
+        for (int i = 0; i < values.length; i++)
+        {
+            value = (value << 8) + (values[i] & 0xff);
+        }
+        return value;
     }
 
     public static short bytesToShort(byte... inputValues) throws BinaryNumberConversionException {

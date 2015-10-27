@@ -18,6 +18,13 @@ public class BytesToPrimitiveHelperTest {
         };
     }
 
+    @DataProvider(name = "goodValueForIntegerWithLengthOf4Array")
+    public static Object[][] goodValueForIntegerWithLengthOf4Array() {
+        return new Object[][]{
+                new Object[]{FOUR_LENGTH_ARRAY_FOR_VALUE_28, 28},
+        };
+    }
+
     @DataProvider(name = "goodValueForShortWithLengthOf2Array")
     public static Object[][] goodValueForShortWithLengthOf2Array(){
         return new Object[][]{
@@ -50,6 +57,12 @@ public class BytesToPrimitiveHelperTest {
         assertThat(value).isEqualTo(expectedValue);
     }
 
+    @Test(dataProvider = "goodValueForIntegerWithLengthOf4Array")
+    public  void testArrayOfLength4ToInt(byte[] inputValues, int expectedValue) throws BinaryNumberConversionException {
+        int value = BytesToPrimitiveHelper.bytesToInteger(inputValues);
+        assertThat(value).isEqualTo(expectedValue);
+    }
+
     @Test(dataProvider = "goodValueForShortWithLengthOf2Array")
     public void testArrayOfLength2ToShort(byte[] inputValues, short expectedValue) throws BinaryNumberConversionException {
         short value = BytesToPrimitiveHelper.bytesToShort(inputValues);
@@ -62,6 +75,7 @@ public class BytesToPrimitiveHelperTest {
         assertThat(value).isEqualTo(expectedValue);
     }
 
+    private static final byte[] FOUR_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,0,0,28};
     private static final byte[] THREE_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,0,28};
     private static final byte[] TWO_LENGTH_ARRAY_FOR_VALUE28 = new byte[]{0,28};
 
