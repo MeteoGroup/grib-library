@@ -26,13 +26,16 @@ public class Grib1GDS {
     private short resolution;
     private float longitudeIncrement;
     private short numberOfCirclesBetweenPoleAndEquator;
-    private short scanningMode;
 
     private LatLon[] latLons;
 
     private short pointsAlongLatitudeCircle;
     private short[] pointsAlongLatitudeCircleForGaussian;
     private short pointsAlongLongitudeMeridian;
+
+    private boolean scanModeIIsPositive;
+    private boolean scanModeJIsPositve;
+    private boolean scanModeJIsConsectuve;
 
     public int getGdsLenght() {
         return gdsLenght;
@@ -186,12 +189,28 @@ public class Grib1GDS {
         this.numberOfCirclesBetweenPoleAndEquator = numberOfCirclesBetweenPoleAndEquator;
     }
 
-    public short getScanningMode() {
-        return scanningMode;
+    public boolean isScanModeIIsPositive() {
+        return scanModeIIsPositive;
     }
 
-    public void setScanningMode(short scanningMode) {
-        this.scanningMode = scanningMode;
+    public void setScanModeIIsPositive(boolean scanModeIIsPositive) {
+        this.scanModeIIsPositive = scanModeIIsPositive;
+    }
+
+    public boolean isScanModeJIsPositve() {
+        return scanModeJIsPositve;
+    }
+
+    public void setScanModeJIsPositve(boolean scanModeJIsPositve) {
+        this.scanModeJIsPositve = scanModeJIsPositve;
+    }
+
+    public boolean isScanModeJIsConsectuve() {
+        return scanModeJIsConsectuve;
+    }
+
+    public void setScanModeJIsConsectuve(boolean scanModeJIsConsectuve) {
+        this.scanModeJIsConsectuve = scanModeJIsConsectuve;
     }
 
     @Override
@@ -216,9 +235,11 @@ public class Grib1GDS {
         if (resolution != grib1GDS.resolution) return false;
         if (Float.compare(grib1GDS.longitudeIncrement, longitudeIncrement) != 0) return false;
         if (numberOfCirclesBetweenPoleAndEquator != grib1GDS.numberOfCirclesBetweenPoleAndEquator) return false;
-        if (scanningMode != grib1GDS.scanningMode) return false;
         if (pointsAlongLatitudeCircle != grib1GDS.pointsAlongLatitudeCircle) return false;
-        return pointsAlongLongitudeMeridian == grib1GDS.pointsAlongLongitudeMeridian;
+        if (pointsAlongLongitudeMeridian != grib1GDS.pointsAlongLongitudeMeridian) return false;
+        if (scanModeIIsPositive != grib1GDS.scanModeIIsPositive) return false;
+        if (scanModeJIsPositve != grib1GDS.scanModeJIsPositve) return false;
+        return scanModeJIsConsectuve == grib1GDS.scanModeJIsConsectuve;
 
     }
 
@@ -239,9 +260,11 @@ public class Grib1GDS {
         result = 31 * result + (int) resolution;
         result = 31 * result + (longitudeIncrement != +0.0f ? Float.floatToIntBits(longitudeIncrement) : 0);
         result = 31 * result + (int) numberOfCirclesBetweenPoleAndEquator;
-        result = 31 * result + (int) scanningMode;
         result = 31 * result + (int) pointsAlongLatitudeCircle;
         result = 31 * result + (int) pointsAlongLongitudeMeridian;
+        result = 31 * result + (scanModeIIsPositive ? 1 : 0);
+        result = 31 * result + (scanModeJIsPositve ? 1 : 0);
+        result = 31 * result + (scanModeJIsConsectuve ? 1 : 0);
         return result;
     }
 
@@ -263,10 +286,11 @@ public class Grib1GDS {
                 ", resolution=" + resolution +
                 ", longitudeIncrement=" + longitudeIncrement +
                 ", numberOfCirclesBetweenPoleAndEquator=" + numberOfCirclesBetweenPoleAndEquator +
-                ", scanningMode=" + scanningMode +
-                ", latLons=" + Arrays.toString(latLons) +
                 ", pointsAlongLatitudeCircle=" + pointsAlongLatitudeCircle +
                 ", pointsAlongLongitudeMeridian=" + pointsAlongLongitudeMeridian +
+                ", scanModeIIsPositive=" + scanModeIIsPositive +
+                ", scanModeJIsPositve=" + scanModeJIsPositve +
+                ", scanModeJIsConsectuve=" + scanModeJIsConsectuve +
                 '}';
     }
 }

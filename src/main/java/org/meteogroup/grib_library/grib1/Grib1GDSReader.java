@@ -28,7 +28,9 @@ public class Grib1GDSReader {
         objectToWriteInto.setNumberOfCirclesBetweenPoleAndEquator(BytesToPrimitiveHelper.bytesToShort(inputValues[25 + offSet], inputValues[26 + offSet]));
 
         //REWRITE TO PROPER BOOLEAN MAPPERS...
-        objectToWriteInto.setScanningMode((short) (inputValues[27 + offSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        objectToWriteInto.setScanModeIIsPositive(this.readScanningModeIDirection(inputValues[27+offSet]));
+        objectToWriteInto.setScanModeJIsPositve(this.readScanningModeJDirection(inputValues[27+offSet]));
+        objectToWriteInto.setScanModeJIsConsectuve(this.readScanningModeIDirection(inputValues[27+offSet]));
 
         objectToWriteInto.setNorth(this.getNorth(objectToWriteInto.getLat1(), objectToWriteInto.getLat2()));
         objectToWriteInto.setSouth(this.getSouth(objectToWriteInto.getLat1(), objectToWriteInto.getLat2()));
@@ -58,4 +60,17 @@ public class Grib1GDSReader {
         return gds;
     }
 
+    public boolean readScanningModeIDirection(byte inputByte) {
+        //0 or false == i step is positive
+        return !(((inputByte >> 7) & 1) == 1);
+    }
+
+    public boolean readScanningModeJDirection(byte inputByte) {
+        //1 or true == j step is positive
+        return ((inputByte >> 6) & 1) == 1;
+    }
+
+    public boolean readScanningModeConsecutiveDirection(byte inputByte) {
+        return ((inputByte >> 5) & 1) == 1;
+    }
 }
