@@ -26,8 +26,8 @@ public class Grib1PDSReader {
         objectToReadInto.setGeneratingProcessIdNumber((short)(values[5+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToReadInto.setGridIdentification((short)(values[6+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
 
-        objectToReadInto.setHasGDS(this.readGds(values[7+headerOffSet]));
-        objectToReadInto.setHasBMS(this.readBms(values[7+headerOffSet]));
+        objectToReadInto.setHasGDS(BitChecker.testBit(values[7+headerOffSet], 1));
+        objectToReadInto.setHasBMS(BitChecker.testBit(values[7+headerOffSet], 2));
 
         objectToReadInto.setIdenticatorOfParameterAndUnit((short)(values[8+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToReadInto.setIdenticatorOfTypeOfLevelOrLayer((short)(values[9+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
@@ -61,14 +61,5 @@ public class Grib1PDSReader {
         objectToReadInto.setDecimalScaleFactor(BytesToPrimitiveHelper.bytesToShort(values[26+headerOffSet], values[27+headerOffSet]));
 
         return objectToReadInto;
-    }
-
-    public boolean readGds(byte inputByte) {
-        return BitChecker.testBit(inputByte,1);
-
-    }
-
-    public boolean readBms(byte inputByte) {
-        return BitChecker.testBit(inputByte,2);
     }
 }
