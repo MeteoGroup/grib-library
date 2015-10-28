@@ -14,9 +14,9 @@ import java.util.List;
 /**
  * Created by roijen on 20-Oct-15.
  */
-public class Grib1CollectionReaderService {
-    
-    Grib1RecordReaderService recordReader;
+public class Grib1CollectionReader {
+
+    Grib1RecordReader recordReader;
     FileChannelPartReader partReader;
 
     long gribRecordOffset = -1;

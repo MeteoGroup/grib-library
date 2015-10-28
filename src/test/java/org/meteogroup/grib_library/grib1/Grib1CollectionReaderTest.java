@@ -12,7 +12,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,9 +20,9 @@ import static org.mockito.Mockito.*;
 /**
  * Created by roijen on 20-Oct-15.
  */
-public class Grib1CollectionReaderServiceTest {
+public class Grib1CollectionReaderTest {
 
-    private Grib1CollectionReaderService collectionReader;
+    private Grib1CollectionReader collectionReader;
 
 
     @DataProvider(name = "goodGDSDataSet")
@@ -43,7 +42,7 @@ public class Grib1CollectionReaderServiceTest {
 
     @BeforeMethod
     public void setUp(){
-        collectionReader = new Grib1CollectionReaderService();
+        collectionReader = new Grib1CollectionReader();
     }
 
     @Test(dataProvider = "simpleFileLocation")
@@ -64,7 +63,7 @@ public class Grib1CollectionReaderServiceTest {
     public void testReadRecords() throws GribReaderException, IOException, BinaryNumberConversionException {
 
         collectionReader.partReader = mock(FileChannelPartReader.class);
-        collectionReader.recordReader = mock(Grib1RecordReaderService.class);
+        collectionReader.recordReader = mock(Grib1RecordReader.class);
         collectionReader.fileLength = 16;
         collectionReader.gribRecordOffset = 0;
 
@@ -83,7 +82,7 @@ public class Grib1CollectionReaderServiceTest {
 
     private static final byte[] SIMULATED_BYTE_ARRAY = new byte[]{'G','R','I','B',19,84,-26,1};
     private static FileChannel SIMULATED_FILE_CHANNEL() throws FileNotFoundException {
-        String fileName = Grib1CollectionReaderServiceTest.class.getClass().getResource("/grib1test/samplefiles/VerySimpleSampleFile.txt").toString().trim().replace("file:/","");
+        String fileName = Grib1CollectionReaderTest.class.getClass().getResource("/grib1test/samplefiles/VerySimpleSampleFile.txt").toString().trim().replace("file:/","");
         RandomAccessFile raf = new RandomAccessFile(fileName, "r");
         return raf.getChannel();
     }

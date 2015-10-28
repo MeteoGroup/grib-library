@@ -18,9 +18,9 @@ import static org.mockito.Mockito.*;
 /**
  * Created by roijen on 19-Oct-15.
  */
-public class Grib1RecordReaderServiceTest {
+public class Grib1RecordReaderTest {
 
-    private Grib1RecordReaderService reader;
+    private Grib1RecordReader reader;
 
     @DataProvider(name = "goodHeader")
     public static Object[][] goodHeader(){
@@ -46,7 +46,7 @@ public class Grib1RecordReaderServiceTest {
 
     @BeforeMethod
     public void setUp(){
-        reader = new Grib1RecordReaderService();
+        reader = new Grib1RecordReader();
     }
 
     @Test(dataProvider = "goodHeader")

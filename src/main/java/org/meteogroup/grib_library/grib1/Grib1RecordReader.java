@@ -11,13 +11,13 @@ import org.meteogroup.grib_library.util.BytesToPrimitiveHelper;
 /**
  * Created by roijen on 19-Oct-15.
  */
-public class Grib1RecordReaderService {
+public class Grib1RecordReader {
 
     public Grib1PDSReader pdsReader;
     public Grib1GDSReader gdsReader;
     public Grib1BDSReader bdsReader;
 
-    public Grib1RecordReaderService(){
+    public Grib1RecordReader(){
         this.pdsReader = new Grib1PDSReader();
         this.gdsReader = new Grib1GDSReader();
         this.bdsReader = new Grib1BDSReader();
