@@ -1,2 +1,3 @@
-target/
-GribReader.iml
+/target
+/.idea
+*.iml
