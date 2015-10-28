@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -72,7 +73,7 @@ public class Grib1CollectionReaderServiceTest {
         when(collectionReader.recordReader.checkIfGribFileIsValidGrib1(any(byte[].class))).thenReturn(true);
         when(collectionReader.recordReader.readRecordLength(any(byte[].class))).thenReturn(8);
 
-        ArrayList<Grib1Record> records = collectionReader.readAllRecords(SIMULATED_FILE_CHANNEL());
+        List<Grib1Record> records = collectionReader.readAllRecords(SIMULATED_FILE_CHANNEL());
         assertThat(records.size()).isEqualTo(2);
     }
 

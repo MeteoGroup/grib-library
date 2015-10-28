@@ -2,6 +2,7 @@ package org.meteogroup.grib_library.grib1;
 
 import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
 import org.meteogroup.grib_library.exception.GribReaderException;
+import org.meteogroup.grib_library.grib1.model.Grib1BDS;
 import org.meteogroup.grib_library.grib1.model.Grib1GDS;
 import org.meteogroup.grib_library.grib1.model.Grib1PDS;
 import org.meteogroup.grib_library.grib1.model.Grib1Record;
@@ -76,10 +77,13 @@ public class Grib1RecordReaderServiceTest {
     public void testReadOutCoordination() throws BinaryNumberConversionException {
         reader.pdsReader = mock(Grib1PDSReader.class);
         reader.gdsReader = mock(Grib1GDSReader.class);
+        reader.bdsReader = mock(Grib1BDSReader.class);
 
         when(reader.pdsReader.readPDSValues(any(byte[].class), anyInt())).thenReturn(LENGTH_ONLY_PDS());
 
         when(reader.gdsReader.readGDSValues(any(byte[].class), anyInt())).thenReturn(LENGTH_ONLY_GDS());
+
+        when(reader.gdsReader.readGDSValues(any(byte[].class), anyInt())).thenReturn(new Grib1GDS());
 
         Grib1Record record = reader.readCompleteRecord(new Grib1Record(),SIMULATED_BYTE_ARRAY, SIMULATED_OFFSET);
 
@@ -91,7 +95,11 @@ public class Grib1RecordReaderServiceTest {
 
         verify(reader.gdsReader, times(1)).readGDSValues(any(byte[].class), anyInt());
 
-        assertThat(record.getPds()).isNotNull();
+        assertThat(record.getGds()).isNotNull();
+
+        verify(reader.bdsReader, times(1)).readBDSValues(any(byte[].class), anyInt());
+
+        assertThat(record.getGds()).isNotNull();
 
 
     }
@@ -107,6 +115,12 @@ public class Grib1RecordReaderServiceTest {
         Grib1GDS gds = new Grib1GDS();
         gds.setGdsLenght(8);
         return gds;
+    }
+
+    private static final Grib1BDS LENGTH_ONLY_BDS(){
+        Grib1BDS bds = new Grib1BDS();
+        bds.setBdsLength(8);
+        return bds;
     }
 
     private static final int SIMULATED_OFFSET = 8;
