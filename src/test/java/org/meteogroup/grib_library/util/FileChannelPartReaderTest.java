@@ -59,7 +59,7 @@ public class FileChannelPartReaderTest {
     }
 
     private static FileChannel VERY_SIMPLE_FILE_CHANNEL() throws FileNotFoundException {
-        String fileName = FileChannelPartReaderTest.class.getClass().getResource("/grib1test/samplefiles/VerySimpleSampleFile.txt").toString().trim().replace("file:/","");
+        String fileName = FileChannelPartReaderTest.class.getClass().getResource("/grib1test/samplefiles/VerySimpleSampleFile.txt").getPath();
         RandomAccessFile raf = new RandomAccessFile(fileName, "r");
         return raf.getChannel();
     }

@@ -47,7 +47,7 @@ public class Grib1CollectionReaderTest {
 
     @Test(dataProvider = "simpleFileLocation")
     public void getAFileChannelFromAFileName(String fileLocation) throws IOException {
-        String fileName = getClass().getResource(fileLocation).toString().trim().replace("file:/","");
+        String fileName = getClass().getResource(fileLocation).getPath();
         FileChannel channel = collectionReader.getFileChannelFromURL(fileName);
         assertThat(channel).isNotNull();
         assertThat(collectionReader.getGribRecordOffset()).isEqualTo(0l);
@@ -82,7 +82,7 @@ public class Grib1CollectionReaderTest {
 
     private static final byte[] SIMULATED_BYTE_ARRAY = new byte[]{'G','R','I','B',19,84,-26,1};
     private static FileChannel SIMULATED_FILE_CHANNEL() throws FileNotFoundException {
-        String fileName = Grib1CollectionReaderTest.class.getClass().getResource("/grib1test/samplefiles/VerySimpleSampleFile.txt").toString().trim().replace("file:/","");
+        String fileName = Grib1CollectionReaderTest.class.getClass().getResource("/grib1test/samplefiles/VerySimpleSampleFile.txt").getPath();
         RandomAccessFile raf = new RandomAccessFile(fileName, "r");
         return raf.getChannel();
     }
