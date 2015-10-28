@@ -2,8 +2,6 @@ package org.meteogroup.grib_library.util;
 
 import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
 
-import java.io.IOException;
-
 /**
  * Created by roijen on 21-Oct-15.
  */
@@ -61,6 +59,26 @@ public class BytesToPrimitiveHelper {
             value = -value;
         }
         return value;
+    }
+
+    public static float bytesToFloatAsIBM(byte... inputValue) throws BinaryNumberConversionException {
+        if(inputValue.length == 4){
+            return byte4ToFloatAsIBM(inputValue);
+        }
+        throw new BinaryNumberConversionException("Invalid length of input value in an attempt to convert byte array to int");
+    }
+
+    private static float byte4ToFloatAsIBM(byte[] values) {
+        //TODO Check signing...
+        int sgn, mant, exp;
+        mant = (values[1] & 0xff) << 16 | (values[2] &0xff) << 8 | (values[3]) &0xff;
+        if (mant == 0) {
+            return 0.0f;
+        }
+
+        sgn = -((((values[0] & 0xff) & 128) >> 6) - 1);
+        exp = ((values[0] & 0xff) & 127) - 64;
+        return (float) (sgn * Math.pow(16.0, exp - 6) * mant);
     }
 
 }
