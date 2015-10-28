@@ -15,15 +15,13 @@ import java.util.List;
  * Created by roijen on 20-Oct-15.
  */
 public class Grib1CollectionReaderService {
+    
+    Grib1RecordReaderService recordReader;
+    FileChannelPartReader partReader;
 
-    //TODO FIX MEMBER VARIABLE!!
-
-    public Grib1RecordReaderService recordReader;
-    public FileChannelPartReader partReader;
-
-    public long gribRecordOffset = -1;
-    public long fileLength = -1;
-    public FileChannel fc = null;
+    long gribRecordOffset = -1;
+    long fileLength = -1;
+    FileChannel fc = null;
 
     private static final int HEADER_LENGTH = 8;
 
