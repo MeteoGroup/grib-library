@@ -44,6 +44,13 @@ public class Grib1BDSReaderTest {
         };
     }
 
+    @DataProvider(name="valuesForSlicing")
+    public Object[][] valuesForSlicing(){
+        return new Object[][]{
+                new Object[]{BINARY_FOR_SLICING,2,4, new byte[]{0b0100_0001, 0b0100_0001}}
+        };
+    }
+
     @BeforeMethod
     public void setUp(){
         bdsReader = new Grib1BDSReader();
@@ -59,6 +66,8 @@ public class Grib1BDSReaderTest {
     public void testBDSReadout(byte[] inputValues, int offSet, Grib1BDS expectedObject) throws BinaryNumberConversionException {
         Grib1BDS actualObject = bdsReader.readBDSValues(inputValues, offSet);
         assertThat(actualObject).isEqualTo(expectedObject);
+        assertThat(actualObject.getValues()).isNotNull();
+        assertThat(actualObject.getValues().length).isEqualTo(actualObject.getBdsLength()-END_OF_META_DATA);
     }
 
     @Test(dataProvider = "valuesForBinayScaleFactor")
@@ -67,6 +76,11 @@ public class Grib1BDSReaderTest {
         assertThat(actualValue).isEqualTo(expectedValue);
     }
 
+    @Test(dataProvider = "valuesForSlicing")
+    public void testArraySlicer(byte[] inputValues, int slicePoint, int bdsLength, byte[] expectedValues){
+        byte[] actualValues = bdsReader.sliceArrayForGribField(inputValues, slicePoint, bdsLength);
+        assertThat(actualValues).isEqualTo(expectedValues);
+    }
 
     private static final byte[] ARRAY_WITH_LENGTH_OF_28 = new byte[]{0,0,28};
     private static final byte[] GOOD_BDS_ARRAY() throws URISyntaxException, IOException {
@@ -104,5 +118,7 @@ public class Grib1BDSReaderTest {
         return bds;
     }
 
+    private static final byte[] BINARY_FOR_SLICING = new byte[]{0b0100_0010, 0b0100_0010, 0b0100_0001, 0b0100_0001};
     private static final byte[] BINARY_FOR_SCALE_FACTOR_WITH_VALUE_9 = new byte[]{0b1000_0000 - 256, 0b0000_1001};
+    private static final int END_OF_META_DATA = 12;
 }

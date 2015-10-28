@@ -5,6 +5,10 @@ import org.meteogroup.grib_library.grib1.model.Grib1BDS;
 import org.meteogroup.grib_library.util.BitChecker;
 import org.meteogroup.grib_library.util.BytesToPrimitiveHelper;
 
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Created by roijen on 27-Oct-15.
  */
@@ -30,15 +34,18 @@ public class Grib1BDSReader {
         objectToWriteInto.setBinaryScaleFactor(this.readBinaryScaleFactor(inputValues[4 + offSet], inputValues[5 + offSet]));
         objectToWriteInto.setReferenceValue(BytesToPrimitiveHelper.bytesToFloatAsIBM(inputValues[6 + offSet], inputValues[7 + offSet], inputValues[8 + offSet], inputValues[9 + offSet]));
         objectToWriteInto.setBytesForDatum(((short) (inputValues[10 + offSet] & BytesToPrimitiveHelper.BYTE_MASK)));
+        objectToWriteInto.setValues(this.sliceArrayForGribField(inputValues, 12,objectToWriteInto.getBdsLength()));
 
         return objectToWriteInto;
     }
 
     public int readBinaryScaleFactor(byte byte4, byte byte5){
         boolean pos = BitChecker.testBit(byte4, 1);
-        String x = Integer.toBinaryString(byte4);
-        String y = Integer.toBinaryString(byte5);
         int absoluteValue = byte5;
         return (pos ? absoluteValue : -1*absoluteValue);
+    }
+
+    public byte[] sliceArrayForGribField(byte[] inputValues, int slicePoint, int bdsLength) {
+        return Arrays.copyOfRange(inputValues,slicePoint,bdsLength);
     }
 }

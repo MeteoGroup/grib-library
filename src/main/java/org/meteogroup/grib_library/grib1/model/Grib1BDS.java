@@ -22,6 +22,7 @@ public class Grib1BDS {
     private boolean flagsAtPosition14;
     //TODO Bits 5 through 8 when 14 = true;
 
+    private byte[] values;
 
     public int getBdsLength() {
         return bdsLength;
@@ -109,6 +110,14 @@ public class Grib1BDS {
 
     public void setFlagsAtPosition14(boolean flagsAtPosition14) {
         this.flagsAtPosition14 = flagsAtPosition14;
+    }
+
+    public byte[] getValues() {
+        return values;
+    }
+
+    public void setValues(byte[] values) {
+        this.values = values;
     }
 
     @Override
