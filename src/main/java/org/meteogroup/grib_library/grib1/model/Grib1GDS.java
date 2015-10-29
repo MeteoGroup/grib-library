@@ -10,10 +10,10 @@ import java.util.Arrays;
 public class Grib1GDS {
 
     private int gdsLenght;
-    private short numberOfVerticalsCoordinateParams;
-    private short locationOfVerticalCoordinateParams;
-    private short locationListPer;
-    private short representationType;
+    private int numberOfVerticalsCoordinateParams;
+    private int locationOfVerticalCoordinateParams;
+    private int locationListPer;
+    private int representationType;
     private int numberOfPoints;
 
     private float north;
@@ -23,15 +23,15 @@ public class Grib1GDS {
     private int lon1;
     private int lon2;
 
-    private short resolution;
+    private int resolution;
     private float longitudeIncrement;
-    private short numberOfCirclesBetweenPoleAndEquator;
+    private int numberOfCirclesBetweenPoleAndEquator;
 
     private LatLon[] latLons;
 
-    private short pointsAlongLatitudeCircle;
-    private short[] pointsAlongLatitudeCircleForGaussian;
-    private short pointsAlongLongitudeMeridian;
+    private int pointsAlongLatitudeCircle;
+    private int[] pointsAlongLatitudeCircleForGaussian;
+    private int pointsAlongLongitudeMeridian;
 
     private boolean scanModeIIsPositive;
     private boolean scanModeJIsPositve;
@@ -45,35 +45,35 @@ public class Grib1GDS {
         this.gdsLenght = gdsLenght;
     }
 
-    public short getNumberOfVerticalsCoordinateParams() {
+    public int getNumberOfVerticalsCoordinateParams() {
         return numberOfVerticalsCoordinateParams;
     }
 
-    public void setNumberOfVerticalsCoordinateParams(short numberOfVerticalsCoordinateParams) {
+    public void setNumberOfVerticalsCoordinateParams(int numberOfVerticalsCoordinateParams) {
         this.numberOfVerticalsCoordinateParams = numberOfVerticalsCoordinateParams;
     }
 
-    public short getLocationOfVerticalCoordinateParams() {
+    public int getLocationOfVerticalCoordinateParams() {
         return locationOfVerticalCoordinateParams;
     }
 
-    public void setLocationOfVerticalCoordinateParams(short locationOfVerticalCoordinateParams) {
+    public void setLocationOfVerticalCoordinateParams(int locationOfVerticalCoordinateParams) {
         this.locationOfVerticalCoordinateParams = locationOfVerticalCoordinateParams;
     }
 
-    public short getLocationListPer() {
+    public int getLocationListPer() {
         return locationListPer;
     }
 
-    public void setLocationListPer(short locationListPer) {
+    public void setLocationListPer(int locationListPer) {
         this.locationListPer = locationListPer;
     }
 
-    public short getRepresentationType() {
+    public int getRepresentationType() {
         return representationType;
     }
 
-    public void setRepresentationType(short representationType) {
+    public void setRepresentationType(int representationType) {
         this.representationType = representationType;
     }
 
@@ -117,38 +117,6 @@ public class Grib1GDS {
         this.lat2 = lat2;
     }
 
-    public LatLon[] getLatLons() {
-        return latLons;
-    }
-
-    public void setLatLons(LatLon[] latLons) {
-        this.latLons = latLons;
-    }
-
-    public short getPointsAlongLatitudeCircle() {
-        return pointsAlongLatitudeCircle;
-    }
-
-    public void setPointsAlongLatitudeCircle(short pointsAlongLatitudeCircle) {
-        this.pointsAlongLatitudeCircle = pointsAlongLatitudeCircle;
-    }
-
-    public short[] getPointsAlongLatitudeCircleForGaussian() {
-        return pointsAlongLatitudeCircleForGaussian;
-    }
-
-    public void setPointsAlongLatitudeCircleForGaussian(short[] pointsAlongLatitudeCircleForGaussian) {
-        this.pointsAlongLatitudeCircleForGaussian = pointsAlongLatitudeCircleForGaussian;
-    }
-
-    public short getPointsAlongLongitudeMeridian() {
-        return pointsAlongLongitudeMeridian;
-    }
-
-    public void setPointsAlongLongitudeMeridian(short pointsAlongLongitudeMeridian) {
-        this.pointsAlongLongitudeMeridian = pointsAlongLongitudeMeridian;
-    }
-
     public int getLon1() {
         return lon1;
     }
@@ -165,11 +133,11 @@ public class Grib1GDS {
         this.lon2 = lon2;
     }
 
-    public short getResolution() {
+    public int getResolution() {
         return resolution;
     }
 
-    public void setResolution(short resolution) {
+    public void setResolution(int resolution) {
         this.resolution = resolution;
     }
 
@@ -181,12 +149,44 @@ public class Grib1GDS {
         this.longitudeIncrement = longitudeIncrement;
     }
 
-    public short getNumberOfCirclesBetweenPoleAndEquator() {
+    public int getNumberOfCirclesBetweenPoleAndEquator() {
         return numberOfCirclesBetweenPoleAndEquator;
     }
 
-    public void setNumberOfCirclesBetweenPoleAndEquator(short numberOfCirclesBetweenPoleAndEquator) {
+    public void setNumberOfCirclesBetweenPoleAndEquator(int numberOfCirclesBetweenPoleAndEquator) {
         this.numberOfCirclesBetweenPoleAndEquator = numberOfCirclesBetweenPoleAndEquator;
+    }
+
+    public LatLon[] getLatLons() {
+        return latLons;
+    }
+
+    public void setLatLons(LatLon[] latLons) {
+        this.latLons = latLons;
+    }
+
+    public int getPointsAlongLatitudeCircle() {
+        return pointsAlongLatitudeCircle;
+    }
+
+    public void setPointsAlongLatitudeCircle(int pointsAlongLatitudeCircle) {
+        this.pointsAlongLatitudeCircle = pointsAlongLatitudeCircle;
+    }
+
+    public int[] getPointsAlongLatitudeCircleForGaussian() {
+        return pointsAlongLatitudeCircleForGaussian;
+    }
+
+    public void setPointsAlongLatitudeCircleForGaussian(int[] pointsAlongLatitudeCircleForGaussian) {
+        this.pointsAlongLatitudeCircleForGaussian = pointsAlongLatitudeCircleForGaussian;
+    }
+
+    public int getPointsAlongLongitudeMeridian() {
+        return pointsAlongLongitudeMeridian;
+    }
+
+    public void setPointsAlongLongitudeMeridian(int pointsAlongLongitudeMeridian) {
+        this.pointsAlongLongitudeMeridian = pointsAlongLongitudeMeridian;
     }
 
     public boolean isScanModeIIsPositive() {
@@ -246,10 +246,10 @@ public class Grib1GDS {
     @Override
     public int hashCode() {
         int result = gdsLenght;
-        result = 31 * result + (int) numberOfVerticalsCoordinateParams;
-        result = 31 * result + (int) locationOfVerticalCoordinateParams;
-        result = 31 * result + (int) locationListPer;
-        result = 31 * result + (int) representationType;
+        result = 31 * result + numberOfVerticalsCoordinateParams;
+        result = 31 * result + locationOfVerticalCoordinateParams;
+        result = 31 * result + locationListPer;
+        result = 31 * result + representationType;
         result = 31 * result + numberOfPoints;
         result = 31 * result + (north != +0.0f ? Float.floatToIntBits(north) : 0);
         result = 31 * result + (south != +0.0f ? Float.floatToIntBits(south) : 0);
@@ -257,11 +257,11 @@ public class Grib1GDS {
         result = 31 * result + lat2;
         result = 31 * result + lon1;
         result = 31 * result + lon2;
-        result = 31 * result + (int) resolution;
+        result = 31 * result + resolution;
         result = 31 * result + (longitudeIncrement != +0.0f ? Float.floatToIntBits(longitudeIncrement) : 0);
-        result = 31 * result + (int) numberOfCirclesBetweenPoleAndEquator;
-        result = 31 * result + (int) pointsAlongLatitudeCircle;
-        result = 31 * result + (int) pointsAlongLongitudeMeridian;
+        result = 31 * result + numberOfCirclesBetweenPoleAndEquator;
+        result = 31 * result + pointsAlongLatitudeCircle;
+        result = 31 * result + pointsAlongLongitudeMeridian;
         result = 31 * result + (scanModeIIsPositive ? 1 : 0);
         result = 31 * result + (scanModeJIsPositve ? 1 : 0);
         result = 31 * result + (scanModeJIsConsectuve ? 1 : 0);

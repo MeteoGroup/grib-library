@@ -86,7 +86,7 @@ public class Grib1GDSReaderTest {
 	}
 
 	@Test(dataProvider = "testSetForGausianCoordinateReadOut")
-	public void testGaussianReadout(Grib1GDS objectToWriteInto, byte[] inputValues, int offSet, short[] expectedResult, short expectedLength) throws BinaryNumberConversionException {
+	public void testGaussianReadout(Grib1GDS objectToWriteInto, byte[] inputValues, int offSet, int[] expectedResult, int expectedLength) throws BinaryNumberConversionException {
 		Grib1GDS result = gdsReader.generateNisAndNumberOfPoints(objectToWriteInto, inputValues,offSet);
 		assertThat(result.getNumberOfPoints()).isEqualTo(expectedLength);
 		assertThat(result.getPointsAlongLatitudeCircleForGaussian()).isEqualTo(expectedResult);
@@ -95,10 +95,10 @@ public class Grib1GDSReaderTest {
 	private static final Grib1GDS GOOD_GDS_OBJECT(){
 		Grib1GDS gds = new Grib1GDS();
 		gds.setGdsLenght(2592);
-		gds.setNumberOfVerticalsCoordinateParams((short) 0);
-		gds.setLocationOfVerticalCoordinateParams((short) 33);
-		gds.setLocationListPer((short) 0);
-		gds.setRepresentationType((short) 4);
+		gds.setNumberOfVerticalsCoordinateParams(0);
+		gds.setLocationOfVerticalCoordinateParams(33);
+		gds.setLocationListPer(0);
+		gds.setRepresentationType(4);
 		gds.setNumberOfPoints(2140702);
 		gds.setNorth(-89.892f);
 		gds.setSouth(89.892f);
@@ -106,11 +106,11 @@ public class Grib1GDSReaderTest {
 		gds.setLat2(-89892);
 		gds.setLon1(0);
 		gds.setLon2(359900);
-		gds.setResolution((short) 0);
-		gds.setLongitudeIncrement(-0.001f);
+		gds.setResolution(0);
+		gds.setLongitudeIncrement(65.535f);
 		gds.setNumberOfCirclesBetweenPoleAndEquator((short) 640);
-		gds.setPointsAlongLatitudeCircle((short) -1);
-		gds.setPointsAlongLongitudeMeridian((short) 1280);
+		gds.setPointsAlongLatitudeCircle(65535);
+		gds.setPointsAlongLongitudeMeridian(1280);
 		gds.setScanModeIIsPositive(true);
 		gds.setScanModeJIsPositve(false);
 		gds.setScanModeJIsConsectuve(false);
@@ -149,7 +149,7 @@ public class Grib1GDSReaderTest {
 	}
 
 	private static final byte[] BYTE_ARRAY_FOR_GAUUSION_COORDINATE_READOUT = new byte[]{0,1,0,2,0,1};
-	private static final short[] EXPECTED_ARRAY_FOR_GAUSSIAN_COORDINATE_READOUT = new short[]{1,2,1};
+	private static final int[] EXPECTED_ARRAY_FOR_GAUSSIAN_COORDINATE_READOUT = new int[]{1,2,1};
 	private static final short EXPECTED_LENGTH_FOR_GAUSSIAN_COORDINATE_READOUT = 4;
 
 

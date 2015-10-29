@@ -8,7 +8,7 @@ public class Grib1BDS {
     private int bdsLength;
     private int binaryScaleFactor;
     private float referenceValue;
-    private short bytesForDatum;
+    private int bytesForDatum;
 
     private boolean gridPointData;
     private boolean sphericalHarmonicCoefficient;
@@ -48,11 +48,11 @@ public class Grib1BDS {
         this.referenceValue = referenceValue;
     }
 
-    public short getBytesForDatum() {
+    public int getBytesForDatum() {
         return bytesForDatum;
     }
 
-    public void setBytesForDatum(short bytesForDatum) {
+    public void setBytesForDatum(int bytesForDatum) {
         this.bytesForDatum = bytesForDatum;
     }
 

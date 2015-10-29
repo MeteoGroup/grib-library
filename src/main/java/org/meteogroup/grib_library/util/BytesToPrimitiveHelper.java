@@ -35,6 +35,8 @@ public class BytesToPrimitiveHelper {
         return value;
     }
 
+    @Deprecated
+    //SIGNING ISSUE, DO NOT USE!
     public static short bytesToShort(byte... inputValues) throws BinaryNumberConversionException {
         if (inputValues.length == 2){
             return (short) bytes2ToInt(inputValues);

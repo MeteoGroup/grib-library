@@ -7,28 +7,28 @@ public class Grib1PDS {
 
     private int pdsLenght;
 
-    private short parameterTableVersionNumber;
-    private short identificationOfCentre;
-    private short generatingProcessIdNumber;
-    private short gridIdentification;
-    private short identicatorOfParameterAndUnit;
-    private short identicatorOfTypeOfLevelOrLayer;
-    private short levelOrLayerValue1 = -1;
-    private short levelOrLayerValue2 = -1;
-    private short issueTimeCentury;
-    private short issueTimeYearOfCentury;
-    private short issueTimeMonth;
-    private short issueTimeDay;
-    private short issueTimeHour;
-    private short issueTimeMinute;
-    private short forecastTimeUnit;
-    private short forecastPeriodOfTime1;
-    private short forecastPeriodOfTime2;
-    private short timeRangeIndicator = -1;
-    private short numberIncludedInAverageOrAccumulation;
-    private short numberOfMissingFromAverageOrAcummulation;
-    private short identificationOfSubCentre;
-    private short decimalScaleFactor;
+    private int parameterTableVersionNumber;
+    private int identificationOfCentre;
+    private int generatingProcessIdNumber;
+    private int gridIdentification;
+    private int identicatorOfParameterAndUnit;
+    private int identicatorOfTypeOfLevelOrLayer;
+    private int levelOrLayerValue1 = -1;
+    private int levelOrLayerValue2 = -1;
+    private int issueTimeCentury;
+    private int issueTimeYearOfCentury;
+    private int issueTimeMonth;
+    private int issueTimeDay;
+    private int issueTimeHour;
+    private int issueTimeMinute;
+    private int forecastTimeUnit;
+    private int forecastPeriodOfTime1;
+    private int forecastPeriodOfTime2;
+    private int timeRangeIndicator = -1;
+    private int numberIncludedInAverageOrAccumulation;
+    private int numberOfMissingFromAverageOrAcummulation;
+    private int identificationOfSubCentre;
+    private int decimalScaleFactor;
 
     private boolean hasOnlyOneLevelOrLayerValue;
 
@@ -46,7 +46,6 @@ public class Grib1PDS {
     public static final int LEVELTYPE_FIXED_HEIGHT_LEVEL = 103;
     public static final int LEVELTYPE_FIXED_HEIGHT_ABOVE_GROUND = 105;
 
-
     public int getPdsLenght() {
         return pdsLenght;
     }
@@ -55,140 +54,180 @@ public class Grib1PDS {
         this.pdsLenght = pdsLenght;
     }
 
-    public short getParameterTableVersionNumber() {
+    public int getParameterTableVersionNumber() {
         return parameterTableVersionNumber;
     }
 
-    public void setParameterTableVersionNumber(short parameterTableVersionNumber) {
+    public void setParameterTableVersionNumber(int parameterTableVersionNumber) {
         this.parameterTableVersionNumber = parameterTableVersionNumber;
     }
 
-    public short getIdentificationOfCentre() {
+    public int getIdentificationOfCentre() {
         return identificationOfCentre;
     }
 
-    public void setIdentificationOfCentre(short identificationOfCentre) {
+    public void setIdentificationOfCentre(int identificationOfCentre) {
         this.identificationOfCentre = identificationOfCentre;
     }
 
-    public short getGeneratingProcessIdNumber() {
+    public int getGeneratingProcessIdNumber() {
         return generatingProcessIdNumber;
     }
 
-    public void setGeneratingProcessIdNumber(short generatingProcessIdNumber) {
+    public void setGeneratingProcessIdNumber(int generatingProcessIdNumber) {
         this.generatingProcessIdNumber = generatingProcessIdNumber;
     }
 
-    public short getIdenticatorOfParameterAndUnit() {
+    public int getGridIdentification() {
+        return gridIdentification;
+    }
+
+    public void setGridIdentification(int gridIdentification) {
+        this.gridIdentification = gridIdentification;
+    }
+
+    public int getIdenticatorOfParameterAndUnit() {
         return identicatorOfParameterAndUnit;
     }
 
-    public void setIdenticatorOfParameterAndUnit(short identicatorOfParameterAndUnit) {
+    public void setIdenticatorOfParameterAndUnit(int identicatorOfParameterAndUnit) {
         this.identicatorOfParameterAndUnit = identicatorOfParameterAndUnit;
     }
 
-    public short getIdenticatorOfTypeOfLevelOrLayer() {
+    public int getIdenticatorOfTypeOfLevelOrLayer() {
         return identicatorOfTypeOfLevelOrLayer;
     }
 
-    public void setIdenticatorOfTypeOfLevelOrLayer(short identicatorOfTypeOfLevelOrLayer) {
+    public void setIdenticatorOfTypeOfLevelOrLayer(int identicatorOfTypeOfLevelOrLayer) {
         this.identicatorOfTypeOfLevelOrLayer = identicatorOfTypeOfLevelOrLayer;
     }
 
-    public short getLevelOrLayerValue1() {
+    public int getLevelOrLayerValue1() {
         return levelOrLayerValue1;
     }
 
-    public void setLevelOrLayerValue1(short levelOrLayerValue1) {
+    public void setLevelOrLayerValue1(int levelOrLayerValue1) {
         this.levelOrLayerValue1 = levelOrLayerValue1;
     }
 
-    public short getLevelOrLayerValue2() {
+    public int getLevelOrLayerValue2() {
         return levelOrLayerValue2;
     }
 
-    public void setLevelOrLayerValue2(short levelOrLayerValue2) {
+    public void setLevelOrLayerValue2(int levelOrLayerValue2) {
         this.levelOrLayerValue2 = levelOrLayerValue2;
     }
 
-    public short getIssueTimeYearOfCentury() {
-        return issueTimeYearOfCentury;
-    }
-
-    public void setIssueTimeYearOfCentury(short issueTimeYearOfCentury) {
-        this.issueTimeYearOfCentury = issueTimeYearOfCentury;
-    }
-
-    public short getIssueTimeMonth() {
-        return issueTimeMonth;
-    }
-
-    public void setIssueTimeMonth(short issueTimeMonth) {
-        this.issueTimeMonth = issueTimeMonth;
-    }
-
-    public short getIssueTimeDay() {
-        return issueTimeDay;
-    }
-
-    public void setIssueTimeDay(short issueTimeDay) {
-        this.issueTimeDay = issueTimeDay;
-    }
-
-    public short getIssueTimeHour() {
-        return issueTimeHour;
-    }
-
-    public void setIssueTimeHour(short issueTimeHour) {
-        this.issueTimeHour = issueTimeHour;
-    }
-
-    public short getIssueTimeMinute() {
-        return issueTimeMinute;
-    }
-
-    public void setIssueTimeMinute(short issueTimeMinute) {
-        this.issueTimeMinute = issueTimeMinute;
-    }
-
-    public short getIssueTimeCentury() {
+    public int getIssueTimeCentury() {
         return issueTimeCentury;
     }
 
-    public void setIssueTimeCentury(short issueTimeCentury) {
+    public void setIssueTimeCentury(int issueTimeCentury) {
         this.issueTimeCentury = issueTimeCentury;
     }
 
-    public short getForecastTimeUnit() {
+    public int getIssueTimeYearOfCentury() {
+        return issueTimeYearOfCentury;
+    }
+
+    public void setIssueTimeYearOfCentury(int issueTimeYearOfCentury) {
+        this.issueTimeYearOfCentury = issueTimeYearOfCentury;
+    }
+
+    public int getIssueTimeMonth() {
+        return issueTimeMonth;
+    }
+
+    public void setIssueTimeMonth(int issueTimeMonth) {
+        this.issueTimeMonth = issueTimeMonth;
+    }
+
+    public int getIssueTimeDay() {
+        return issueTimeDay;
+    }
+
+    public void setIssueTimeDay(int issueTimeDay) {
+        this.issueTimeDay = issueTimeDay;
+    }
+
+    public int getIssueTimeHour() {
+        return issueTimeHour;
+    }
+
+    public void setIssueTimeHour(int issueTimeHour) {
+        this.issueTimeHour = issueTimeHour;
+    }
+
+    public int getIssueTimeMinute() {
+        return issueTimeMinute;
+    }
+
+    public void setIssueTimeMinute(int issueTimeMinute) {
+        this.issueTimeMinute = issueTimeMinute;
+    }
+
+    public int getForecastTimeUnit() {
         return forecastTimeUnit;
     }
 
-    public void setForecastTimeUnit(short forecastTimeUnit) {
+    public void setForecastTimeUnit(int forecastTimeUnit) {
         this.forecastTimeUnit = forecastTimeUnit;
     }
 
-    public short getForecastPeriodOfTime1() {
+    public int getForecastPeriodOfTime1() {
         return forecastPeriodOfTime1;
     }
 
-    public void setForecastPeriodOfTime1(short forecastPeriodOfTime1) {
+    public void setForecastPeriodOfTime1(int forecastPeriodOfTime1) {
         this.forecastPeriodOfTime1 = forecastPeriodOfTime1;
     }
 
-    public short getForecastPeriodOfTime2() {
+    public int getForecastPeriodOfTime2() {
         return forecastPeriodOfTime2;
     }
 
-    public void setForecastPeriodOfTime2(short forecastPeriodOfTime2) {
+    public void setForecastPeriodOfTime2(int forecastPeriodOfTime2) {
         this.forecastPeriodOfTime2 = forecastPeriodOfTime2;
     }
 
-    public short getTimeRangeIndicator() {
+    public int getTimeRangeIndicator() {
         return timeRangeIndicator;
     }
 
-    public void setTimeRangeIndicator(short timeRangeIndicator) {
+    public void setTimeRangeIndicator(int timeRangeIndicator) {
         this.timeRangeIndicator = timeRangeIndicator;
+    }
+
+    public int getNumberIncludedInAverageOrAccumulation() {
+        return numberIncludedInAverageOrAccumulation;
+    }
+
+    public void setNumberIncludedInAverageOrAccumulation(int numberIncludedInAverageOrAccumulation) {
+        this.numberIncludedInAverageOrAccumulation = numberIncludedInAverageOrAccumulation;
+    }
+
+    public int getNumberOfMissingFromAverageOrAcummulation() {
+        return numberOfMissingFromAverageOrAcummulation;
+    }
+
+    public void setNumberOfMissingFromAverageOrAcummulation(int numberOfMissingFromAverageOrAcummulation) {
+        this.numberOfMissingFromAverageOrAcummulation = numberOfMissingFromAverageOrAcummulation;
+    }
+
+    public int getIdentificationOfSubCentre() {
+        return identificationOfSubCentre;
+    }
+
+    public void setIdentificationOfSubCentre(int identificationOfSubCentre) {
+        this.identificationOfSubCentre = identificationOfSubCentre;
+    }
+
+    public int getDecimalScaleFactor() {
+        return decimalScaleFactor;
+    }
+
+    public void setDecimalScaleFactor(int decimalScaleFactor) {
+        this.decimalScaleFactor = decimalScaleFactor;
     }
 
     public boolean isHasOnlyOneLevelOrLayerValue() {
@@ -213,46 +252,6 @@ public class Grib1PDS {
 
     public void setHasBMS(boolean hasBMS) {
         this.hasBMS = hasBMS;
-    }
-
-    public short getNumberIncludedInAverageOrAccumulation() {
-        return numberIncludedInAverageOrAccumulation;
-    }
-
-    public void setNumberIncludedInAverageOrAccumulation(short numberIncludedInAverageOrAccumulation) {
-        this.numberIncludedInAverageOrAccumulation = numberIncludedInAverageOrAccumulation;
-    }
-
-    public short getNumberOfMissingFromAverageOrAcummulation() {
-        return numberOfMissingFromAverageOrAcummulation;
-    }
-
-    public void setNumberOfMissingFromAverageOrAcummulation(short numberOfMissingFromAverageOrAcummulation) {
-        this.numberOfMissingFromAverageOrAcummulation = numberOfMissingFromAverageOrAcummulation;
-    }
-
-    public short getIdentificationOfSubCentre() {
-        return identificationOfSubCentre;
-    }
-
-    public void setIdentificationOfSubCentre(short identificationOfSubCentre) {
-        this.identificationOfSubCentre = identificationOfSubCentre;
-    }
-
-    public short getDecimalScaleFactor() {
-        return decimalScaleFactor;
-    }
-
-    public void setDecimalScaleFactor(short decimalScaleFactor) {
-        this.decimalScaleFactor = decimalScaleFactor;
-    }
-
-    public short getGridIdentification() {
-        return gridIdentification;
-    }
-
-    public void setGridIdentification(short gridIdentification) {
-        this.gridIdentification = gridIdentification;
     }
 
     @Override
@@ -285,6 +284,7 @@ public class Grib1PDS {
         if (numberOfMissingFromAverageOrAcummulation != grib1PDS.numberOfMissingFromAverageOrAcummulation) return false;
         if (identificationOfSubCentre != grib1PDS.identificationOfSubCentre) return false;
         if (decimalScaleFactor != grib1PDS.decimalScaleFactor) return false;
+        if (hasOnlyOneLevelOrLayerValue != grib1PDS.hasOnlyOneLevelOrLayerValue) return false;
         if (hasGDS != grib1PDS.hasGDS) return false;
         return hasBMS == grib1PDS.hasBMS;
 
@@ -293,28 +293,29 @@ public class Grib1PDS {
     @Override
     public int hashCode() {
         int result = pdsLenght;
-        result = 31 * result + (int) parameterTableVersionNumber;
-        result = 31 * result + (int) identificationOfCentre;
-        result = 31 * result + (int) generatingProcessIdNumber;
-        result = 31 * result + (int) gridIdentification;
-        result = 31 * result + (int) identicatorOfParameterAndUnit;
-        result = 31 * result + (int) identicatorOfTypeOfLevelOrLayer;
-        result = 31 * result + (int) levelOrLayerValue1;
-        result = 31 * result + (int) levelOrLayerValue2;
-        result = 31 * result + (int) issueTimeCentury;
-        result = 31 * result + (int) issueTimeYearOfCentury;
-        result = 31 * result + (int) issueTimeMonth;
-        result = 31 * result + (int) issueTimeDay;
-        result = 31 * result + (int) issueTimeHour;
-        result = 31 * result + (int) issueTimeMinute;
-        result = 31 * result + (int) forecastTimeUnit;
-        result = 31 * result + (int) forecastPeriodOfTime1;
-        result = 31 * result + (int) forecastPeriodOfTime2;
-        result = 31 * result + (int) timeRangeIndicator;
-        result = 31 * result + (int) numberIncludedInAverageOrAccumulation;
-        result = 31 * result + (int) numberOfMissingFromAverageOrAcummulation;
-        result = 31 * result + (int) identificationOfSubCentre;
-        result = 31 * result + (int) decimalScaleFactor;
+        result = 31 * result + parameterTableVersionNumber;
+        result = 31 * result + identificationOfCentre;
+        result = 31 * result + generatingProcessIdNumber;
+        result = 31 * result + gridIdentification;
+        result = 31 * result + identicatorOfParameterAndUnit;
+        result = 31 * result + identicatorOfTypeOfLevelOrLayer;
+        result = 31 * result + levelOrLayerValue1;
+        result = 31 * result + levelOrLayerValue2;
+        result = 31 * result + issueTimeCentury;
+        result = 31 * result + issueTimeYearOfCentury;
+        result = 31 * result + issueTimeMonth;
+        result = 31 * result + issueTimeDay;
+        result = 31 * result + issueTimeHour;
+        result = 31 * result + issueTimeMinute;
+        result = 31 * result + forecastTimeUnit;
+        result = 31 * result + forecastPeriodOfTime1;
+        result = 31 * result + forecastPeriodOfTime2;
+        result = 31 * result + timeRangeIndicator;
+        result = 31 * result + numberIncludedInAverageOrAccumulation;
+        result = 31 * result + numberOfMissingFromAverageOrAcummulation;
+        result = 31 * result + identificationOfSubCentre;
+        result = 31 * result + decimalScaleFactor;
+        result = 31 * result + (hasOnlyOneLevelOrLayerValue ? 1 : 0);
         result = 31 * result + (hasGDS ? 1 : 0);
         result = 31 * result + (hasBMS ? 1 : 0);
         return result;
@@ -346,6 +347,7 @@ public class Grib1PDS {
                 ", numberOfMissingFromAverageOrAcummulation=" + numberOfMissingFromAverageOrAcummulation +
                 ", identificationOfSubCentre=" + identificationOfSubCentre +
                 ", decimalScaleFactor=" + decimalScaleFactor +
+                ", hasOnlyOneLevelOrLayerValue=" + hasOnlyOneLevelOrLayerValue +
                 ", hasGDS=" + hasGDS +
                 ", hasBMS=" + hasBMS +
                 '}';

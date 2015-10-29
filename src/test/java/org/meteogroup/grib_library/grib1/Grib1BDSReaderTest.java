@@ -107,7 +107,7 @@ public class Grib1BDSReaderTest {
         bds.setBdsLength(4281416);
         bds.setBinaryScaleFactor((short) 9);
         bds.setReferenceValue(208.2547f);
-        bds.setBytesForDatum((short) 16);
+        bds.setBytesForDatum(16);
         bds.setGridPointData(true);
         bds.setSphericalHarmonicCoefficient(false);
         bds.setSimplePacking(true);
