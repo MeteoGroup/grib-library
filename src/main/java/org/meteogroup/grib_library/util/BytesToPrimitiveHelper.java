@@ -19,6 +19,7 @@ public class BytesToPrimitiveHelper {
     	else if (inputValue.length == 3){
             return bytes3ToInt(inputValue);
         }
+    	
         throw new BinaryNumberConversionException("Invalid length of input value in an attempt to convert byte array to int");
     }
     private static int bytes4ToInt(byte[] values) {
