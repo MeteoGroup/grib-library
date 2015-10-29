@@ -81,7 +81,7 @@ public class BytesToPrimitiveHelper {
         return (float) (sgn * Math.pow(16.0, exp - 6) * mant);
     }
 
-    public static long bytesToLong(byte[] inputValues) throws BinaryNumberConversionException {
+    public static long bytesToLong(byte... inputValues) throws BinaryNumberConversionException {
         if (inputValues.length == 8){
             return BytesToPrimitiveHelper.bytes8ToLong(inputValues);
         }

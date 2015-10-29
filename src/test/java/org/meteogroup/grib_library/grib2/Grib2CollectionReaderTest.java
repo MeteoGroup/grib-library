@@ -71,7 +71,7 @@ public class Grib2CollectionReaderTest {
         when(collectionReader.partReader.readPartOfFileChannel(any(FileChannel.class), anyInt(), anyInt())).thenReturn(SIMULATED_BYTE_ARRAY);
 
         when(collectionReader.recordReader.checkIfGribFileIsValidGrib2(any(byte[].class))).thenReturn(true);
-        when(collectionReader.recordReader.readRecordLength(any(byte[].class))).thenReturn(8);
+        when(collectionReader.recordReader.readRecordLength(any(byte[].class))).thenReturn(16l);
 
         List<Grib2Record> records = collectionReader.readAllRecords(SIMULATED_FILE_CHANNEL());
         assertThat(records.size()).isEqualTo(2);
