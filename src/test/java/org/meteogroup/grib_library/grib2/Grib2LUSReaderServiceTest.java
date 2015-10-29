@@ -40,7 +40,7 @@ public class Grib2LUSReaderServiceTest {
 		
 		
 		Grib2LUS lus = new Grib2LUS();
-		lus.setLusSectionLength(EXPECTEDLENGTH);
+		lus.setLusLength(EXPECTEDLENGTH);
 		return lus;
 	}
 	
@@ -70,6 +70,7 @@ public class Grib2LUSReaderServiceTest {
 		
 		Grib2LUS lus = lusReader.readLUSValues(testArray,headerOffSet);
 		assertThat(lus).isNotNull();
+		System.out.println();
 		assertThat(lus).isEqualTo(expectedResponseObject);
 	}
 	

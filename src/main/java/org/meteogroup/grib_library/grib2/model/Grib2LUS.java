@@ -11,5 +11,5 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class Grib2LUS {
 	
-	private int lusSectionLength;
+	private int lusLength;
 }
