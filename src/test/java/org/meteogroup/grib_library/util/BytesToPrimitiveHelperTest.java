@@ -5,6 +5,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 
 /**
  * Created by roijen on 21-Oct-15.
@@ -25,6 +26,7 @@ public class BytesToPrimitiveHelperTest {
         };
     }
 
+
     @DataProvider(name = "goodValueForShortWithLengthOf2Array")
     public static Object[][] goodValueForShortWithLengthOf2Array(){
         return new Object[][]{
@@ -39,6 +41,14 @@ public class BytesToPrimitiveHelperTest {
                 new Object[]{THREE_SIGNED_LAT_ARRAY_FOR_VALUE2, -89892}
         };
     }
+
+    @DataProvider(name = "goodValueForFloatTest")
+    public static Object[][] goodValueForFloatTest(){
+        return new Object[][]{
+                new Object[]{FOUR_BYTES_FOR_FLOAT, 208.255f},
+        };
+    }
+
 
     @Test
     public void testBitMask(){
@@ -63,6 +73,12 @@ public class BytesToPrimitiveHelperTest {
         assertThat(value).isEqualTo(expectedValue);
     }
 
+    @Test(dataProvider = "goodValueForIntegerWithLengthOf4Array")
+    public  void testArrayOfLength4ToInt(byte[] inputValues, int expectedValue) throws BinaryNumberConversionException {
+        int value = BytesToPrimitiveHelper.bytesToInteger(inputValues);
+        assertThat(value).isEqualTo(expectedValue);
+    }
+
     @Test(dataProvider = "goodValueForShortWithLengthOf2Array")
     public void testArrayOfLength2ToShort(byte[] inputValues, short expectedValue) throws BinaryNumberConversionException {
         short value = BytesToPrimitiveHelper.bytesToShort(inputValues);
@@ -75,6 +91,12 @@ public class BytesToPrimitiveHelperTest {
         assertThat(value).isEqualTo(expectedValue);
     }
 
+    @Test(dataProvider = "goodValueForFloatTest")
+    public void testFloatWithLengthOfFour(byte[] inputValues, float expectedValue) throws BinaryNumberConversionException {
+        float value = BytesToPrimitiveHelper.bytesToFloatAsIBM(inputValues);
+        assertThat(value).isCloseTo(value, within(0.001f));
+    }
+
     private static final byte[] FOUR_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,0,0,28};
     private static final byte[] THREE_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,0,28};
     private static final byte[] TWO_LENGTH_ARRAY_FOR_VALUE28 = new byte[]{0,28};
@@ -84,6 +106,6 @@ public class BytesToPrimitiveHelperTest {
     private static final byte[] THREE_SIGNED_LAT_ARRAY_FOR_VALUE1 = new byte[]{1,95,36};
     private static final byte[] THREE_SIGNED_LAT_ARRAY_FOR_VALUE2 = new byte[]{-127,95,36};
 
-
+    private static final byte[] FOUR_BYTES_FOR_FLOAT = new byte[]{0b0100_0010, 0b1101_0000 - 256, 0b0100_0001, 0b0011_0100};
 
 }

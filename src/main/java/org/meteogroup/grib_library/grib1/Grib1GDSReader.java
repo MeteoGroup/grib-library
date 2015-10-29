@@ -2,6 +2,7 @@ package org.meteogroup.grib_library.grib1;
 
 import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
 import org.meteogroup.grib_library.grib1.model.Grib1GDS;
+import org.meteogroup.grib_library.util.BitChecker;
 import org.meteogroup.grib_library.util.BytesToPrimitiveHelper;
 
 /**
@@ -12,7 +13,9 @@ public class Grib1GDSReader {
         return BytesToPrimitiveHelper.bytesToInteger(inputValues[0 + offSet], inputValues[1 + offSet], inputValues[2 + offSet]);
     }
 
-    public Grib1GDS readGDSValues(byte[] inputValues, int offSet, Grib1GDS objectToWriteInto) throws BinaryNumberConversionException {
+    public Grib1GDS readGDSValues(byte[] inputValues, int offSet) throws BinaryNumberConversionException {
+        Grib1GDS objectToWriteInto= new Grib1GDS();
+        objectToWriteInto.setGdsLenght(this.readGDSLength(inputValues, offSet));
         objectToWriteInto.setNumberOfVerticalsCoordinateParams((short) (inputValues[3 + offSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToWriteInto.setLocationOfVerticalCoordinateParams((short) (inputValues[4 + offSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToWriteInto.setRepresentationType((short) (inputValues[5 + offSet] & BytesToPrimitiveHelper.BYTE_MASK));
@@ -27,10 +30,11 @@ public class Grib1GDSReader {
         objectToWriteInto.setLongitudeIncrement(BytesToPrimitiveHelper.bytesToShort(inputValues[23 + offSet], inputValues[24 + offSet])/1000f);
         objectToWriteInto.setNumberOfCirclesBetweenPoleAndEquator(BytesToPrimitiveHelper.bytesToShort(inputValues[25 + offSet], inputValues[26 + offSet]));
 
-        //REWRITE TO PROPER BOOLEAN MAPPERS...
-        objectToWriteInto.setScanModeIIsPositive(this.readScanningModeIDirection(inputValues[27+offSet]));
-        objectToWriteInto.setScanModeJIsPositve(this.readScanningModeJDirection(inputValues[27+offSet]));
-        objectToWriteInto.setScanModeJIsConsectuve(this.readScanningModeIDirection(inputValues[27+offSet]));
+        //A positive I would come from a FALSE bit...
+        objectToWriteInto.setScanModeIIsPositive(! BitChecker.testBit(inputValues[27 + offSet],1));
+        //A positive J would come from a TRUE bit....
+        objectToWriteInto.setScanModeJIsPositve(BitChecker.testBit(inputValues[27 + offSet], 2));
+        objectToWriteInto.setScanModeJIsConsectuve(BitChecker.testBit(inputValues[27 + offSet], 3));
 
         objectToWriteInto.setNorth(this.getNorth(objectToWriteInto.getLat1(), objectToWriteInto.getLat2()));
         objectToWriteInto.setSouth(this.getSouth(objectToWriteInto.getLat1(), objectToWriteInto.getLat2()));
@@ -58,19 +62,5 @@ public class Grib1GDSReader {
         gds.setNumberOfPoints(numberOfPoints);
         gds.setPointsAlongLatitudeCircleForGaussian(nis);
         return gds;
-    }
-
-    public boolean readScanningModeIDirection(byte inputByte) {
-        //0 or false == i step is positive
-        return !(((inputByte >> 7) & 1) == 1);
-    }
-
-    public boolean readScanningModeJDirection(byte inputByte) {
-        //1 or true == j step is positive
-        return ((inputByte >> 6) & 1) == 1;
-    }
-
-    public boolean readScanningModeConsecutiveDirection(byte inputByte) {
-        return ((inputByte >> 5) & 1) == 1;
     }
 }

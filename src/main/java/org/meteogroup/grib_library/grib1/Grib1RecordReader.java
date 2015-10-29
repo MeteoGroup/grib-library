@@ -2,6 +2,7 @@ package org.meteogroup.grib_library.grib1;
 
 import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
 import org.meteogroup.grib_library.exception.GribReaderException;
+import org.meteogroup.grib_library.grib1.model.Grib1BDS;
 import org.meteogroup.grib_library.grib1.model.Grib1GDS;
 import org.meteogroup.grib_library.grib1.model.Grib1PDS;
 import org.meteogroup.grib_library.grib1.model.Grib1Record;
@@ -10,10 +11,17 @@ import org.meteogroup.grib_library.util.BytesToPrimitiveHelper;
 /**
  * Created by roijen on 19-Oct-15.
  */
-public class Grib1RecordReaderService {
+public class Grib1RecordReader {
 
     public Grib1PDSReader pdsReader;
     public Grib1GDSReader gdsReader;
+    public Grib1BDSReader bdsReader;
+
+    public Grib1RecordReader(){
+        this.pdsReader = new Grib1PDSReader();
+        this.gdsReader = new Grib1GDSReader();
+        this.bdsReader = new Grib1BDSReader();
+    }
 
     public boolean checkIfGribFileIsValidGrib1(byte[] bufferValues) {
         String headerString = new String();
@@ -21,10 +29,7 @@ public class Grib1RecordReaderService {
             headerString = headerString + (char) bufferValues[x];
         }
         short versionNumber = bufferValues[7];
-        if (headerString.equals("GRIB") && versionNumber == 1) {
-            return true;
-        }
-        return false;
+        return (headerString.equals("GRIB") && versionNumber == 1);
     }
 
     public int readRecordLength(byte[] bufferValues) throws GribReaderException {
@@ -36,14 +41,15 @@ public class Grib1RecordReaderService {
     }
 
     public Grib1Record readCompleteRecord(Grib1Record grib1Record, byte[] bufferValues, int headerOffSet) throws BinaryNumberConversionException {
-        Grib1PDS pds = new Grib1PDS();
-        pds.setPdsLenght(pdsReader.readPDSLength(bufferValues, headerOffSet));
-        pds = pdsReader.readPDSValues(bufferValues, headerOffSet, pds);
+        Grib1PDS pds = pdsReader.readPDSValues(bufferValues, headerOffSet);
         grib1Record.setPds(pds);
 
-        Grib1GDS gds = new Grib1GDS();
-        gds.setGdsLenght(gdsReader.readGDSLength(bufferValues,headerOffSet+pds.getPdsLenght()));
-        gds = gdsReader.readGDSValues(bufferValues, headerOffSet, gds);
+        Grib1GDS gds = gdsReader.readGDSValues(bufferValues, headerOffSet+pds.getPdsLenght());
+        grib1Record.setGds(gds);
+
+        Grib1BDS bds = bdsReader.readBDSValues(bufferValues,headerOffSet+pds.getPdsLenght()+gds.getGdsLenght());
+        grib1Record.setBds(bds);
         return grib1Record;
     }
+
 }

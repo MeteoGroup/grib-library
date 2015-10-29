@@ -2,6 +2,7 @@ package org.meteogroup.grib_library.grib1;
 
 import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
 import org.meteogroup.grib_library.exception.GribReaderException;
+import org.meteogroup.grib_library.grib1.model.Grib1BDS;
 import org.meteogroup.grib_library.grib1.model.Grib1GDS;
 import org.meteogroup.grib_library.grib1.model.Grib1PDS;
 import org.meteogroup.grib_library.grib1.model.Grib1Record;
@@ -17,9 +18,9 @@ import static org.mockito.Mockito.*;
 /**
  * Created by roijen on 19-Oct-15.
  */
-public class Grib1RecordReaderServiceTest {
+public class Grib1RecordReaderTest {
 
-    private Grib1RecordReaderService reader;
+    private Grib1RecordReader reader;
 
     @DataProvider(name = "goodHeader")
     public static Object[][] goodHeader(){
@@ -45,7 +46,7 @@ public class Grib1RecordReaderServiceTest {
 
     @BeforeMethod
     public void setUp(){
-        reader = new Grib1RecordReaderService();
+        reader = new Grib1RecordReader();
     }
 
     @Test(dataProvider = "goodHeader")
@@ -76,29 +77,51 @@ public class Grib1RecordReaderServiceTest {
     public void testReadOutCoordination() throws BinaryNumberConversionException {
         reader.pdsReader = mock(Grib1PDSReader.class);
         reader.gdsReader = mock(Grib1GDSReader.class);
+        reader.bdsReader = mock(Grib1BDSReader.class);
 
-        when(reader.pdsReader.readPDSLength(any(byte[].class),anyInt())).thenReturn(SIMULATED_PDS_LENGTH);
-        when(reader.pdsReader.readPDSValues(any(byte[].class), anyInt(), any(Grib1PDS.class))).thenReturn(new Grib1PDS());
+        when(reader.pdsReader.readPDSValues(any(byte[].class), anyInt())).thenReturn(LENGTH_ONLY_PDS());
 
-        when(reader.gdsReader.readGDSLength(any(byte[].class), anyInt())).thenReturn(SIMULATED_GDS_LENGTH);
+        when(reader.gdsReader.readGDSValues(any(byte[].class), anyInt())).thenReturn(LENGTH_ONLY_GDS());
+
+        when(reader.gdsReader.readGDSValues(any(byte[].class), anyInt())).thenReturn(new Grib1GDS());
 
         Grib1Record record = reader.readCompleteRecord(new Grib1Record(),SIMULATED_BYTE_ARRAY, SIMULATED_OFFSET);
 
         assertThat(record).isNotNull();
 
-        verify(reader.pdsReader, times(1)).readPDSLength(any(byte[].class),anyInt());
-        verify(reader.pdsReader, times(1)).readPDSValues(any(byte[].class), anyInt(), any(Grib1PDS.class));
+        verify(reader.pdsReader, times(1)).readPDSValues(any(byte[].class), anyInt());
 
         assertThat(record.getPds()).isNotNull();
 
-        verify(reader.gdsReader, times(1)).readGDSLength(any(byte[].class), anyInt());
-        verify(reader.gdsReader, times(1)).readGDSValues(any(byte[].class), anyInt(), any(Grib1GDS.class));
+        verify(reader.gdsReader, times(1)).readGDSValues(any(byte[].class), anyInt());
 
-        assertThat(record.getPds()).isNotNull();
+        assertThat(record.getGds()).isNotNull();
+
+        verify(reader.bdsReader, times(1)).readBDSValues(any(byte[].class), anyInt());
+
+        assertThat(record.getGds()).isNotNull();
 
 
     }
 
+
+    private static final Grib1PDS LENGTH_ONLY_PDS(){
+        Grib1PDS pds = new Grib1PDS();
+        pds.setPdsLenght(8);
+        return pds;
+    }
+
+    private static final Grib1GDS LENGTH_ONLY_GDS(){
+        Grib1GDS gds = new Grib1GDS();
+        gds.setGdsLenght(8);
+        return gds;
+    }
+
+    private static final Grib1BDS LENGTH_ONLY_BDS(){
+        Grib1BDS bds = new Grib1BDS();
+        bds.setBdsLength(8);
+        return bds;
+    }
 
     private static final int SIMULATED_OFFSET = 8;
     private static final int SIMULATED_PDS_LENGTH = 28;

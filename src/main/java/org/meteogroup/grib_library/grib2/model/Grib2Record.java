@@ -1,5 +1,6 @@
 package org.meteogroup.grib_library.grib2.model;
 
+<<<<<<< HEAD
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,3 +31,21 @@ public class Grib2Record {
     
 	private int length = 0;
 }
+=======
+/**
+ * Created by roijen on 28-Oct-15.
+ */
+public class Grib2Record {
+
+    private int length;
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+}
+>>>>>>> 29b5f7dc06cd6bb6dca6881be5f9937d1c809abc

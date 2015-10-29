@@ -9,24 +9,25 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by roijen on 20-Oct-15.
  */
-public class Grib1CollectionReaderService {
+public class Grib1CollectionReader {
 
-    public Grib1RecordReaderService recordReader;
-    public FileChannelPartReader partReader;
+    Grib1RecordReader recordReader;
+    FileChannelPartReader partReader;
 
-    public long gribRecordOffset = -1;
-    public long fileLength = -1;
-    public FileChannel fc = null;
+    long gribRecordOffset = -1;
+    long fileLength = -1;
+    FileChannel fc = null;
 
     private static final int HEADER_LENGTH = 8;
 
-    public ArrayList<Grib1Record> readFileFromFileName(String url) throws IOException {
+    public List<Grib1Record> readFileFromFileName(String url) throws IOException, BinaryNumberConversionException, GribReaderException {
         this.fc = this.getFileChannelFromURL(url);
-        return new ArrayList<Grib1Record>();
+        return this.readAllRecords(fc);
     }
 
     public FileChannel getFileChannelFromURL(String url) throws IOException {
@@ -44,7 +45,7 @@ public class Grib1CollectionReaderService {
         return fileLength;
     }
 
-    public ArrayList<Grib1Record> readAllRecords(FileChannel fileChannel) throws IOException, GribReaderException, BinaryNumberConversionException {
+    public List<Grib1Record> readAllRecords(FileChannel fileChannel) throws IOException, GribReaderException, BinaryNumberConversionException {
         ArrayList<Grib1Record> response = new ArrayList<Grib1Record>();
         while (gribRecordOffset < fileLength){
             byte[] recordHeader = partReader.readPartOfFileChannel(fileChannel, gribRecordOffset, HEADER_LENGTH);

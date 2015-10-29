@@ -2,6 +2,7 @@ package org.meteogroup.grib_library.grib1;
 
 import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
 import org.meteogroup.grib_library.grib1.model.Grib1PDS;
+import org.meteogroup.grib_library.util.BitChecker;
 import org.meteogroup.grib_library.util.BytesToPrimitiveHelper;
 
 import java.util.ArrayList;
@@ -17,14 +18,16 @@ public class Grib1PDSReader {
         return BytesToPrimitiveHelper.bytesToInteger(values[0 + headerOffSet], values[1 + headerOffSet], values[2 + headerOffSet]);
     }
 
-    public Grib1PDS readPDSValues(byte[] values, int headerOffSet, Grib1PDS objectToReadInto) throws BinaryNumberConversionException {
-        objectToReadInto.setParameterTableVerionNumber((short)(values[3+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
+    public Grib1PDS readPDSValues(byte[] values, int headerOffSet) throws BinaryNumberConversionException {
+        Grib1PDS objectToReadInto = new Grib1PDS();
+        objectToReadInto.setPdsLenght(this.readPDSLength(values,headerOffSet));
+        objectToReadInto.setParameterTableVersionNumber((short) (values[3 + headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToReadInto.setIdentificationOfCentre((short)(values[4+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToReadInto.setGeneratingProcessIdNumber((short)(values[5+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToReadInto.setGridIdentification((short)(values[6+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
 
-        objectToReadInto.setHasGDS(this.readGds(values[7+headerOffSet]));
-        objectToReadInto.setHasBMS(this.readBms(values[7+headerOffSet]));
+        objectToReadInto.setHasGDS(BitChecker.testBit(values[7+headerOffSet], 1));
+        objectToReadInto.setHasBMS(BitChecker.testBit(values[7+headerOffSet], 2));
 
         objectToReadInto.setIdenticatorOfParameterAndUnit((short)(values[8+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToReadInto.setIdenticatorOfTypeOfLevelOrLayer((short)(values[9+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
@@ -58,14 +61,5 @@ public class Grib1PDSReader {
         objectToReadInto.setDecimalScaleFactor(BytesToPrimitiveHelper.bytesToShort(values[26+headerOffSet], values[27+headerOffSet]));
 
         return objectToReadInto;
-    }
-
-    public boolean readGds(byte inputByte) {
-        return ((inputByte >> 7) & 1) == 1;
-
-    }
-
-    public boolean readBms(byte inputByte) {
-        return ((inputByte >> 6) & 1) == 1;
     }
 }

@@ -7,7 +7,7 @@ public class Grib1PDS {
 
     private int pdsLenght;
 
-    private short parameterTableVerionNumber;
+    private short parameterTableVersionNumber;
     private short identificationOfCentre;
     private short generatingProcessIdNumber;
     private short gridIdentification;
@@ -55,12 +55,12 @@ public class Grib1PDS {
         this.pdsLenght = pdsLenght;
     }
 
-    public short getParameterTableVerionNumber() {
-        return parameterTableVerionNumber;
+    public short getParameterTableVersionNumber() {
+        return parameterTableVersionNumber;
     }
 
-    public void setParameterTableVerionNumber(short parameterTableVerionNumber) {
-        this.parameterTableVerionNumber = parameterTableVerionNumber;
+    public void setParameterTableVersionNumber(short parameterTableVersionNumber) {
+        this.parameterTableVersionNumber = parameterTableVersionNumber;
     }
 
     public short getIdentificationOfCentre() {
@@ -263,7 +263,7 @@ public class Grib1PDS {
         Grib1PDS grib1PDS = (Grib1PDS) o;
 
         if (pdsLenght != grib1PDS.pdsLenght) return false;
-        if (parameterTableVerionNumber != grib1PDS.parameterTableVerionNumber) return false;
+        if (parameterTableVersionNumber != grib1PDS.parameterTableVersionNumber) return false;
         if (identificationOfCentre != grib1PDS.identificationOfCentre) return false;
         if (generatingProcessIdNumber != grib1PDS.generatingProcessIdNumber) return false;
         if (gridIdentification != grib1PDS.gridIdentification) return false;
@@ -293,7 +293,7 @@ public class Grib1PDS {
     @Override
     public int hashCode() {
         int result = pdsLenght;
-        result = 31 * result + (int) parameterTableVerionNumber;
+        result = 31 * result + (int) parameterTableVersionNumber;
         result = 31 * result + (int) identificationOfCentre;
         result = 31 * result + (int) generatingProcessIdNumber;
         result = 31 * result + (int) gridIdentification;
@@ -324,7 +324,7 @@ public class Grib1PDS {
     public String toString() {
         return "Grib1PDS{" +
                 "pdsLenght=" + pdsLenght +
-                ", parameterTableVerionNumber=" + parameterTableVerionNumber +
+                ", parameterTableVersionNumber=" + parameterTableVersionNumber +
                 ", identificationOfCentre=" + identificationOfCentre +
                 ", generatingProcessIdNumber=" + generatingProcessIdNumber +
                 ", gridIdentification=" + gridIdentification +
