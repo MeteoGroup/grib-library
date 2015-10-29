@@ -73,11 +73,6 @@ public class BytesToPrimitiveHelperTest {
         assertThat(value).isEqualTo(expectedValue);
     }
 
-    @Test(dataProvider = "goodValueForIntegerWithLengthOf4Array")
-    public  void testArrayOfLength4ToInt(byte[] inputValues, int expectedValue) throws BinaryNumberConversionException {
-        int value = BytesToPrimitiveHelper.bytesToInteger(inputValues);
-        assertThat(value).isEqualTo(expectedValue);
-    }
 
     @Test(dataProvider = "goodValueForShortWithLengthOf2Array")
     public void testArrayOfLength2ToShort(byte[] inputValues, short expectedValue) throws BinaryNumberConversionException {
