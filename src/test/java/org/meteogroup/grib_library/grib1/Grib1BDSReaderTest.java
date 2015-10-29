@@ -86,8 +86,8 @@ public class Grib1BDSReaderTest {
     private static final byte[] GOOD_BDS_ARRAY() throws URISyntaxException, IOException {
         String filename = "/grib1test/samplefiles/ec-grib1-example-binary-data-section.grb";
 
-        String name = Grib1GDSReader.class.getResource(filename).toString();
-        File f = new File(Grib1GDSReader.class.getResource(filename).toURI());
+        String name = Grib1BDSReader.class.getResource(filename).toString();
+        File f = new File(Grib1BDSReader.class.getResource(filename).toURI());
         if (!f.exists()) {
             throw new IOException("file does not exist at " + name);
         }

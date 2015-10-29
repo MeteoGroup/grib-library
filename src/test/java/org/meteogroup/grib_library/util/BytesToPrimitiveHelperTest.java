@@ -49,6 +49,13 @@ public class BytesToPrimitiveHelperTest {
         };
     }
 
+    @DataProvider(name = "goodValueForLongTest")
+    public static Object[][] goodValueForLongTest(){
+        return new Object[][]{
+                new Object[]{EIGHT_BYTES_FOR_LONG, 8l},
+                new Object[]{EIGTH_BYTES_FOR_LONG_COMPLEX, 8l}
+        };
+    }
 
     @Test
     public void testBitMask(){
@@ -92,6 +99,12 @@ public class BytesToPrimitiveHelperTest {
         assertThat(value).isCloseTo(value, within(0.001f));
     }
 
+    @Test(dataProvider = "goodValueForLongTest")
+    public void testLongCalculation(byte[] inputValues, float expectedValue){
+        long value = BytesToPrimitiveHelper.bytesToLong(inputValues);
+        assertThat(value).isEqualTo(expectedValue);
+    }
+
     private static final byte[] FOUR_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,0,0,28};
     private static final byte[] THREE_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,0,28};
     private static final byte[] TWO_LENGTH_ARRAY_FOR_VALUE28 = new byte[]{0,28};
@@ -102,5 +115,8 @@ public class BytesToPrimitiveHelperTest {
     private static final byte[] THREE_SIGNED_LAT_ARRAY_FOR_VALUE2 = new byte[]{-127,95,36};
 
     private static final byte[] FOUR_BYTES_FOR_FLOAT = new byte[]{0b0100_0010, 0b1101_0000 - 256, 0b0100_0001, 0b0011_0100};
+
+    private static final byte[] EIGHT_BYTES_FOR_LONG = new byte[]{0,0,0,0,0,0,0,8};
+    private static final byte[] EIGTH_BYTES_FOR_LONG_COMPLEX = new byte[]{0,5,0,1,7,-33,9,9};
 
 }

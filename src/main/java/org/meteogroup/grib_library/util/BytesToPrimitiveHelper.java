@@ -81,4 +81,19 @@ public class BytesToPrimitiveHelper {
         return (float) (sgn * Math.pow(16.0, exp - 6) * mant);
     }
 
+    public static long bytesToLong(byte[] inputValues) throws BinaryNumberConversionException {
+        if (inputValues.length == 8){
+            return BytesToPrimitiveHelper.bytes8ToLong(inputValues);
+        }
+        throw new BinaryNumberConversionException("Invalid length of input value in an attempt to convert byte array to int");
+    }
+
+    private static long bytes8ToLong(byte[] inputValues) {
+        long value = 0;
+        for (int i = 0; i < inputValues.length; i++)
+        {
+            value = (value << 8) + (inputValues[i] & 0xff);
+        }
+        return value;
+    }
 }
