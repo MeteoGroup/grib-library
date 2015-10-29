@@ -1,5 +1,9 @@
 package org.meteogroup.grib_library.grib2;
 
+import java.io.IOException;
+
+import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
+import org.meteogroup.grib_library.grib2.model.Grib2IDS;
 import org.meteogroup.grib_library.grib2.model.Grib2Record;
 
 /**
@@ -7,6 +11,8 @@ import org.meteogroup.grib_library.grib2.model.Grib2Record;
  */
 public class Grib2RecordReader {
 
+	private Grib2IDSReader idsReader;
+	
     public boolean checkIfGribFileIsValidGrib2(byte[] recordHeader) {
         return false;
     }
@@ -15,7 +21,9 @@ public class Grib2RecordReader {
         return 0;
     }
 
-    public Grib2Record readCompleteRecord(Grib2Record record, byte[] recordAsByteArray, int headerLength) {
-        return null;
+    public Grib2Record readCompleteRecord(Grib2Record record, byte[] recordAsByteArray, int headerLength) throws BinaryNumberConversionException, IOException {
+        Grib2IDS ids = idsReader.readGIDValues(recordAsByteArray, headerLength);
+        record.setIds(ids);
+        return record;
     }
 }

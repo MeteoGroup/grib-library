@@ -1,5 +1,6 @@
 package org.meteogroup.grib_library.grib2;
 
+import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
 import org.meteogroup.grib_library.exception.GribReaderException;
 import org.meteogroup.grib_library.grib2.model.Grib2Record;
 import org.meteogroup.grib_library.util.FileChannelPartReader;
@@ -37,7 +38,7 @@ public class Grib2CollectionReader {
         return fileLength;
     }
 
-    public List<Grib2Record> readAllRecords(FileChannel fileChannel) throws IOException, GribReaderException {
+    public List<Grib2Record> readAllRecords(FileChannel fileChannel) throws IOException, GribReaderException, BinaryNumberConversionException {
         ArrayList<Grib2Record> response = new ArrayList<Grib2Record>();
         while (gribRecordOffset < fileLength){
             byte[] recordHeader = partReader.readPartOfFileChannel(fileChannel, gribRecordOffset, HEADER_LENGTH);

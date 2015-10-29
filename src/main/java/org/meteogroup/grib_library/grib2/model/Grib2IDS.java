@@ -12,7 +12,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class Grib2ID {
+public class Grib2IDS {
 
     private int length;
     public static final short SIGNIFICANCE_REFERENCETIME_FORECAST_START = 1;

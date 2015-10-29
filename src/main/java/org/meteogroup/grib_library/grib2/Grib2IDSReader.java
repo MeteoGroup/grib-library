@@ -3,7 +3,7 @@ package org.meteogroup.grib_library.grib2;
 import java.io.IOException;
 
 import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
-import org.meteogroup.grib_library.grib2.model.Grib2ID;
+import org.meteogroup.grib_library.grib2.model.Grib2IDS;
 import org.meteogroup.grib_library.util.BytesToPrimitiveHelper;
 
 
@@ -12,7 +12,7 @@ import org.meteogroup.grib_library.util.BytesToPrimitiveHelper;
  * @author Pauw
  * Reads out the Grib2 Identification section 
  */
-public class Grib2GIDReader extends Grib2SectionReader{
+public class Grib2IDSReader extends Grib2SectionReader{
 
 	private static final int SECTIONID = 1;
 	
@@ -42,8 +42,8 @@ public class Grib2GIDReader extends Grib2SectionReader{
 	 * @throws BinaryNumberConversionException
 	 * @throws IOException
 	 */
-	public Grib2ID readGIDValues(byte[] gidsValues, int headerOffSet) throws BinaryNumberConversionException, IOException {
-		Grib2ID gid = new Grib2ID();
+	public Grib2IDS readGIDValues(byte[] gidsValues, int headerOffSet) throws BinaryNumberConversionException, IOException {
+		Grib2IDS gid = new Grib2IDS();
 		gid.setLength(readSectionLength(gidsValues, 0));
        
         if (readSectionNumber(gidsValues,headerOffSet)!=SECTIONID){
