@@ -12,19 +12,19 @@ import java.nio.channels.FileChannel;
 import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
 import org.meteogroup.grib_library.grib1.Grib1GDSReader;
 import org.meteogroup.grib_library.grib1.model.Grib1GDS;
-import org.meteogroup.grib_library.grib2.model.Grib2ID;
+import org.meteogroup.grib_library.grib2.model.Grib2IDS;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class Grib2GIDReaderServiceTest {
+public class Grib2IDSReaderServiceTest {
 
 	
-	Grib2GIDReader gidReader;
+	Grib2IDSReader idsReader;
 
 	@BeforeMethod
 	public void prepare() throws Exception {
-		gidReader = new Grib2GIDReader();
+		idsReader = new Grib2IDSReader();
 	}
 
 	@DataProvider(name = "goodGIDDataSet")
@@ -34,8 +34,8 @@ public class Grib2GIDReaderServiceTest {
 		};
 	}
 	
-	private static final Grib2ID GOOD_GID_OBJECT(){
-		Grib2ID gid = new Grib2ID();
+	private static final Grib2IDS GOOD_GID_OBJECT(){
+		Grib2IDS gid = new Grib2IDS();
 		gid.setLength(21);
 		gid.setCentreId(98); //ecmwf
 		gid.setYear(2015);
@@ -50,11 +50,11 @@ public class Grib2GIDReaderServiceTest {
 		
 		gid.setLocalTableVersionNumber((short)0);
 		// @todo gid.setProductionStatus(productionStatus);
-		gid.setSignificanceOfReferenceTime(Grib2ID.SIGNIFICANCE_REFERENCETIME_FORECAST_START);
+		gid.setSignificanceOfReferenceTime(Grib2IDS.SIGNIFICANCE_REFERENCETIME_FORECAST_START);
 		
 		gid.setSubCenterId(0);
 
-		gid.setTypeOfData(Grib2ID.TYPE_OF_DATA_FORECAST);
+		gid.setTypeOfData(Grib2IDS.TYPE_OF_DATA_FORECAST);
 		
 		
 		return gid;
@@ -63,8 +63,8 @@ public class Grib2GIDReaderServiceTest {
 	private static final byte[] GOOD_GID_ARRAY() throws URISyntaxException, IOException {
 		String filename = "/grib2test/samplefiles/ec-grib2-example-identification-section.grb";
 
-		String name = Grib2GIDReader.class.getResource(filename).toString();
-		File f = new File(Grib2GIDReader.class.getResource(filename).toURI());
+		String name = Grib2IDSReader.class.getResource(filename).toString();
+		File f = new File(Grib2IDSReader.class.getResource(filename).toURI());
 		if (!f.exists()) {
 			throw new IOException("file does not exist at " + name);
 		}
@@ -81,11 +81,11 @@ public class Grib2GIDReaderServiceTest {
 	};
 	
 	@Test(dataProvider = "goodGIDDataSet")
-	public void testReadGID(byte[] testArray, int headerOffSet, int expectedValue, Grib2ID expectedResponseObject) throws BinaryNumberConversionException, IOException {
-		int length = gidReader.readSectionLength(testArray, headerOffSet);
+	public void testReadGID(byte[] testArray, int headerOffSet, int expectedValue, Grib2IDS expectedResponseObject) throws BinaryNumberConversionException, IOException {
+		int length = idsReader.readSectionLength(testArray, headerOffSet);
 		assertThat(length).isEqualTo(expectedValue);
 		
-		Grib2ID gid = gidReader.readGIDValues(testArray,headerOffSet);
+		Grib2IDS gid = idsReader.readGIDValues(testArray,headerOffSet);
 		assertThat(gid).isNotNull();
 		System.out.println("==============gid"+gid+ gid.equals(gid));
 		assertThat(gid).isEqualTo(expectedResponseObject);

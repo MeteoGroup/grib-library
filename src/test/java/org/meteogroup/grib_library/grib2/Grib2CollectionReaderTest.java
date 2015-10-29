@@ -65,7 +65,7 @@ public class Grib2CollectionReaderTest {
 
         collectionReader.partReader = mock(FileChannelPartReader.class);
         collectionReader.recordReader = mock(Grib2RecordReader.class);
-        collectionReader.fileLength = 16;
+        collectionReader.fileLength = 32;
         collectionReader.gribRecordOffset = 0;
 
         when(collectionReader.partReader.readPartOfFileChannel(any(FileChannel.class), anyInt(), anyInt())).thenReturn(SIMULATED_BYTE_ARRAY);
