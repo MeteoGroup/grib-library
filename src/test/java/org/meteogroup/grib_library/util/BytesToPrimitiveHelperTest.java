@@ -53,7 +53,7 @@ public class BytesToPrimitiveHelperTest {
     public static Object[][] goodValueForLongTest(){
         return new Object[][]{
                 new Object[]{EIGHT_BYTES_FOR_LONG, 8l},
-                new Object[]{EIGTH_BYTES_FOR_LONG_COMPLEX, 8l}
+                new Object[]{EIGTH_BYTES_FOR_LONG_COMPLEX, 1407379310577929l}
         };
     }
 
@@ -96,11 +96,11 @@ public class BytesToPrimitiveHelperTest {
     @Test(dataProvider = "goodValueForFloatTest")
     public void testFloatWithLengthOfFour(byte[] inputValues, float expectedValue) throws BinaryNumberConversionException {
         float value = BytesToPrimitiveHelper.bytesToFloatAsIBM(inputValues);
-        assertThat(value).isCloseTo(value, within(0.001f));
+        assertThat(value).isCloseTo(expectedValue, within(0.001f));
     }
 
     @Test(dataProvider = "goodValueForLongTest")
-    public void testLongCalculation(byte[] inputValues, float expectedValue){
+    public void testLongCalculation(byte[] inputValues, long expectedValue) throws BinaryNumberConversionException {
         long value = BytesToPrimitiveHelper.bytesToLong(inputValues);
         assertThat(value).isEqualTo(expectedValue);
     }
