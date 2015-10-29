@@ -30,7 +30,8 @@ public class BytesToPrimitiveHelperTest {
     @DataProvider(name = "goodValueForShortWithLengthOf2Array")
     public static Object[][] goodValueForShortWithLengthOf2Array(){
         return new Object[][]{
-                new Object[]{TWO_LENGTH_ARRAY_FOR_VALUE28, (short) 28},
+                new Object[]{TWO_LENGTH_ARRAY_FOR_VALUE_28, (short) 28},
+                new Object[]{TWO_LENGTH_ARRAY_FOR_VALUE_50002, (short) 50002},
         };
     }
 
@@ -107,7 +108,8 @@ public class BytesToPrimitiveHelperTest {
 
     private static final byte[] FOUR_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,0,0,28};
     private static final byte[] THREE_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,0,28};
-    private static final byte[] TWO_LENGTH_ARRAY_FOR_VALUE28 = new byte[]{0,28};
+    private static final byte[] TWO_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,28};
+    private static final byte[] TWO_LENGTH_ARRAY_FOR_VALUE_50002 = new byte[]{-30,61};
 
     private static final int BYTE_MASK = 0xff;
 

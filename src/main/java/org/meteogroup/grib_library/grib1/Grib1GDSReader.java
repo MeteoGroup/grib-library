@@ -20,15 +20,15 @@ public class Grib1GDSReader {
         objectToWriteInto.setLocationOfVerticalCoordinateParams((short) (inputValues[4 + offSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToWriteInto.setRepresentationType((short) (inputValues[5 + offSet] & BytesToPrimitiveHelper.BYTE_MASK));
         //InputValues 5 gives the grid. For now Gaussian only. Simply proceeding.
-        objectToWriteInto.setPointsAlongLatitudeCircle(BytesToPrimitiveHelper.bytesToShort(inputValues[6 + offSet], inputValues[7 + offSet]));
-        objectToWriteInto.setPointsAlongLongitudeMeridian(BytesToPrimitiveHelper.bytesToShort(inputValues[8 + offSet], inputValues[9 + offSet]));
+        objectToWriteInto.setPointsAlongLatitudeCircle(BytesToPrimitiveHelper.bytesToInteger(inputValues[6 + offSet], inputValues[7 + offSet]));
+        objectToWriteInto.setPointsAlongLongitudeMeridian(BytesToPrimitiveHelper.bytesToInteger(inputValues[8 + offSet], inputValues[9 + offSet]));
         objectToWriteInto.setLat1(BytesToPrimitiveHelper.signedBytesToInt(inputValues[10 + offSet], inputValues[11 + offSet], inputValues[12 + offSet]));
         objectToWriteInto.setLon1(BytesToPrimitiveHelper.signedBytesToInt(inputValues[13 + offSet], inputValues[14 + offSet], inputValues[15 + offSet]));
-        objectToWriteInto.setResolution((short) (inputValues[16 + offSet] & BytesToPrimitiveHelper.BYTE_MASK));
+        objectToWriteInto.setResolution((inputValues[16 + offSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToWriteInto.setLat2(BytesToPrimitiveHelper.signedBytesToInt(inputValues[17 + offSet], inputValues[18 + offSet], inputValues[19 + offSet]));
         objectToWriteInto.setLon2(BytesToPrimitiveHelper.signedBytesToInt(inputValues[20 + offSet], inputValues[21 + offSet], inputValues[22 + offSet]));
-        objectToWriteInto.setLongitudeIncrement(BytesToPrimitiveHelper.bytesToShort(inputValues[23 + offSet], inputValues[24 + offSet])/1000f);
-        objectToWriteInto.setNumberOfCirclesBetweenPoleAndEquator(BytesToPrimitiveHelper.bytesToShort(inputValues[25 + offSet], inputValues[26 + offSet]));
+        objectToWriteInto.setLongitudeIncrement(BytesToPrimitiveHelper.bytesToInteger(inputValues[23 + offSet], inputValues[24 + offSet])/1000f);
+        objectToWriteInto.setNumberOfCirclesBetweenPoleAndEquator(BytesToPrimitiveHelper.bytesToInteger(inputValues[25 + offSet], inputValues[26 + offSet]));
 
         //A positive I would come from a FALSE bit...
         objectToWriteInto.setScanModeIIsPositive(! BitChecker.testBit(inputValues[27 + offSet],1));
@@ -51,12 +51,12 @@ public class Grib1GDSReader {
     }
 
     public Grib1GDS generateNisAndNumberOfPoints(Grib1GDS gds, byte[] inputValues, int offSet) throws BinaryNumberConversionException {
-        short[] nis = new short[gds.getPointsAlongLongitudeMeridian()];
+        int[] nis = new int[gds.getPointsAlongLongitudeMeridian()];
         int numberOfPoints = 0;
         for (int x = 0; x < gds.getPointsAlongLongitudeMeridian() ; x++){
             //Position -1 (for array) +x*2 (for pos)
             int position = offSet + (gds.getLocationOfVerticalCoordinateParams()+(x*2)-1);
-            nis[x] = BytesToPrimitiveHelper.bytesToShort(inputValues[position], inputValues[position+1]);
+            nis[x] = BytesToPrimitiveHelper.bytesToInteger(inputValues[position], inputValues[position+1]);
             numberOfPoints += nis[x];
         }
         gds.setNumberOfPoints(numberOfPoints);

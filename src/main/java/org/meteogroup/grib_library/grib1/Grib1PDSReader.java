@@ -34,7 +34,7 @@ public class Grib1PDSReader {
 
         if(HEIGHT_LAYERS_WITH_DOUBLE_OCTET_VALUES.contains(objectToReadInto.getIdenticatorOfTypeOfLevelOrLayer())){
             objectToReadInto.setHasOnlyOneLevelOrLayerValue(true);
-            objectToReadInto.setLevelOrLayerValue1(BytesToPrimitiveHelper.bytesToShort(values[10+headerOffSet], values[11+headerOffSet]));
+            objectToReadInto.setLevelOrLayerValue1(BytesToPrimitiveHelper.bytesToInteger(values[10+headerOffSet], values[11+headerOffSet]));
         }
         else{
             objectToReadInto.setHasOnlyOneLevelOrLayerValue(false);
@@ -52,13 +52,13 @@ public class Grib1PDSReader {
         objectToReadInto.setForecastPeriodOfTime2((short)(values[19+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToReadInto.setTimeRangeIndicator((short)(values[20+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
 
-        objectToReadInto.setNumberIncludedInAverageOrAccumulation(BytesToPrimitiveHelper.bytesToShort(values[21+headerOffSet], values[22+headerOffSet]));
+        objectToReadInto.setNumberIncludedInAverageOrAccumulation(BytesToPrimitiveHelper.bytesToInteger(values[21+headerOffSet], values[22+headerOffSet]));
 
         objectToReadInto.setNumberOfMissingFromAverageOrAcummulation((short) (values[23 + headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToReadInto.setIssueTimeCentury((short)(values[24+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToReadInto.setIdentificationOfSubCentre((short)(values[25+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
 
-        objectToReadInto.setDecimalScaleFactor(BytesToPrimitiveHelper.bytesToShort(values[26+headerOffSet], values[27+headerOffSet]));
+        objectToReadInto.setDecimalScaleFactor(BytesToPrimitiveHelper.bytesToInteger(values[26+headerOffSet], values[27+headerOffSet]));
 
         return objectToReadInto;
     }
