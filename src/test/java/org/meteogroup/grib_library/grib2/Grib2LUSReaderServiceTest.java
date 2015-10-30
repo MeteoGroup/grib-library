@@ -70,7 +70,6 @@ public class Grib2LUSReaderServiceTest {
 		
 		Grib2LUS lus = lusReader.readLUSValues(testArray,headerOffSet);
 		assertThat(lus).isNotNull();
-		System.out.println();
 		assertThat(lus).isEqualTo(expectedResponseObject);
 	}
 	

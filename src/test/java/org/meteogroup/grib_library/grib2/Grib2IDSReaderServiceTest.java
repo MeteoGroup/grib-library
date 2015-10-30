@@ -76,7 +76,6 @@ public class Grib2IDSReaderServiceTest {
 		buffer.rewind();
 		byte[] response = buffer.array();
 		raFile.close();
-		System.out.println("response length = "+response.length);
 		return response;
 	};
 	
@@ -87,11 +86,6 @@ public class Grib2IDSReaderServiceTest {
 		
 		Grib2IDS gid = idsReader.readGIDValues(testArray,headerOffSet);
 		assertThat(gid).isNotNull();
-		System.out.println("==============gid"+gid+ gid.equals(gid));
 		assertThat(gid).isEqualTo(expectedResponseObject);
-	}
-	
-
-	
-	
+	}	
 }
