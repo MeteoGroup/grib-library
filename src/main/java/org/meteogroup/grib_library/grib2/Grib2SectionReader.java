@@ -24,7 +24,7 @@ public class Grib2SectionReader {
 	}
 	
 	protected int readSectionNumber(byte[] bytes, int headerOffset){
-		return bytes[POSITION_SECTIONNUMBER]&0xFF;
+		return bytes[POSITION_SECTIONNUMBER + headerOffset]&0xFF;
 	}
 
 }
