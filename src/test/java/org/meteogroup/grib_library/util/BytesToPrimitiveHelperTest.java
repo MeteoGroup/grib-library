@@ -30,8 +30,8 @@ public class BytesToPrimitiveHelperTest {
     @DataProvider(name = "goodValueForShortWithLengthOf2Array")
     public static Object[][] goodValueForShortWithLengthOf2Array(){
         return new Object[][]{
-                new Object[]{TWO_LENGTH_ARRAY_FOR_VALUE_28, (short) 28},
-                new Object[]{TWO_LENGTH_ARRAY_FOR_VALUE_50002, (short) 50002},
+                new Object[]{TWO_LENGTH_ARRAY_FOR_VALUE_28, 28},
+                new Object[]{TWO_LENGTH_ARRAY_FOR_VALUE_50002, 57917},
         };
     }
 
@@ -83,7 +83,7 @@ public class BytesToPrimitiveHelperTest {
 
 
     @Test(dataProvider = "goodValueForShortWithLengthOf2Array")
-    public void testArrayOfLength2ToShort(byte[] inputValues, short expectedValue) throws BinaryNumberConversionException {
+    public void testArrayOfLength2ToShort(byte[] inputValues, int expectedValue) throws BinaryNumberConversionException {
         int value = BytesToPrimitiveHelper.bytesToInteger(inputValues);
         assertThat(value).isEqualTo(expectedValue);
     }
