@@ -39,7 +39,10 @@ public class BytesToPrimitiveHelperTest {
     public static Object[][] goodValueForSignedIntTest(){
         return new Object[][]{
                 new Object[]{THREE_SIGNED_LAT_ARRAY_FOR_VALUE1, 89892},
-                new Object[]{THREE_SIGNED_LAT_ARRAY_FOR_VALUE2, -89892}
+                new Object[]{THREE_SIGNED_LAT_ARRAY_FOR_VALUE2, -89892},
+                new Object[]{TWO_LENGTH_FOR_SIGNED_TEST_MINUS_5, -5},
+                new Object[]{TWO_LENGTH_FOR_SIGNED_TEST_PLUS_5, 5},
+
         };
     }
 
@@ -100,16 +103,14 @@ public class BytesToPrimitiveHelperTest {
         assertThat(value).isCloseTo(expectedValue, within(0.001f));
     }
 
-    @Test(dataProvider = "goodValueForLongTest")
-    public void testLongCalculation(byte[] inputValues, long expectedValue) throws BinaryNumberConversionException {
-        long value = BytesToPrimitiveHelper.bytesToLong(inputValues);
-        assertThat(value).isEqualTo(expectedValue);
-    }
 
     private static final byte[] FOUR_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,0,0,28};
     private static final byte[] THREE_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,0,28};
     private static final byte[] TWO_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,28};
     private static final byte[] TWO_LENGTH_ARRAY_FOR_VALUE_50002 = new byte[]{-30,61};
+
+    private static final byte[] TWO_LENGTH_FOR_SIGNED_TEST_MINUS_5 = new byte[]{-128,5};
+    private static final byte[] TWO_LENGTH_FOR_SIGNED_TEST_PLUS_5 = new byte[]{0,5};
 
     private static final int BYTE_MASK = 0xff;
 
