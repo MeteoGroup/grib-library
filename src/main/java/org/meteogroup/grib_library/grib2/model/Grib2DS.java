@@ -14,5 +14,4 @@ public class Grib2DS {
 	
 	private int length;
 	private byte[] packedData;
-
 }
