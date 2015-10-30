@@ -43,12 +43,11 @@ public class Grib2IDSReader extends Grib2SectionReader{
 	 * @throws IOException
 	 */
 	public Grib2IDS readGIDValues(byte[] gidsValues, int headerOffSet) throws BinaryNumberConversionException, IOException {
-		Grib2IDS gid = new Grib2IDS();
-		gid.setLength(readSectionLength(gidsValues, 0));
-       
+		Grib2IDS gid = new Grib2IDS();       
         if (readSectionNumber(gidsValues,headerOffSet)!=SECTIONID){
 			throw new IOException("Section ID does not match. Should be "+SECTIONID+" is "+readSectionNumber(gidsValues,headerOffSet));
 		}
+        gid.setLength(readSectionLength(gidsValues, 0));
         //gid.setId((short) (readSectionNumber(gidsValues)));
         gid.setCentreId(BytesToPrimitiveHelper.bytesToShort(gidsValues[POSITION_CENTREID_1],gidsValues[POSITION_CENTREID_2]));
         gid.setSubCenterId(BytesToPrimitiveHelper.bytesToShort(gidsValues[POSITION_SUBCENTREID_1],gidsValues[POSITION_SUBCENTREID_2]));
