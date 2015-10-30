@@ -1,10 +1,14 @@
 package org.meteogroup.grib_library.grib2.model.drstemplates;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode
 public class BoustrophedonicSecondOrderDRSTemplate extends DRSTemplate {
 	
 	float referenceValue;
