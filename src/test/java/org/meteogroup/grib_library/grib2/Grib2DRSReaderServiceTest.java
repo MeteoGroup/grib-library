@@ -51,7 +51,7 @@ public class Grib2DRSReaderServiceTest {
 		
 		
 		Grib2DRS drs = new Grib2DRS();
-		drs.setDRSLength(EXPECTEDLENGTH);
+		drs.setLength(EXPECTEDLENGTH);
 		drs.setDataRepresenationtypeNumber(DATA_REPRESENTATION_NUMBER);
 		
 		BoustrophedonicSecondOrderDRSTemplate mockedBoustro = mock(BoustrophedonicSecondOrderDRSTemplate.class);//new DRSTemplate();//mock(DRSTemplate.class);

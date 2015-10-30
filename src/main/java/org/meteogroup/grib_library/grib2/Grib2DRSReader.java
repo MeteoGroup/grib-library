@@ -41,7 +41,7 @@ public class Grib2DRSReader extends Grib2SectionReader {
 		if (readSectionNumber(drsValues,headerOffSet)!=SECTIONID){
 			throw new IOException("Section ID does not match. Should be "+SECTIONID+" is "+readSectionNumber(drsValues,headerOffSet));
 		}
-		drs.setDRSLength(readSectionLength(drsValues, headerOffSet));
+		drs.setLength(readSectionLength(drsValues, headerOffSet));
 		drs.setDataRepresenationtypeNumber(BytesToPrimitiveHelper.bytesToInteger(drsValues[POSITION_TEMPLATE_NUMBER1],
 				drsValues[POSITION_TEMPLATE_NUMBER2]));
 		drs.setNumberOfDataPoints(BytesToPrimitiveHelper.bytesToInteger(

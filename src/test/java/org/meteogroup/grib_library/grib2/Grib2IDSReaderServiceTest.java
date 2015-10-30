@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
 public class Grib2IDSReaderServiceTest {
 
 	
-	Grib2IDSReader idsReader;
+	private Grib2IDSReader idsReader;
 
 	@BeforeMethod
 	public void prepare() throws Exception {

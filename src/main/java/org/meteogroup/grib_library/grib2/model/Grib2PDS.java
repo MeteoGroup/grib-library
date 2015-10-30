@@ -9,18 +9,18 @@ import org.meteogroup.grib_library.grib2.model.producttemplates.ProductTemplate;
  */
 public class Grib2PDS {
 
-    private int sectionLength;
+    private int length;
     private short sectionNumber;
     private int numberOfCoordinateValues;
     private int templateNumber;
     private ProductTemplate template;
 
-    public int getSectionLength() {
-        return sectionLength;
+    public int getLength() {
+        return length;
     }
 
-    public void setSectionLength(int sectionLength) {
-        this.sectionLength = sectionLength;
+    public void setnLength(int length) {
+        this.length = length;
     }
 
     public short getSectionNumber() {

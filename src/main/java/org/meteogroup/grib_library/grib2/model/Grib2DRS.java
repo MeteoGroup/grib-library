@@ -13,7 +13,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class Grib2DRS {
 
-	private int DRSLength;
+	private int length;
 	private int dataRepresenationtypeNumber = -1;	
 	private int numberOfDataPoints;
 	

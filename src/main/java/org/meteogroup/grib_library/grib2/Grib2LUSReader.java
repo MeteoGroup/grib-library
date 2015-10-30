@@ -22,7 +22,7 @@ public class Grib2LUSReader extends Grib2SectionReader {
 		if (readSectionNumber(lusValues,headerOffSet)!=SECTIONID){
 			throw new IOException("Section ID does not match. Should be "+SECTIONID+" is "+readSectionNumber(lusValues,headerOffSet));
 		}
-		lus.setLusLength(readSectionLength(lusValues, headerOffSet));
+		lus.setLength(readSectionLength(lusValues, headerOffSet));
 		
 		return lus;
 	}
