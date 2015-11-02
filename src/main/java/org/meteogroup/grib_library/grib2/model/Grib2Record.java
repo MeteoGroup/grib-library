@@ -1,5 +1,7 @@
 package org.meteogroup.grib_library.grib2.model;
 
+import org.meteogroup.grib_library.grib.GribRecord;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,9 +10,8 @@ import lombok.Setter;
  * @author Pauw
  *
  */
-public class Grib2Record {
+public class Grib2Record extends GribRecord{
 
-	private long length = 0;
 	
 	private Grib2IDS ids = null;
 
@@ -29,13 +30,6 @@ public class Grib2Record {
 
 	private Grib2Endsection endSection = null;
 
-	public long getLength() {
-		return length;
-	}
-
-	public void setLength(long length) {
-		this.length = length;
-	}
 
 	public Grib2IDS getIds() {
 		return ids;

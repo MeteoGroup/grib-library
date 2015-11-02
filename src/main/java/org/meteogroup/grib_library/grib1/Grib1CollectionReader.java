@@ -24,6 +24,7 @@ public class Grib1CollectionReader {
     FileChannel fc = null;
 
     private static final int HEADER_LENGTH = 8;
+	private static final int GRIB_VERSION = 1;
 
     public List<Grib1Record> readFileFromFileName(String url) throws IOException, BinaryNumberConversionException, GribReaderException {
         this.fc = this.getFileChannelFromURL(url);
@@ -53,6 +54,7 @@ public class Grib1CollectionReader {
                 throw new GribReaderException ("Attempted to read invalid grib record");
             }
             Grib1Record record = new Grib1Record();
+            record.setVersion(GRIB_VERSION);
             record.setLength(recordReader.readRecordLength(recordHeader));
             byte[] recordAsByteArray = partReader.readPartOfFileChannel(fileChannel,gribRecordOffset,record.getLength());
             record = recordReader.readCompleteRecord(record,recordAsByteArray, HEADER_LENGTH);

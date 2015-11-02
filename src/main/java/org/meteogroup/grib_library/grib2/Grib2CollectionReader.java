@@ -17,6 +17,7 @@ import java.util.List;
 public class Grib2CollectionReader {
 
     private static final int HEADER_LENGTH = 16;
+    private static final int GRIB_VERSION = 2;
     long fileLength;
     long gribRecordOffset;
     FileChannelPartReader partReader;
@@ -46,7 +47,8 @@ public class Grib2CollectionReader {
                 throw new GribReaderException("Attempted to read invalid grib record");
             }
             Grib2Record record = new Grib2Record();
-            record.setLength(recordReader.readRecordLength(recordHeader));
+            record.setLength((int) recordReader.readRecordLength(recordHeader));
+            record.setVersion(GRIB_VERSION);
             byte[] recordAsByteArray = partReader.readPartOfFileChannel(fileChannel,gribRecordOffset,record.getLength());
             record = recordReader.readCompleteRecord(record,recordAsByteArray, HEADER_LENGTH);
             response.add(record);
@@ -54,5 +56,4 @@ public class Grib2CollectionReader {
         }
         return response;
     }
-
 }

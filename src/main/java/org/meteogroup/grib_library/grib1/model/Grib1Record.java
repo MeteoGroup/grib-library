@@ -1,23 +1,19 @@
 package org.meteogroup.grib_library.grib1.model;
 
+import org.meteogroup.grib_library.grib.GribRecord;
+
 /**
  * Created by roijen on 20-Oct-15.
  */
-public class Grib1Record {
+public class Grib1Record extends GribRecord{
 
-    int length;
+    
 
     Grib1PDS pds = new Grib1PDS();
     Grib1GDS gds = new Grib1GDS();
     Grib1BDS bds = new Grib1BDS();
 
-    public int getLength() {
-        return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
+    
 
     public Grib1PDS getPds() {
         return pds;
