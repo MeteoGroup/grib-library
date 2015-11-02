@@ -2,6 +2,8 @@ package org.meteogroup.grib_library.grib2;
 
 import java.io.IOException;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
 import org.meteogroup.grib_library.grib2.model.Grib2Endsection;
 
@@ -12,6 +14,7 @@ import org.meteogroup.grib_library.grib2.model.Grib2Endsection;
  * Reads out/checks the grib2 end section
  *
  */
+@Slf4j
 public class Grib2EndReader extends Grib2SectionReader {
 	
 	public Grib2Endsection readEndValues(byte[] endValues, int headerOffSet) throws BinaryNumberConversionException, IOException{
@@ -26,7 +29,7 @@ public class Grib2EndReader extends Grib2SectionReader {
 		for (int i=0; i<4; i++){
 			char c = (char) bytes[bytes.length-1-i];
 			if (c != '7'){
-				System.out.println("wrong char, was "+c);
+				log.error("wrong char at endsection, was "+c);
 				return false;
 			}
 		}
