@@ -3,6 +3,8 @@ package org.meteogroup.grib_library.grib2;
 import java.io.IOException;
 import java.util.Arrays;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
 import org.meteogroup.grib_library.grib2.model.Grib2DS;
 
@@ -12,6 +14,7 @@ import org.meteogroup.grib_library.grib2.model.Grib2DS;
  * Reads out the grib2 data section
  *
  */
+@Slf4j
 public class Grib2DSReader extends Grib2SectionReader {
 	
 	private static final int SECTIONID = 7;
@@ -30,6 +33,7 @@ public class Grib2DSReader extends Grib2SectionReader {
 	}
 	
 	protected byte[] readPackedValues(byte[] bytes, int headerOffSet){
+		log.debug("Reading in the packed values");
     	return Arrays.copyOfRange(bytes, POSITION_PACKEDDATASTART+headerOffSet,bytes.length);
     }
 }
