@@ -1,8 +1,15 @@
 package org.meteogroup.grib_library.grib2.model.producttemplates;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+import org.meteogroup.grib_library.grib2.model.drstemplates.BoustrophedonicSecondOrderDRSTemplate;
+
 /**
  * Created by roijen on 14-Oct-15.
  */
+@ToString
+@EqualsAndHashCode
 public class HorizontalLevelTemplate implements ProductTemplate{
 
     private short parameterCategory;

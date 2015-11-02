@@ -1,6 +1,5 @@
 package org.meteogroup.grib_library.grib2.pdstemplates;
 
-import java.io.IOException;
 
 import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
 import org.meteogroup.grib_library.grib2.model.producttemplates.HorizontalLevelTemplate;
@@ -21,6 +20,10 @@ public class HorizontalLevelTemplateReader implements ProductTemplateReader {
 	        template.setGeneratingProcess((short) (pdsValues[11] & BYTE_MASK));
 	        template.setBackgroundGenerating((short) (pdsValues[12] & BYTE_MASK));
 	        template.setAnalysisProcess((short) (pdsValues[13] & BYTE_MASK));
+	        System.out.println("====== "+pdsValues[14]+"  "+ pdsValues[15] );
+	        
+	        
+	        
 	        template.setHoursOfObservation(BytesToPrimitiveHelper.signedBytesToInt(pdsValues[14], pdsValues[15]));
 	        template.setMinutesOfObservation((short) (pdsValues[16] & BYTE_MASK));
 	        template.setUnitOfTimeRange((short) (pdsValues[17] & BYTE_MASK));

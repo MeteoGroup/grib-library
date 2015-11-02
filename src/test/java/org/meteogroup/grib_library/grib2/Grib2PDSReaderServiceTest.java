@@ -17,6 +17,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * 
+ * @author Pauw
+ *
+ */
 public class Grib2PDSReaderServiceTest {
 
 	private static final int EXPECTEDLENGTH = 1138; //checked
