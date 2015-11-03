@@ -82,7 +82,7 @@ public class Grib2PDSReaderServiceTest {
 		assertThat(pds).isNotNull();
 		
 		assertThat(pds.getTemplate()).isInstanceOf(ProductTemplate.class);
-		//excluse datatemplate content itself, so artificial equal
+		//exclude datatemplate content itself, so artificial equal
 		pds.setTemplate(expectedResponseObject.getTemplate());
 		assertThat(pds).isEqualTo(expectedResponseObject);
 	}

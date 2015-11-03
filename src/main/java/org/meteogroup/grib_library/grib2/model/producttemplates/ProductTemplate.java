@@ -1,5 +1,7 @@
 package org.meteogroup.grib_library.grib2.model.producttemplates;
 
+import org.meteogroup.grib_library.grib2.model.producttemplates.HorizontalLevelTemplate.HorizontalLevelTimeUnit;
+
 /**
  * Created by roijen on 14-Oct-15.
  */
@@ -19,8 +21,8 @@ public interface ProductTemplate {
     public void setHoursOfObservation(int hoursOfObservation);
     public short getMinutesOfObservation();
     public void setMinutesOfObservation(short minutesOfObservation);
-    public short getUnitOfTimeRange();
-    public void setUnitOfTimeRange(short unitOfTimeRange);
+    
+
     public int getForeCastTimeInTimeRange();
     public void setForeCastTimeInTimeRange(int foreCastTimeInTimeRange);
     public short getTypeOfFirstFixedSurface();
@@ -35,4 +37,6 @@ public interface ProductTemplate {
     public void setScaleOfSecondFixedSurface(short scaleOfSecondFixedSurface);
     public int getScaleValueOfSecondFixedSurface();
     public void setScaleValueOfSecondFixedSurface(int scaleValueOfSecondFixedSurface);
+	void setUnitOfTimeRange(HorizontalLevelTimeUnit unitOfTimeRange);
+	public HorizontalLevelTimeUnit getUnitOfTimeRange();
 }

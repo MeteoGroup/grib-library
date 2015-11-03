@@ -12,6 +12,7 @@ import java.nio.channels.FileChannel;
 import org.meteogroup.grib_library.exception.BinaryNumberConversionException;
 import org.meteogroup.grib_library.grib2.Grib2PDSReader;
 import org.meteogroup.grib_library.grib2.model.producttemplates.HorizontalLevelTemplate;
+import org.meteogroup.grib_library.grib2.model.producttemplates.HorizontalLevelTemplate.HorizontalLevelTimeUnit;
 import org.meteogroup.grib_library.grib2.pdstemplates.HorizontalLevelTemplateReader;
 import org.meteogroup.grib_library.util.BytesToPrimitiveHelper;
 import org.testng.annotations.BeforeMethod;
@@ -20,8 +21,6 @@ import org.testng.annotations.Test;
 
 public class HorizontalLevelTemplateReaderTest {
 	
-	//private static final int EXPECTEDLENGTH = 00039;
-
 	
 	HorizontalLevelTemplateReader horizontalLevelReader;
 
@@ -36,16 +35,22 @@ public class HorizontalLevelTemplateReaderTest {
 				new Object[]{GOOD_HORIZONTALLEVEL_ARRAY(), 0, GOOD_HORIZONTALLEVEL_OBJECT()}
 		};
 	}
-	
+	/**
+	 * @todo check parameters that are unchecked. Not checked while they are not important yet
+	 * @return
+	 * @throws BinaryNumberConversionException
+	 */
 	private static final HorizontalLevelTemplate GOOD_HORIZONTALLEVEL_OBJECT() throws BinaryNumberConversionException{
 				
 		HorizontalLevelTemplate horizontalLevelTemplate = new HorizontalLevelTemplate();
+		horizontalLevelTemplate.setParameterCategory((short) 0); //temperature category
+		horizontalLevelTemplate.setParameterNumber((short)0); //temperature but not important yet
 		horizontalLevelTemplate.setGeneratingProcess((short) 2); //unchecked
 		horizontalLevelTemplate.setBackgroundGenerating((short) 255);//unchecked
-		horizontalLevelTemplate.setAnalysisProcess((short) 145);
-		horizontalLevelTemplate.setHoursOfObservation(BytesToPrimitiveHelper.signedBytesToInt((byte)255,(byte)255));
-		horizontalLevelTemplate.setMinutesOfObservation((short) 255);
-		horizontalLevelTemplate.setUnitOfTimeRange((short) 1);
+		horizontalLevelTemplate.setAnalysisProcess((short) 145); //unchecked
+		horizontalLevelTemplate.setHoursOfObservation(BytesToPrimitiveHelper.signedBytesToInt((byte)255,(byte)255)); //not important yet
+		horizontalLevelTemplate.setMinutesOfObservation((short) 255); //not important yet
+		horizontalLevelTemplate.setUnitOfTimeRange(HorizontalLevelTimeUnit.valueOf( 1)); 
 		horizontalLevelTemplate.setForeCastTimeInTimeRange(6); //checked
 		horizontalLevelTemplate.setTypeOfFirstFixedSurface((short) 105);//hybrid level
 		horizontalLevelTemplate.setScaleOfFirstFixedSurface((short) 0);
