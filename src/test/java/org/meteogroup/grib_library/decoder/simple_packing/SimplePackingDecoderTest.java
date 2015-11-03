@@ -43,7 +43,7 @@ public class SimplePackingDecoderTest {
     @Test
     public void testReadPackedValues() throws IOException, URISyntaxException {
         Grib1Record record = SIMPLE_GRIB_1_RECORD();
-        double[] unPackedValues = decoder.readAllValues(record.getBds().getValues(), record.getGds().getNumberOfPoints(), record.getBds().getBytesForDatum(),record.getPds().getDecimalScaleFactor(),
+        double[] unPackedValues = decoder.readAllValues(record.getBds().getPackedValues(), record.getGds().getNumberOfPoints(), record.getBds().getBytesForDatum(),record.getPds().getDecimalScaleFactor(),
                 record.getBds().getBinaryScaleFactor(), record.getBds().getReferenceValue());
         assertThat(unPackedValues.length).isEqualTo(3);
         assertThat(unPackedValues[0]).isCloseTo(FIRST_VALUE, within(0.01));
@@ -62,7 +62,7 @@ public class SimplePackingDecoderTest {
 
         Grib1BDS bds = new Grib1BDS();
         bds.setBytesForDatum(BITS_PER_VALUE);
-        bds.setValues(SIMPLE_BYTE_ARRAY);
+        bds.setPackedValues(SIMPLE_BYTE_ARRAY);
         bds.setBinaryScaleFactor(BINARY_SCALE_MINUS_6);
         bds.setReferenceValue(REFERENCE_VALUE_4707);
 
