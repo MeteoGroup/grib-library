@@ -26,16 +26,16 @@ public class BitReaderTest {
 
     @Test
     public void testBitsToUnsignedInt() throws IOException, URISyntaxException {
-        BitReader reader = new BitReader(BYTE_ARRAY_TEST);
-        long firstValue = reader.readNext(AMOUNT_OF_BITS_TO_READ);
+        BitReader reader = new BitReader(SIMPLE_BYTE_ARRAY);
+        long firstValue = reader.readNext(BITS_TO_READ_16);
         assertThat(firstValue).isEqualTo(FIRST_VALUE);
-        long secondValue = reader.readNext(AMOUNT_OF_BITS_TO_READ);
+        long secondValue = reader.readNext(BITS_TO_READ_16);
         assertThat(secondValue).isEqualTo(SECOND_VALUE);
     }
 
     @Test
     public void testNextByte() throws IOException, URISyntaxException {
-        BitReader reader = new BitReader(BYTE_ARRAY_TEST);
+        BitReader reader = new BitReader(SIMPLE_BYTE_ARRAY);
         int firstIncrement = reader.nextByte();
         assertThat(firstIncrement).isEqualTo(FIRST_BYTE);
         int secondIncrement = reader.nextByte();
@@ -68,9 +68,9 @@ public class BitReaderTest {
     private static final int FIRST_BYTE = 0;
     private static final int SECOND_BYTE = 25;
 
-    private static final int AMOUNT_OF_BITS_TO_READ = 16;
+    private static final int BITS_TO_READ_16 = 16;
     private static final long FIRST_VALUE = 25L;
     private static final long SECOND_VALUE = 26L;
-    private static final byte[] BYTE_ARRAY_TEST = new byte[]{0,25,0,26};
+    private static final byte[] SIMPLE_BYTE_ARRAY = new byte[]{0,25,0,26};
 
 }
