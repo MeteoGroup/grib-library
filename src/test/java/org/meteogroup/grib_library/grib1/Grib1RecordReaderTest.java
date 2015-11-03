@@ -63,13 +63,13 @@ public class Grib1RecordReaderTest {
     }
 
     @Test(dataProvider = "goodHeader")
-    public void testValidLength(byte[] bufferValues) throws GribReaderException {
+    public void testValidLength(byte[] bufferValues) throws GribReaderException, BinaryNumberConversionException {
         int headerLength = reader.readRecordLength(bufferValues);
         assertThat(headerLength).isEqualTo(1266918);
     }
 
     @Test(dataProvider = "wrongLength", expectedExceptions = GribReaderException.class)
-    public void testInvalidLength(byte[] bufferValues) throws GribReaderException {
+    public void testInvalidLength(byte[] bufferValues) throws GribReaderException, BinaryNumberConversionException {
         reader.readRecordLength(bufferValues);
     }
 

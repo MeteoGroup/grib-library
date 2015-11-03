@@ -25,6 +25,11 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
+/**
+ * 
+ * @author Pauw
+ *
+ */
 public class Grib2DRSReaderServiceTest {
 
 	private static final int EXPECTEDLENGTH = 39; //verified with wgrib2

@@ -1,18 +1,51 @@
 package org.meteogroup.grib_library.grib2.model.producttemplates;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+
+
 /**
  * Created by roijen on 14-Oct-15.
  */
+@ToString
+@EqualsAndHashCode
 public class HorizontalLevelTemplate implements ProductTemplate{
 
-    private short parameterCategory;
-    private short parameterNumber;
+	public enum HorizontalLevelTimeUnit{
+		MINUTE(0),
+		HOUR(1),
+		DAY(2),
+		MONTH(3);
+		private int id;
+		private static Map<Integer,HorizontalLevelTimeUnit> map = new HashMap<Integer,HorizontalLevelTimeUnit>();
+		
+		static{
+			for (HorizontalLevelTimeUnit timeUnit  : HorizontalLevelTimeUnit.values()){
+				map.put(timeUnit.id, timeUnit);
+			}
+		}
+		
+		private HorizontalLevelTimeUnit(int id){
+			this.id = id;
+		}
+
+		public static HorizontalLevelTimeUnit valueOf(int i) {
+			return map.get(i);
+		}
+	}
+
+    private short parameterCategory = -1;
+    private short parameterNumber = -1;
     private short generatingProcess;
     private short backgroundGenerating;
     private short analysisProcess;
     private int hoursOfObservation;
     private short minutesOfObservation;
-    private short unitOfTimeRange;
+    private HorizontalLevelTimeUnit unitOfTimeRange;
     private int foreCastTimeInTimeRange;
     private short typeOfFirstFixedSurface;
     private short scaleOfFirstFixedSurface;
@@ -91,15 +124,7 @@ public class HorizontalLevelTemplate implements ProductTemplate{
         this.minutesOfObservation = minutesOfObservation;
     }
 
-    @Override
-    public short getUnitOfTimeRange() {
-        return unitOfTimeRange;
-    }
 
-    @Override
-    public void setUnitOfTimeRange(short unitOfTimeRange) {
-        this.unitOfTimeRange = unitOfTimeRange;
-    }
 
     @Override
     public int getForeCastTimeInTimeRange() {
@@ -170,4 +195,13 @@ public class HorizontalLevelTemplate implements ProductTemplate{
     public void setScaleValueOfSecondFixedSurface(int scaleValueOfSecondFixedSurface) {
         this.scaleValueOfSecondFixedSurface = scaleValueOfSecondFixedSurface;
     }
+
+    @Override
+	public HorizontalLevelTimeUnit getUnitOfTimeRange() {
+		return unitOfTimeRange;
+	}
+    @Override
+	public void setUnitOfTimeRange(HorizontalLevelTimeUnit unitOfTimeRange) {
+		this.unitOfTimeRange = unitOfTimeRange;
+	}
 }
