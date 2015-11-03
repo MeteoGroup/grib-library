@@ -22,8 +22,7 @@ import org.meteogroup.grib_library.util.BytesToPrimitiveHelper;
 public class Grib2DRSReader extends Grib2SectionReader {
 	
 	private static final int SECTIONID = 5;
-	
-	static final int POSITION_SECTIONNUMBER = 4;
+
 	static final int POSITION_NUMBER_DATAPOINTS1 = 5;
 	static final int POSITION_NUMBER_DATAPOINTS2 = 6;
 	static final int POSITION_NUMBER_DATAPOINTS3 = 7;
@@ -31,8 +30,6 @@ public class Grib2DRSReader extends Grib2SectionReader {
 	
 	static final int POSITION_TEMPLATE_NUMBER1 = 9;
 	static final int POSITION_TEMPLATE_NUMBER2 = 10;
-	
-	static final int POSITION_DATA_REPRESENTATION_TEMPLATE_START = 11;
 	
 	public Grib2DRS readDRSValues(byte[] drsValues, int headerOffSet) throws BinaryNumberConversionException, IOException{
 		
