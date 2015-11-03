@@ -66,8 +66,8 @@ public class Grib1BDSReaderTest {
     public void testBDSReadout(byte[] inputValues, int offSet, Grib1BDS expectedObject) throws BinaryNumberConversionException {
         Grib1BDS actualObject = bdsReader.readBDSValues(inputValues, offSet);
         assertThat(actualObject).isEqualTo(expectedObject);
-        assertThat(actualObject.getValues()).isNotNull();
-        assertThat(actualObject.getValues().length).isEqualTo(actualObject.getBdsLength()-END_OF_META_DATA);
+        assertThat(actualObject.getPackedValues()).isNotNull();
+        assertThat(actualObject.getPackedValues().length).isEqualTo(actualObject.getBdsLength()-END_OF_META_DATA);
     }
 
     @Test(dataProvider = "valuesForBinayScaleFactor")

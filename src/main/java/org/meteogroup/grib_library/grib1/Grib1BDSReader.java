@@ -51,7 +51,7 @@ public class Grib1BDSReader {
         objectToWriteInto.setBinaryScaleFactor(this.readBinaryScaleFactor(inputValues[POSITION_BDS_BINARY_SCALE_1 + offSet], inputValues[POSITION_BDS_BINARY_SCALE_2 + offSet]));
         objectToWriteInto.setReferenceValue(BytesToPrimitiveHelper.bytesToFloatAsIBM(inputValues[POSITION_BDS_REFERENCE_VALUE_1 + offSet], inputValues[POSITION_BDS_REFERENCE_VALUE_2 + offSet], inputValues[POSITION_BDS_REFERENCE_VALUE_3 + offSet], inputValues[POSITION_BDS_REFERENCE_VALUE_4 + offSet]));
         objectToWriteInto.setBytesForDatum(((short) (inputValues[POSITION_BDS_DATUM + offSet] & BytesToPrimitiveHelper.BYTE_MASK)));
-        objectToWriteInto.setValues(this.sliceArrayForGribField(inputValues, POSITION_BDS_SLICE_POINT_FOR_STANDARD_PACKING, objectToWriteInto.getBdsLength()));
+        objectToWriteInto.setPackedValues(this.sliceArrayForGribField(inputValues, POSITION_BDS_SLICE_POINT_FOR_STANDARD_PACKING, objectToWriteInto.getBdsLength()));
 
         return objectToWriteInto;
     }
