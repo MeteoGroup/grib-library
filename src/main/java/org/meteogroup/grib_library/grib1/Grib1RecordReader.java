@@ -16,6 +16,12 @@ public class Grib1RecordReader {
     public Grib1PDSReader pdsReader;
     public Grib1GDSReader gdsReader;
     public Grib1BDSReader bdsReader;
+    
+    
+    private static final int POSITION_RECORDLENGTH1 = 4;
+    private static final int POSITION_RECORDLENGTH2 = 5;
+    private static final int POSITION_RECORDLENGTH3 = 6;
+    private static final int POSITION_GRIBVERSION = 7;
 
     public Grib1RecordReader(){
         this.pdsReader = new Grib1PDSReader();
@@ -28,12 +34,12 @@ public class Grib1RecordReader {
         for (int x = 0; x < 4 ;x++) {
             headerString = headerString + (char) bufferValues[x];
         }
-        short versionNumber = bufferValues[7];
+        short versionNumber = bufferValues[POSITION_GRIBVERSION];
         return (headerString.equals("GRIB") && versionNumber == 1);
     }
 
-    public int readRecordLength(byte[] bufferValues) throws GribReaderException {
-        int length = (((bufferValues[4] & BytesToPrimitiveHelper.BYTE_MASK) << 8) | (bufferValues[5] & BytesToPrimitiveHelper.BYTE_MASK)) << 8 | (bufferValues[6] & BytesToPrimitiveHelper.BYTE_MASK);
+    public int readRecordLength(byte[] bufferValues) throws GribReaderException, BinaryNumberConversionException {
+        int length = BytesToPrimitiveHelper.bytesToInteger(bufferValues[POSITION_RECORDLENGTH1],bufferValues[POSITION_RECORDLENGTH2],bufferValues[POSITION_RECORDLENGTH3]);
         if (length < 8){
             throw new GribReaderException("The suggested length in the record header is invalid.");
         }
