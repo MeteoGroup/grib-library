@@ -9,6 +9,8 @@ public class BytesToPrimitiveHelper {
 
     public static final int BYTE_MASK = 0xff;
 
+    private BytesToPrimitiveHelper(){}
+
     public static int bytesToInteger(byte ... inputValue) throws BinaryNumberConversionException {
         if (inputValue.length == 2){
             return bytes2ToInt(inputValue);
