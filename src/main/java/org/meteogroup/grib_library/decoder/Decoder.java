@@ -8,7 +8,7 @@ import org.meteogroup.grib_library.grib2.model.Grib2Record;
  */
 public interface Decoder {
 
-    float[] decodeFromGrib1(Grib1Record record);
-    float[] decodeFromGrib2(Grib2Record record);
+    double[] decodeFromGrib1(Grib1Record record);
+    double[] decodeFromGrib2(Grib2Record record);
 
 }

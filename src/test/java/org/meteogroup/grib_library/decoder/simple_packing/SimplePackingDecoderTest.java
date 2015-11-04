@@ -41,6 +41,16 @@ public class SimplePackingDecoderTest {
     }
 
     @Test
+    public void testReadGrib1Record() throws IOException, URISyntaxException {
+        Grib1Record record = SIMPLE_GRIB_1_RECORD();
+        double[] unPackedValues = decoder.decodeFromGrib1(record);
+        assertThat(unPackedValues.length).isEqualTo(3);
+        assertThat(unPackedValues[0]).isCloseTo(FIRST_VALUE, within(0.01));
+        assertThat(unPackedValues[1]).isCloseTo(SECOND_VALUE, within(0.01));
+        assertThat(unPackedValues[2]).isCloseTo(THIRD_VALUE, within(0.01));
+    }
+
+    @Test
     public void testReadPackedValues() throws IOException, URISyntaxException {
         Grib1Record record = SIMPLE_GRIB_1_RECORD();
         double[] unPackedValues = decoder.readAllValues(record.getBds().getPackedValues(), record.getGds().getNumberOfPoints(), record.getBds().getBytesForDatum(),record.getPds().getDecimalScaleFactor(),
