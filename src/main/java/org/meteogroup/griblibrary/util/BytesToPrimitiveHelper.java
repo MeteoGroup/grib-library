@@ -12,11 +12,9 @@ public class BytesToPrimitiveHelper {
     public static int bytesToInteger(byte ... inputValue) throws BinaryNumberConversionException {
         if (inputValue.length == 2){
             return bytes2ToInt(inputValue);
-        }
-        else if (inputValue.length == 3){
+        } else if (inputValue.length == 3){
             return bytes3ToInt(inputValue);
-        }
-        else if(inputValue.length == 4){
+        } else if(inputValue.length == 4){
             return bytes4ToInt(inputValue);
         }
         throw new BinaryNumberConversionException("Invalid length of input value in an attempt to convert byte array to int");
@@ -28,20 +26,20 @@ public class BytesToPrimitiveHelper {
 
     private static int bytes4ToInt(byte[] values) {
         int value = 0;
-        for (int i = 0; i < values.length; i++)
-        {
+        for (int i = 0; i < values.length; i++) {
             value = (value << 8) + (values[i] & 0xff);
         }
         return value;
     }
 
+    /**
+     *@deprecated SIGNING ISSUE, DO NOT USE!
+     */
     @Deprecated
-    //SIGNING ISSUE, DO NOT USE!
     public static short bytesToShort(byte... inputValues) throws BinaryNumberConversionException {
         if (inputValues.length == 2){
             return (short) bytes2ToInt(inputValues);
-        }
-        else{
+        } else{
             throw new BinaryNumberConversionException("Invalid length of input value in an attempt to convert byte array to short");
         }
     }
@@ -53,8 +51,7 @@ public class BytesToPrimitiveHelper {
     public static int signedBytesToInt(byte... values) throws BinaryNumberConversionException {
         if (values.length == 2){
             return BytesToPrimitiveHelper.signedBytes2ToInt(values);
-        }
-        if (values.length == 3){
+        } else if (values.length == 3){
             return BytesToPrimitiveHelper.signedBytes3ToInt(values);
         }
         throw new BinaryNumberConversionException("Failed to convert to integer.");
@@ -103,8 +100,7 @@ public class BytesToPrimitiveHelper {
 
     private static long bytes8ToLong(byte[] inputValues) {
         long value = 0;
-        for (int i = 0; i < inputValues.length; i++)
-        {
+        for (int i = 0; i < inputValues.length; i++) {
             value = (value << 8) + (inputValues[i] & 0xff);
         }
         return value;

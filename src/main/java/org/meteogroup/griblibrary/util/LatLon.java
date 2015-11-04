@@ -5,8 +5,8 @@ package org.meteogroup.griblibrary.util;
  */
 public class LatLon {
 
-    public float lat;
-    public float lon;
+    float lat;
+    float lon;
 
     public LatLon(float lat, float lon) {
         this.lat = lat;

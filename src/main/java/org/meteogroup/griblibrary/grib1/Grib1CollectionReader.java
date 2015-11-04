@@ -36,7 +36,7 @@ public class Grib1CollectionReader {
         fileLength = raf.length();
         gribRecordOffset = 0;
         return raf.getChannel();
-    };
+    }
 
     public long getGribRecordOffset() {
         return gribRecordOffset;

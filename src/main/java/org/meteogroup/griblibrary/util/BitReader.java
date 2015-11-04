@@ -20,13 +20,13 @@ public class BitReader {
         int bitsLeftToRead = bitsToRead;
         long result = 0;
 
-        if (bitPositionInByte == 0){
+        if (bitPositionInByte == 0) {
             bitBufferAsInteger = nextByte();
             bitPositionInByte = BIT_LENGTH;
         }
-        while(true){
+        while (true) {
             int shift = bitsLeftToRead - bitPositionInByte;
-            if (shift > 0){
+            if (shift > 0) {
                 //Reading the buffer to the end of this byte.
                 result |= bitBufferAsInteger << shift;
                 bitsLeftToRead -= bitPositionInByte;
@@ -34,8 +34,7 @@ public class BitReader {
                 //Get the next byte from the byte array
                 bitBufferAsInteger = nextByte();
                 bitPositionInByte = BIT_LENGTH;
-            }
-            else{
+            } else {
                 //Reading only part of this byte;
                 result |= bitBufferAsInteger >> -shift;
                 bitPositionInByte -= bitsLeftToRead;
@@ -47,7 +46,7 @@ public class BitReader {
 
     int nextByte() {
         int result = -1;
-        if (data != null){
+        if (data != null) {
             result = (data[bytePositionInByteArray] & BytesToPrimitiveHelper.BYTE_MASK);
         }
         bytePositionInByteArray++;

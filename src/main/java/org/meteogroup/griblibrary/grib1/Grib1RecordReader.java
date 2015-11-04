@@ -13,9 +13,9 @@ import org.meteogroup.griblibrary.util.BytesToPrimitiveHelper;
  */
 public class Grib1RecordReader {
 
-    public Grib1PDSReader pdsReader;
-    public Grib1GDSReader gdsReader;
-    public Grib1BDSReader bdsReader;
+    Grib1PDSReader pdsReader;
+    Grib1GDSReader gdsReader;
+    Grib1BDSReader bdsReader;
     
     
     private static final int POSITION_RECORDLENGTH1 = 4;

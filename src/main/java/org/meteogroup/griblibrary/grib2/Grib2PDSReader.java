@@ -56,8 +56,7 @@ public class Grib2PDSReader extends Grib2SectionReader {
     		log.debug("horizontal, point in time");
     		productTemplateReader = new HorizontalLevelTemplateReader();
     		
-    	}
-    	else if (pdsTemplateNumber == TEMPLATE_HORIZONTAL_INDIVIDUAL_ENSEMBLE_PERTURBATED_POINT_IN_TIME){
+    	} else if (pdsTemplateNumber == TEMPLATE_HORIZONTAL_INDIVIDUAL_ENSEMBLE_PERTURBATED_POINT_IN_TIME){
     		log.debug("ensemble horizontal perturbated");
     	}
     	

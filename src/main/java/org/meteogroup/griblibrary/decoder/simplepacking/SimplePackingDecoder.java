@@ -10,7 +10,7 @@ import org.meteogroup.griblibrary.util.BitReader;
  */
 public class SimplePackingDecoder implements Decoder {
 
-    private int BASE_10 = 10;
+    private int base10 = 10;
 
     @Override
     public double[] decodeFromGrib1(Grib1Record record) {
@@ -26,7 +26,7 @@ public class SimplePackingDecoder implements Decoder {
     double[] readAllValues(byte[] packedValues, int numberOfPoints, int bytesForDatum, int factorDivision, int binaryScale, float referenceValue) {
         double[] result = new double[numberOfPoints];
         double binaryScalePowered = Math.pow(2, binaryScale);
-        double division = Math.pow(BASE_10, factorDivision);
+        double division = Math.pow(base10, factorDivision);
 
         BitReader bitReader = new BitReader(packedValues);
 

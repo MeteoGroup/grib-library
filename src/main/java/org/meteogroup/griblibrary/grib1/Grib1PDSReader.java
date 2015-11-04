@@ -71,8 +71,7 @@ public class Grib1PDSReader {
         if(HEIGHT_LAYERS_WITH_DOUBLE_OCTET_VALUES.contains(objectToReadInto.getIdenticatorOfTypeOfLevelOrLayer())){
             objectToReadInto.setHasOnlyOneLevelOrLayerValue(true);
             objectToReadInto.setLevelOrLayerValue1(BytesToPrimitiveHelper.bytesToInteger(values[POSITION_PDS_LEVEL_OR_LAYER_VALUE_1+headerOffSet], values[POSITION_PDS_LEVEL_OR_LAYER_VALUE_2+headerOffSet]));
-        }
-        else{
+        } else{
             objectToReadInto.setHasOnlyOneLevelOrLayerValue(false);
             objectToReadInto.setLevelOrLayerValue1((short)(values[POSITION_PDS_LEVEL_OR_LAYER_VALUE_1+headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
             objectToReadInto.setLevelOrLayerValue2((short) (values[POSITION_PDS_LEVEL_OR_LAYER_VALUE_2 + headerOffSet] & BytesToPrimitiveHelper.BYTE_MASK));
