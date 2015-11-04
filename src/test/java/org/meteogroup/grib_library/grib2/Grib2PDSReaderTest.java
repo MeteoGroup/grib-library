@@ -22,7 +22,7 @@ import org.testng.annotations.Test;
  * @author Pauw
  *
  */
-public class Grib2PDSReaderServiceTest {
+public class Grib2PDSReaderTest {
 
 	private static final int EXPECTEDLENGTH = 1138; //checked
 

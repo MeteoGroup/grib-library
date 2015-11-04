@@ -18,7 +18,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class Grib2LUSReaderServiceTest {
+public class Grib2LUSReaderTest {
 
 	private static final int EXPECTEDLENGTH = 17;
 	

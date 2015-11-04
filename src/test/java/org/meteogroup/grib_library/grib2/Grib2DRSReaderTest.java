@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
  * @author Pauw
  *
  */
-public class Grib2DRSReaderServiceTest {
+public class Grib2DRSReaderTest {
 
 	private static final int EXPECTEDLENGTH = 39; //verified with wgrib2
 	static final int NUMBEROFPOINTS = 843490; //verified with NetCDF ToolsUI
