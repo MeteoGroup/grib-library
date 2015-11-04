@@ -12,6 +12,7 @@ import java.nio.channels.FileChannel;
 import org.meteogroup.griblibrary.exception.BinaryNumberConversionException;
 
 
+import org.meteogroup.griblibrary.exception.GribReaderException;
 import org.meteogroup.griblibrary.grib2.model.Grib2DRS;
 import org.meteogroup.griblibrary.grib2.model.drstemplates.BoustrophedonicSecondOrderDRSTemplate;
 import org.testng.annotations.BeforeMethod;
@@ -83,8 +84,13 @@ public class Grib2DRSReaderTest {
 	};
 	
 	@Test(dataProvider = "goodDRSDataSet")
-	public void testReadDRS(byte[] testArray, int headerOffSet, int expectedValue, Grib2DRS expectedResponseObject) throws BinaryNumberConversionException, IOException {
-		int length = drsReader.readSectionLength(testArray, headerOffSet);
+	public void testReadDRS(byte[] testArray, int headerOffSet, int expectedValue, Grib2DRS expectedResponseObject) throws GribReaderException {
+		int length = 0;
+		try {
+			length = drsReader.readSectionLength(testArray, headerOffSet);
+		} catch (BinaryNumberConversionException e) {
+			throw new GribReaderException(e.getMessage(),e);
+		}
 		assertThat(length).isEqualTo(expectedValue);
 		
 		Grib2DRS drs = drsReader.readDRSValues(testArray,headerOffSet);

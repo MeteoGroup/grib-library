@@ -11,17 +11,25 @@ import java.nio.channels.FileChannel;
  */
 public class FileChannelPartReader {
 
-    public byte[] readPartOfFileChannel(FileChannel fileChannel, long startPosition, long lengthToRead) throws IOException, GribReaderException {
+    public byte[] readPartOfFileChannel(FileChannel fileChannel, long startPosition, long lengthToRead) throws GribReaderException {
         if (startPosition < 0 || lengthToRead <= 0){
             throw new GribReaderException("Invalid start position or length to read");
         }
-        if (fileChannel.size() < startPosition + lengthToRead){
-            throw new GribReaderException("Reading to buffer will run out of FileChannel to read.");
+        ByteBuffer buffer = null;
+        try {
+            if (fileChannel.size() < startPosition + lengthToRead){
+                throw new GribReaderException("Reading to buffer will run out of FileChannel to read.");
+            }
+            fileChannel.position(startPosition);
+            buffer = ByteBuffer.allocate((int) lengthToRead);
+            fileChannel.read(buffer);
+            buffer.rewind();
+        } catch (IOException e) {
+            throw new GribReaderException(e.getMessage(),e);
         }
-        fileChannel.position(startPosition);
-        ByteBuffer buffer = ByteBuffer.allocate((int) lengthToRead);
-        fileChannel.read(buffer);
-        buffer.rewind();
+        if (buffer == null){
+            throw new GribReaderException("Buffer was not filled. This indicates a very vague problem in the FileChannelPartReader...");
+        }
         return buffer.array();
     }
 }

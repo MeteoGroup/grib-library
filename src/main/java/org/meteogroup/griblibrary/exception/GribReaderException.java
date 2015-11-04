@@ -9,4 +9,8 @@ public class GribReaderException extends Exception {
         super(message);
     }
 
+    public GribReaderException(String message, Exception cause){
+        super(message,cause);
+    }
+
 }

@@ -38,16 +38,28 @@ public class Grib2RecordReader {
         return (headerString.equals("GRIB") && versionNumber == CORRECT_VERSION_NUMBER);
     }
 
-    public long readRecordLength(byte[] recordHeader) throws BinaryNumberConversionException, GribReaderException {
-        long length = BytesToPrimitiveHelper.bytesToLong(recordHeader[POSITION_LENGTH_1],recordHeader[POSITION_LENGTH_2],recordHeader[POSITION_LENGTH_3],recordHeader[POSITION_LENGTH_4],recordHeader[POSITION_LENGTH_5],recordHeader[POSITION_LENGTH_6],recordHeader[POSITION_LENGTH_7],recordHeader[POSITION_LENGTH_8]);
+    public long readRecordLength(byte[] recordHeader) throws GribReaderException {
+        long length = 0;
+        try {
+            length = BytesToPrimitiveHelper.bytesToLong(recordHeader[POSITION_LENGTH_1], recordHeader[POSITION_LENGTH_2], recordHeader[POSITION_LENGTH_3], recordHeader[POSITION_LENGTH_4], recordHeader[POSITION_LENGTH_5], recordHeader[POSITION_LENGTH_6], recordHeader[POSITION_LENGTH_7], recordHeader[POSITION_LENGTH_8]);
+        } catch (BinaryNumberConversionException e) {
+            throw new GribReaderException(e.getMessage(),e);
+        }
         if (length < MINIMUM_REQUIRED_LENGTH_IN_BIT){
             throw new GribReaderException("The suggested length in the record header is invalid.");
         }
         return length;
     }
 
-    public Grib2Record readCompleteRecord(Grib2Record record, byte[] recordAsByteArray, int headerLength) throws BinaryNumberConversionException, IOException {
-        Grib2IDS ids = idsReader.readGIDValues(recordAsByteArray, headerLength);
+    public Grib2Record readCompleteRecord(Grib2Record record, byte[] recordAsByteArray, int headerLength) throws GribReaderException {
+        Grib2IDS ids = null;
+        try {
+            ids = idsReader.readGIDValues(recordAsByteArray, headerLength);
+        } catch (BinaryNumberConversionException e) {
+            throw new GribReaderException(e.getMessage(),e);
+        } catch (IOException e) {
+            throw new GribReaderException(e.getMessage(),e);
+        }
         record.setIds(ids);
         return record;
     }

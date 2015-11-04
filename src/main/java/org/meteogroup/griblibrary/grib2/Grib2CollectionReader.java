@@ -39,7 +39,7 @@ public class Grib2CollectionReader {
         return fileLength;
     }
 
-    public List<Grib2Record> readAllRecords(FileChannel fileChannel) throws IOException, GribReaderException, BinaryNumberConversionException {
+    public List<Grib2Record> readAllRecords(FileChannel fileChannel) throws GribReaderException {
         ArrayList<Grib2Record> response = new ArrayList<Grib2Record>();
         while (gribRecordOffset < fileLength){
             byte[] recordHeader = partReader.readPartOfFileChannel(fileChannel, gribRecordOffset, HEADER_LENGTH);

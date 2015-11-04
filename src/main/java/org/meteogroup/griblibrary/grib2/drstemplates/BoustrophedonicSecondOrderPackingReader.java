@@ -3,6 +3,7 @@ package org.meteogroup.griblibrary.grib2.drstemplates;
 import java.io.IOException;
 
 import org.meteogroup.griblibrary.exception.BinaryNumberConversionException;
+import org.meteogroup.griblibrary.exception.GribReaderException;
 import org.meteogroup.griblibrary.grib2.model.drstemplates.BoustrophedonicSecondOrderDRSTemplate;
 import org.meteogroup.griblibrary.grib2.model.drstemplates.DRSTemplate;
 import org.meteogroup.griblibrary.util.BytesToPrimitiveHelper;
@@ -59,29 +60,31 @@ public class BoustrophedonicSecondOrderPackingReader implements DataTemplateRead
 	}
 	
 	@Override
-	public DRSTemplate readTemplate(byte[] bytes) throws IOException, BinaryNumberConversionException {
+	public DRSTemplate readTemplate(byte[] bytes) throws GribReaderException {
 		BoustrophedonicSecondOrderDRSTemplate  boustroTemplate = new BoustrophedonicSecondOrderDRSTemplate();
 		if (bytes ==null){
-    		throw new IOException("section not read in yet");
+    		throw new GribReaderException("section not read in yet");
     	}
-
-		boustroTemplate.setReferenceValue(BytesToPrimitiveHelper.bytesToFloatAsIBM(
-    			bytes[POSITION_REFERENCE_VALUE1],
-    			bytes[POSITION_REFERENCE_VALUE2],
-    			bytes[POSITION_REFERENCE_VALUE3],
-    			bytes[POSITION_REFERENCE_VALUE4])); 
-		boustroTemplate.setBinaryScaleFactor(BytesToPrimitiveHelper.signedBytesToInt(bytes[POSITION_BINARYSCALEFACTOR1] ,bytes[POSITION_BINARYSCALEFACTOR2] ));
-		boustroTemplate.setDecimalScaleFactor(BytesToPrimitiveHelper.signedBytesToInt(bytes[POSITION_DECIMALSCALEFACTOR1],bytes[POSITION_DECIMALSCALEFACTOR2]));
-		boustroTemplate.setBitsPerValue(bytes[POSITION_BITSPERVALUE] &0xFF);
-		boustroTemplate.setWidthOfFirstOrderValues(bytes[POSITION_WIDTHOFFIRSTORDERVALUES] &0xFF);
-		boustroTemplate.setNumberOfGroups(BytesToPrimitiveHelper.bytesToInteger(bytes[POSITION_NUMBEROFGROUPS1],bytes[POSITION_NUMBEROFGROUPS2],bytes[POSITION_NUMBEROFGROUPS3],bytes[POSITION_NUMBEROFGROUPS4]));
-		boustroTemplate.setNumberOfSecondOrderPackedValues(BytesToPrimitiveHelper.bytesToInteger(bytes[POSITION_NUMBEROFSECONDORDERPACKEDVALUES1],bytes[POSITION_NUMBEROFSECONDORDERPACKEDVALUES2],bytes[POSITION_NUMBEROFSECONDORDERPACKEDVALUES3],bytes[POSITION_NUMBEROFSECONDORDERPACKEDVALUES4]));
-		boustroTemplate.setWidthOfWidth(bytes[POSITION_WIDTHOFWIDTHS] &0xFF);
-		boustroTemplate.setWidthOfLength(bytes[POSITION_WITHOFLENGTHS] &0xFF);
-		boustroTemplate.setBoustrophonic(bytes[POSITION_BOUSTROPHEDONIC] &0xFF);
-		boustroTemplate.setOrderOfSPD(bytes[POSITION_ORDEROFSPD] &0xFF);
-		boustroTemplate.setWidthOfSPD(bytes[POSITION_WIDTH_SPD] &0xFF);
-		
+		try {
+			boustroTemplate.setReferenceValue(BytesToPrimitiveHelper.bytesToFloatAsIBM(
+                    bytes[POSITION_REFERENCE_VALUE1],
+                    bytes[POSITION_REFERENCE_VALUE2],
+                    bytes[POSITION_REFERENCE_VALUE3],
+                    bytes[POSITION_REFERENCE_VALUE4]));
+			boustroTemplate.setBinaryScaleFactor(BytesToPrimitiveHelper.signedBytesToInt(bytes[POSITION_BINARYSCALEFACTOR1] ,bytes[POSITION_BINARYSCALEFACTOR2] ));
+			boustroTemplate.setDecimalScaleFactor(BytesToPrimitiveHelper.signedBytesToInt(bytes[POSITION_DECIMALSCALEFACTOR1],bytes[POSITION_DECIMALSCALEFACTOR2]));
+			boustroTemplate.setBitsPerValue(bytes[POSITION_BITSPERVALUE] &0xFF);
+			boustroTemplate.setWidthOfFirstOrderValues(bytes[POSITION_WIDTHOFFIRSTORDERVALUES] &0xFF);
+			boustroTemplate.setNumberOfGroups(BytesToPrimitiveHelper.bytesToInteger(bytes[POSITION_NUMBEROFGROUPS1],bytes[POSITION_NUMBEROFGROUPS2],bytes[POSITION_NUMBEROFGROUPS3],bytes[POSITION_NUMBEROFGROUPS4]));
+			boustroTemplate.setNumberOfSecondOrderPackedValues(BytesToPrimitiveHelper.bytesToInteger(bytes[POSITION_NUMBEROFSECONDORDERPACKEDVALUES1],bytes[POSITION_NUMBEROFSECONDORDERPACKEDVALUES2],bytes[POSITION_NUMBEROFSECONDORDERPACKEDVALUES3],bytes[POSITION_NUMBEROFSECONDORDERPACKEDVALUES4]));
+			boustroTemplate.setWidthOfWidth(bytes[POSITION_WIDTHOFWIDTHS] &0xFF);
+			boustroTemplate.setWidthOfLength(bytes[POSITION_WITHOFLENGTHS] &0xFF);
+			boustroTemplate.setBoustrophonic(bytes[POSITION_BOUSTROPHEDONIC] &0xFF);
+			boustroTemplate.setOrderOfSPD(bytes[POSITION_ORDEROFSPD] &0xFF);
+			boustroTemplate.setWidthOfSPD(bytes[POSITION_WIDTH_SPD] &0xFF);
+		} catch (BinaryNumberConversionException e) {
+			throw new GribReaderException(e.getMessage(), e);
+		}
 		return boustroTemplate;
 		}
 	

@@ -3,6 +3,7 @@ package org.meteogroup.griblibrary.grib2;
 import java.io.IOException;
 
 import org.meteogroup.griblibrary.exception.BinaryNumberConversionException;
+import org.meteogroup.griblibrary.exception.GribReaderException;
 import org.meteogroup.griblibrary.grib2.drstemplates.BoustrophedonicSecondOrderPackingReader;
 import org.meteogroup.griblibrary.grib2.drstemplates.DataTemplateReader;
 import org.meteogroup.griblibrary.grib2.model.Grib2DRS;
@@ -28,26 +29,30 @@ public class Grib2DRSReader extends Grib2SectionReader {
 	static final int POSITION_TEMPLATE_NUMBER1 = 9;
 	static final int POSITION_TEMPLATE_NUMBER2 = 10;
 	
-	public Grib2DRS readDRSValues(byte[] drsValues, int headerOffSet) throws BinaryNumberConversionException, IOException{
+	public Grib2DRS readDRSValues(byte[] drsValues, int headerOffSet) throws GribReaderException {
 		
 		Grib2DRS drs = new Grib2DRS();
 		
 		if (readSectionNumber(drsValues,headerOffSet)!=SECTIONID){
-			throw new IOException("Section ID does not match. Should be "+SECTIONID+" is "+readSectionNumber(drsValues,headerOffSet));
+			throw new GribReaderException("Section ID does not match. Should be "+SECTIONID+" is "+readSectionNumber(drsValues,headerOffSet));
 		}
-		drs.setLength(readSectionLength(drsValues, headerOffSet));
-		drs.setDataRepresenationtypeNumber(BytesToPrimitiveHelper.bytesToInteger(drsValues[POSITION_TEMPLATE_NUMBER1],
-				drsValues[POSITION_TEMPLATE_NUMBER2]));
-		drs.setNumberOfDataPoints(BytesToPrimitiveHelper.bytesToInteger(
-				drsValues[POSITION_NUMBER_DATAPOINTS1],
-				drsValues[POSITION_NUMBER_DATAPOINTS2],
-				drsValues[POSITION_NUMBER_DATAPOINTS3],
-				drsValues[POSITION_NUMBER_DATAPOINTS4]));
+		try {
+			drs.setLength(readSectionLength(drsValues, headerOffSet));
+			drs.setDataRepresenationtypeNumber(BytesToPrimitiveHelper.bytesToInteger(drsValues[POSITION_TEMPLATE_NUMBER1],
+					drsValues[POSITION_TEMPLATE_NUMBER2]));
+			drs.setNumberOfDataPoints(BytesToPrimitiveHelper.bytesToInteger(
+					drsValues[POSITION_NUMBER_DATAPOINTS1],
+					drsValues[POSITION_NUMBER_DATAPOINTS2],
+					drsValues[POSITION_NUMBER_DATAPOINTS3],
+					drsValues[POSITION_NUMBER_DATAPOINTS4]));
+		} catch (BinaryNumberConversionException e) {
+			e.printStackTrace();
+		}
 		drs.setDataTemplate(this.readDataTemplate(drsValues,drs.getDataRepresenationtypeNumber()));
 		return drs;
 	}
 	
-    protected DRSTemplate readDataTemplate(byte[] drsValues, int drsTemplate) throws IOException, BinaryNumberConversionException{
+    protected DRSTemplate readDataTemplate(byte[] drsValues, int drsTemplate) throws GribReaderException {
     	final int TEMPLATE_PACKING_SIMPLE = 0;
     	final int TEMPLATE_PACKING_BOUSTROPHEDONIC = 50002;
     	

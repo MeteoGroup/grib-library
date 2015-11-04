@@ -38,8 +38,13 @@ public class Grib1RecordReader {
         return (headerString.equals("GRIB") && versionNumber == 1);
     }
 
-    public int readRecordLength(byte[] bufferValues) throws GribReaderException, BinaryNumberConversionException {
-        int length = BytesToPrimitiveHelper.bytesToInteger(bufferValues[POSITION_RECORDLENGTH1],bufferValues[POSITION_RECORDLENGTH2],bufferValues[POSITION_RECORDLENGTH3]);
+    public int readRecordLength(byte[] bufferValues) throws GribReaderException {
+        int length = 0;
+        try {
+            length = BytesToPrimitiveHelper.bytesToInteger(bufferValues[POSITION_RECORDLENGTH1], bufferValues[POSITION_RECORDLENGTH2], bufferValues[POSITION_RECORDLENGTH3]);
+        } catch (BinaryNumberConversionException e) {
+            throw new GribReaderException(e.getMessage(),e);
+        }
         if (length < 8){
             throw new GribReaderException("The suggested length in the record header is invalid.");
         }

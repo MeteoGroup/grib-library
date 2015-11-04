@@ -10,6 +10,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 import org.meteogroup.griblibrary.exception.BinaryNumberConversionException;
+import org.meteogroup.griblibrary.exception.GribReaderException;
 import org.meteogroup.griblibrary.grib2.Grib2DRSReader;
 import org.meteogroup.griblibrary.grib2.drstemplates.BoustrophedonicSecondOrderPackingReader;
 import org.meteogroup.griblibrary.grib2.model.drstemplates.BoustrophedonicSecondOrderDRSTemplate;
@@ -90,7 +91,7 @@ public class BoustrophedonicSecondOrderPackingReaderTest {
 	};
 	
 	@Test(dataProvider = "goodBOUSTRODataSet")
-	public void testReadBoustro(byte[] testArray, int headerOffSet, BoustrophedonicSecondOrderDRSTemplate expectedResponseObject) throws BinaryNumberConversionException, IOException {
+	public void testReadBoustro(byte[] testArray, int headerOffSet, BoustrophedonicSecondOrderDRSTemplate expectedResponseObject) throws GribReaderException {
 		//int length = boustroReader.readSectionLength(testArray, headerOffSet);
 		//assertThat(length).isEqualTo(expectedValue);
 		
