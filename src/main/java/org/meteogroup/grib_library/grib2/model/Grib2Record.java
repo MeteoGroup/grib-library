@@ -8,6 +8,7 @@ import lombok.Setter;
 /**
  * 
  * @author Pauw
+ * The record that holds all the needed sections
  *
  */
 public class Grib2Record extends GribRecord{

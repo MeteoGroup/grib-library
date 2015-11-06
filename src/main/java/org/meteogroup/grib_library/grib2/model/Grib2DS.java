@@ -6,8 +6,10 @@ import lombok.Setter;
 /**
  * 
  * @author Pauw
- *
+ * Domain class holding the actual (packed) data itself. 
  */
+
+
 @Getter
 @Setter
 public class Grib2DS {
