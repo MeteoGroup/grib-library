@@ -28,8 +28,10 @@ public class Grib2LUSReaderTest {
 
 	@DataProvider(name = "goodLUSDataSet")
 	public static Object[][] goodLUSDataSet() throws IOException, URISyntaxException {
+		final int OFFSET = 12;
 		return new Object[][]{
-				new Object[]{GOOD_LUS_ARRAY(), 0, EXPECTEDLENGTH, GOOD_LUS_OBJECT()}
+				new Object[]{GOOD_LUS_ARRAY(), 0, EXPECTEDLENGTH, GOOD_LUS_OBJECT()},
+				new Object[]{GOOD_LUS_ARRAY_WITH_OFFSET(OFFSET), OFFSET, EXPECTEDLENGTH, GOOD_LUS_OBJECT()}
 		};
 	}
 	
@@ -59,6 +61,19 @@ public class Grib2LUSReaderTest {
 		raFile.close();
 		return response;
 	};
+	
+	private static final byte[] GOOD_LUS_ARRAY_WITH_OFFSET(int offSet)
+			throws URISyntaxException, IOException {
+		byte[] bytes = GOOD_LUS_ARRAY();
+		byte[] response = new byte[bytes.length + offSet];
+		for (int i = 0; i < offSet; i++) {
+			response[i] = (byte) 1;
+		}
+		for (int counter = 0; counter < bytes.length; counter++) {
+			response[offSet + counter] = bytes[counter];
+		}
+		return response;
+	}
 	
 	@Test(dataProvider = "goodLUSDataSet")
 	public void testReadLUS(byte[] testArray, int headerOffSet, int expectedValue, Grib2LUS expectedResponseObject) throws BinaryNumberConversionException, IOException {

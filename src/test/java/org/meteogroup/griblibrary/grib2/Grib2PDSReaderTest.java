@@ -38,8 +38,10 @@ public class Grib2PDSReaderTest {
 
 	@DataProvider(name = "goodPDSDataSet")
 	public static Object[][] goodPDSDataSet() throws IOException, URISyntaxException {
+		final int OFFSET = 13;
 		return new Object[][]{
-				new Object[]{GOOD_PDS_ARRAY(), 0, EXPECTEDLENGTH, GOOD_PDS_OBJECT()}
+				new Object[]{GOOD_PDS_ARRAY(), 0, EXPECTEDLENGTH, GOOD_PDS_OBJECT()},
+				new Object[]{GOOD_PDS_ARRAY_WITH_OFFSET(OFFSET), OFFSET, EXPECTEDLENGTH, GOOD_PDS_OBJECT()}
 		};
 	}
 	
@@ -72,6 +74,19 @@ public class Grib2PDSReaderTest {
 		raFile.close();
 		return response;
 	};
+	
+	private static final byte[] GOOD_PDS_ARRAY_WITH_OFFSET(int offSet)
+			throws URISyntaxException, IOException {
+		byte[] bytes = GOOD_PDS_ARRAY();
+		byte[] response = new byte[bytes.length + offSet];
+		for (int i = 0; i < offSet; i++) {
+			response[i] = (byte) 1;
+		}
+		for (int counter = 0; counter < bytes.length; counter++) {
+			response[offSet + counter] = bytes[counter];
+		}
+		return response;
+	}
 	
 	@Test(dataProvider = "goodPDSDataSet")
 	public void testReadPDS(byte[] testArray, int headerOffSet, int expectedValue, Grib2PDS expectedResponseObject) throws BinaryNumberConversionException, IOException {
