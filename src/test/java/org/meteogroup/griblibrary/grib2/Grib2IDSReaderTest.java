@@ -27,8 +27,10 @@ public class Grib2IDSReaderTest {
 
 	@DataProvider(name = "goodGIDDataSet")
 	public static Object[][] goodGDSDataSet() throws IOException, URISyntaxException {
+		final int OFFSET = 11;
 		return new Object[][]{
-				new Object[]{GOOD_GID_ARRAY(), 0, 21, GOOD_GID_OBJECT()}
+				new Object[]{GOOD_GID_ARRAY(), 0, 21, GOOD_GID_OBJECT()},
+				new Object[]{GOOD_GID_ARRAY_WITH_OFFSET(OFFSET), OFFSET, 21, GOOD_GID_OBJECT()}
 		};
 	}
 	
@@ -76,6 +78,19 @@ public class Grib2IDSReaderTest {
 		raFile.close();
 		return response;
 	};
+
+	private static final byte[] GOOD_GID_ARRAY_WITH_OFFSET(int offSet)
+			throws URISyntaxException, IOException {
+		byte[] bytes = GOOD_GID_ARRAY();
+		byte[] response = new byte[bytes.length + offSet];
+		for (int i = 0; i < offSet; i++) {
+			response[i] = (byte) 1;
+		}
+		for (int counter = 0; counter < bytes.length; counter++) {
+			response[offSet + counter] = bytes[counter];
+		}
+		return response;
+	}
 	
 	@Test(dataProvider = "goodGIDDataSet")
 	public void testReadGID(byte[] testArray, int headerOffSet, int expectedValue, Grib2IDS expectedResponseObject) throws BinaryNumberConversionException, IOException {

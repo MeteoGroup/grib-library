@@ -49,20 +49,19 @@ public class Grib2IDSReader extends Grib2SectionReader{
 		}
         gid.setLength(readSectionLength(gidsValues, headerOffSet));
         //gid.setId((short) (readSectionNumber(gidsValues)));
-        gid.setCentreId(BytesToPrimitiveHelper.bytesToShort(gidsValues[POSITION_CENTREID_1],gidsValues[POSITION_CENTREID_2]));
-        gid.setSubCenterId(BytesToPrimitiveHelper.bytesToShort(gidsValues[POSITION_SUBCENTREID_1],gidsValues[POSITION_SUBCENTREID_2]));
-        gid.setTableVersion((short) (gidsValues[POSITION_TABLEVERSION] & 0xFF));
-        gid.setLocalTableVersionNumber((short) (gidsValues[POSITION_LOCALTABLEVERSION] & 0xFF));
-        gid.setSignificanceOfReferenceTime((short) (gidsValues[POSITION_SIGNIFICANCE_REFERENCETIME] & 0xFF));
-        gid.setYear(BytesToPrimitiveHelper.bytesToShort(gidsValues[POSITION_YEAR_1],gidsValues[POSITION_YEAR_2]));
-        gid.setMonth((short) (gidsValues[POSITION_MONTH] & 0xFF));
-        gid.setDay((short) (gidsValues[POSITION_DAY] & 0xFF));
-        gid.setHour((short) (gidsValues[POSITION_HOUR] & 0xFF));
-        gid.setMinute((short) (gidsValues[POSITION_MINUTE] & 0xFF));
-        gid.setSecond((short) (gidsValues[POSITION_SECOND] & 0xFF));
-        gid.setProductionStatus((short) (gidsValues[POSITION_PRODUCTION_STATUS] & 0xFF));
-        gid.setTypeOfData((short) (gidsValues[POSITION_TYPEOFDATA] & 0xFF));
+        gid.setCentreId(BytesToPrimitiveHelper.bytesToShort(gidsValues[POSITION_CENTREID_1+headerOffSet],gidsValues[POSITION_CENTREID_2+headerOffSet]));
+        gid.setSubCenterId(BytesToPrimitiveHelper.bytesToShort(gidsValues[POSITION_SUBCENTREID_1+headerOffSet],gidsValues[POSITION_SUBCENTREID_2+headerOffSet]));
+        gid.setTableVersion((short) (gidsValues[POSITION_TABLEVERSION+headerOffSet] & 0xFF));
+        gid.setLocalTableVersionNumber((short) (gidsValues[POSITION_LOCALTABLEVERSION+headerOffSet] & 0xFF));
+        gid.setSignificanceOfReferenceTime((short) (gidsValues[POSITION_SIGNIFICANCE_REFERENCETIME+headerOffSet] & 0xFF));
+        gid.setYear(BytesToPrimitiveHelper.bytesToShort(gidsValues[POSITION_YEAR_1+headerOffSet],gidsValues[POSITION_YEAR_2+headerOffSet]));
+        gid.setMonth((short) (gidsValues[POSITION_MONTH+headerOffSet] & 0xFF));
+        gid.setDay((short) (gidsValues[POSITION_DAY+headerOffSet] & 0xFF));
+        gid.setHour((short) (gidsValues[POSITION_HOUR+headerOffSet] & 0xFF));
+        gid.setMinute((short) (gidsValues[POSITION_MINUTE+headerOffSet] & 0xFF));
+        gid.setSecond((short) (gidsValues[POSITION_SECOND+headerOffSet] & 0xFF));
+        gid.setProductionStatus((short) (gidsValues[POSITION_PRODUCTION_STATUS+headerOffSet] & 0xFF));
+        gid.setTypeOfData((short) (gidsValues[POSITION_TYPEOFDATA+headerOffSet] & 0xFF));
         return gid;
     }
-
 }
