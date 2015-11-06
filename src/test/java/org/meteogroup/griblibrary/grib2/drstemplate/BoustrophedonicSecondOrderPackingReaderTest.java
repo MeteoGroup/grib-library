@@ -45,14 +45,14 @@ public class BoustrophedonicSecondOrderPackingReaderTest {
 
 	@DataProvider(name = "goodBOUSTRODataSet")
 	public static Object[][] goodBoustroDataSet() throws IOException, URISyntaxException {
+		final int OFFSET = 10;
 		return new Object[][]{
-				new Object[]{GOOD_BOUSTRO_ARRAY(), 0, GOOD_BOUSTRO_OBJECT()}
+				new Object[]{GOOD_BOUSTRO_ARRAY(), 0, GOOD_BOUSTRO_OBJECT()},
+				new Object[]{GOOD_BOUSTRO_ARRAY_WITH_OFFSET(OFFSET), OFFSET, GOOD_BOUSTRO_OBJECT()}
 		};
 	}
 	
 	private static final BoustrophedonicSecondOrderDRSTemplate GOOD_BOUSTRO_OBJECT(){
-		
-		
 		BoustrophedonicSecondOrderDRSTemplate boustroTemplate = new BoustrophedonicSecondOrderDRSTemplate();
 		//hier nog verder aan werken om deze waarden te kunnen controleren
 		boustroTemplate.setReferenceValue(REFERENCEVALUE);
@@ -90,12 +90,24 @@ public class BoustrophedonicSecondOrderPackingReaderTest {
 		return response;
 	};
 	
+	private static final byte[] GOOD_BOUSTRO_ARRAY_WITH_OFFSET(int offSet) throws URISyntaxException, IOException {
+		byte[] bytes = GOOD_BOUSTRO_ARRAY();
+		byte[] response = new byte[bytes.length+offSet];
+		for (int i=0; i<offSet; i++){
+			response[i] = (byte)1;	
+		}
+		for (int counter=0; counter<bytes.length; counter++){
+			response[offSet+counter] = bytes[counter];
+		}
+		return response;
+	}
+	
 	@Test(dataProvider = "goodBOUSTRODataSet")
 	public void testReadBoustro(byte[] testArray, int headerOffSet, BoustrophedonicSecondOrderDRSTemplate expectedResponseObject) throws GribReaderException {
 		//int length = boustroReader.readSectionLength(testArray, headerOffSet);
 		//assertThat(length).isEqualTo(expectedValue);
 		
-		BoustrophedonicSecondOrderDRSTemplate boustro = (BoustrophedonicSecondOrderDRSTemplate) boustroReader.readTemplate(testArray);//,headerOffSet);
+		BoustrophedonicSecondOrderDRSTemplate boustro = (BoustrophedonicSecondOrderDRSTemplate) boustroReader.readTemplate(testArray,headerOffSet);//,headerOffSet);
 		assertThat(boustro).isNotNull();
 		assertThat(boustro).isEqualTo(expectedResponseObject);
 	}

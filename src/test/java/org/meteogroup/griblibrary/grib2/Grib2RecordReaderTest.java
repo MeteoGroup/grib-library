@@ -2,6 +2,9 @@ package org.meteogroup.griblibrary.grib2;
 
 import org.meteogroup.griblibrary.exception.BinaryNumberConversionException;
 import org.meteogroup.griblibrary.exception.GribReaderException;
+import org.meteogroup.griblibrary.grib.GribRecord;
+import org.meteogroup.griblibrary.grib2.model.Grib2Record;
+import org.meteogroup.griblibrary.util.FileChannelPartReader;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -21,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class Grib2RecordReaderTest {
 
     private Grib2RecordReader reader;
+    FileChannelPartReader partReader;
 
     @DataProvider(name = "goodHeader")
     public static Object[][] goodHeader() throws IOException, URISyntaxException {
@@ -113,4 +117,47 @@ public class Grib2RecordReaderTest {
         raFile.close();
         return response;
     };
+    
+    
+    
+    @Test
+    public void fullGribRecordTest() throws URISyntaxException, IOException, GribReaderException{
+    	
+    	Grib2Record record = this.readSampleGribFile();
+    	assertThat(record).isNotNull();
+    	assertThat(record.getIds()).isNotNull();
+//    	assertThat(record.getGDS).isNotNull(); //@todo build @Lajos busy with it
+    	assertThat(record.getPds()).isNotNull();
+    	assertThat(record.getDrs()).isNotNull();
+    	//assertThat(record.getBms()).isNotNull(); @todo build, not needed yet
+    	assertThat(record.getDataSection()).isNotNull();
+    	
+    }
+    
+	private Grib2Record readSampleGribFile() throws URISyntaxException, IOException, GribReaderException {
+		String filename = "/grib2test/samplefiles/ec-grib2-example.grb";
+
+		String name = Grib2RecordReaderTest.class.getResource(filename).toString();
+		File f = new File(Grib2RecordReaderTest.class.getResource(filename).toURI());
+		if (!f.exists()) {
+			throw new IOException("file does not exist at " + name);
+		}
+		RandomAccessFile raFile = new RandomAccessFile(f, "r");
+		FileChannel fc = raFile.getChannel();
+		fc.position(0);
+		ByteBuffer buffer = ByteBuffer.allocate((int) raFile.length());
+		fc.read(buffer);
+		buffer.rewind();
+		byte[] response = buffer.array();
+
+		final int HEADER_LENGTH = 16;
+		final int GRIB_VERSION = 2;
+		partReader = new FileChannelPartReader();
+		byte[] recordHeader = partReader.readPartOfFileChannel(fc, 0, HEADER_LENGTH);
+		Grib2Record record = new Grib2Record();
+		record.setLength((int) reader.readRecordLength(recordHeader));
+        record.setVersion(GRIB_VERSION);
+		 
+		return reader.readCompleteRecord(record,response,HEADER_LENGTH );
+	};
 }

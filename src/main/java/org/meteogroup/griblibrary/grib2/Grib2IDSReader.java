@@ -47,7 +47,7 @@ public class Grib2IDSReader extends Grib2SectionReader{
         if (readSectionNumber(gidsValues,headerOffSet)!=SECTIONID){
 			throw new IOException("Section ID does not match. Should be "+SECTIONID+" is "+readSectionNumber(gidsValues,headerOffSet));
 		}
-        gid.setLength(readSectionLength(gidsValues, 0));
+        gid.setLength(readSectionLength(gidsValues, headerOffSet));
         //gid.setId((short) (readSectionNumber(gidsValues)));
         gid.setCentreId(BytesToPrimitiveHelper.bytesToShort(gidsValues[POSITION_CENTREID_1],gidsValues[POSITION_CENTREID_2]));
         gid.setSubCenterId(BytesToPrimitiveHelper.bytesToShort(gidsValues[POSITION_SUBCENTREID_1],gidsValues[POSITION_SUBCENTREID_2]));

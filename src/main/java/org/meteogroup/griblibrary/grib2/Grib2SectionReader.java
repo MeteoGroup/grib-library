@@ -16,10 +16,10 @@ public class Grib2SectionReader {
 	private static final int POSITION_LENGTH_4 = 3;
 	private static final int POSITION_SECTIONNUMBER = 4;
 	
-	protected int readSectionLength(byte[] bytes, int headerOffSet) throws BinaryNumberConversionException {
+	protected int readSectionLength(byte[] bytes, final int headerOffSet) throws BinaryNumberConversionException {
 
-		return BytesToPrimitiveHelper.bytesToInteger(bytes[POSITION_LENGTH_1], bytes[POSITION_LENGTH_2],
-				bytes[POSITION_LENGTH_3], bytes[POSITION_LENGTH_4]);
+		return BytesToPrimitiveHelper.bytesToInteger(bytes[POSITION_LENGTH_1+headerOffSet], bytes[POSITION_LENGTH_2+headerOffSet],
+				bytes[POSITION_LENGTH_3+headerOffSet], bytes[POSITION_LENGTH_4+headerOffSet]);
 
 	}
 	

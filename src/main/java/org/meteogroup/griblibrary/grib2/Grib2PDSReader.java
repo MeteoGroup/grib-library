@@ -37,16 +37,16 @@ public class Grib2PDSReader extends Grib2SectionReader {
 		}
 		pds.setLength(readSectionLength(pdsValues, headerOffSet));
 		pds.setNumberOfCoordinateValues(BytesToPrimitiveHelper.signedBytesToInt(
-				pdsValues[POSITION_NROFCOORDINATEVALUES1],
-				pdsValues[POSITION_NROFCOORDINATEVALUES2]));
+				pdsValues[POSITION_NROFCOORDINATEVALUES1+headerOffSet],
+				pdsValues[POSITION_NROFCOORDINATEVALUES2+headerOffSet]));
 		pds.setTemplateNumber(BytesToPrimitiveHelper.signedBytesToInt(
-				pdsValues[POSITION_TEMPLATENUMBER1],
-				pdsValues[POSITION_TEMPLATENUMBER2]));
-		pds.setTemplate(this.readProductTemplate(pdsValues, pds.getTemplateNumber()));
+				pdsValues[POSITION_TEMPLATENUMBER1+headerOffSet],
+				pdsValues[POSITION_TEMPLATENUMBER2+headerOffSet]));
+		pds.setTemplate(this.readProductTemplate(pdsValues,headerOffSet, pds.getTemplateNumber()));
 		return pds;
 	}
 	
-    protected ProductTemplate readProductTemplate(byte[] pdsValues, int pdsTemplateNumber) throws IOException, BinaryNumberConversionException{
+    protected ProductTemplate readProductTemplate(byte[] pdsValues,int headerOffset, int pdsTemplateNumber) throws IOException, BinaryNumberConversionException{
     	final int TEMPLATE_HORIZONTAL_POINT_IN_TIME = 0;
     	final int TEMPLATE_HORIZONTAL_INDIVIDUAL_ENSEMBLE_PERTURBATED_POINT_IN_TIME = 1;
     	
@@ -60,6 +60,6 @@ public class Grib2PDSReader extends Grib2SectionReader {
     		log.debug("ensemble horizontal perturbated");
     	}
     	
-    	return productTemplateReader.readTemplate(pdsValues);
+    	return productTemplateReader.readTemplate(pdsValues,headerOffset);
     }
 }

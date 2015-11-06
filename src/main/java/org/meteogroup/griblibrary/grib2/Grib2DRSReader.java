@@ -38,21 +38,21 @@ public class Grib2DRSReader extends Grib2SectionReader {
 		}
 		try {
 			drs.setLength(readSectionLength(drsValues, headerOffSet));
-			drs.setDataRepresenationtypeNumber(BytesToPrimitiveHelper.bytesToInteger(drsValues[POSITION_TEMPLATE_NUMBER1],
-					drsValues[POSITION_TEMPLATE_NUMBER2]));
+			drs.setDataRepresenationtypeNumber(BytesToPrimitiveHelper.bytesToInteger(drsValues[POSITION_TEMPLATE_NUMBER1+headerOffSet],
+					drsValues[POSITION_TEMPLATE_NUMBER2+headerOffSet]));
 			drs.setNumberOfDataPoints(BytesToPrimitiveHelper.bytesToInteger(
-					drsValues[POSITION_NUMBER_DATAPOINTS1],
-					drsValues[POSITION_NUMBER_DATAPOINTS2],
-					drsValues[POSITION_NUMBER_DATAPOINTS3],
-					drsValues[POSITION_NUMBER_DATAPOINTS4]));
+					drsValues[POSITION_NUMBER_DATAPOINTS1+headerOffSet],
+					drsValues[POSITION_NUMBER_DATAPOINTS2+headerOffSet],
+					drsValues[POSITION_NUMBER_DATAPOINTS3+headerOffSet],
+					drsValues[POSITION_NUMBER_DATAPOINTS4+headerOffSet]));
 		} catch (BinaryNumberConversionException e) {
 			e.printStackTrace();
 		}
-		drs.setDataTemplate(this.readDataTemplate(drsValues,drs.getDataRepresenationtypeNumber()));
+		drs.setDataTemplate(this.readDataTemplate(drsValues,headerOffSet,drs.getDataRepresenationtypeNumber()));
 		return drs;
 	}
 	
-    protected DRSTemplate readDataTemplate(byte[] drsValues, int drsTemplate) throws GribReaderException {
+    protected DRSTemplate readDataTemplate(byte[] drsValues,int headerOffSet, int drsTemplate) throws GribReaderException {
     	final int TEMPLATE_PACKING_SIMPLE = 0;
     	final int TEMPLATE_PACKING_BOUSTROPHEDONIC = 50002;
     	
@@ -67,6 +67,6 @@ public class Grib2DRSReader extends Grib2SectionReader {
     		dataTemplateReader = new BoustrophedonicSecondOrderPackingReader();
     	}
     	
-    	return dataTemplateReader.readTemplate(drsValues);
+    	return dataTemplateReader.readTemplate(drsValues,headerOffSet);
     }
 }

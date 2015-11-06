@@ -9,6 +9,6 @@ import org.meteogroup.griblibrary.grib2.model.producttemplates.ProductTemplate;
  */
 public interface ProductTemplateReader {
 
-    public ProductTemplate readTemplate(byte[] ptValues) throws BinaryNumberConversionException;
+    public ProductTemplate readTemplate(byte[] ptValues, int headerOffset) throws BinaryNumberConversionException;
 
 }

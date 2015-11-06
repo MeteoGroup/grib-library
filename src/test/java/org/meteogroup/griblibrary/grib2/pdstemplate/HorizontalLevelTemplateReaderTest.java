@@ -31,8 +31,10 @@ public class HorizontalLevelTemplateReaderTest {
 
 	@DataProvider(name = "goodHorizontalLevelDataSet")
 	public static Object[][] goodHorizontalLevelDataSet() throws IOException, URISyntaxException, BinaryNumberConversionException {
+		final int OFFSET = 10;
 		return new Object[][]{
-				new Object[]{GOOD_HORIZONTALLEVEL_ARRAY(), 0, GOOD_HORIZONTALLEVEL_OBJECT()}
+				new Object[]{GOOD_HORIZONTALLEVEL_ARRAY(), 0, GOOD_HORIZONTALLEVEL_OBJECT()},
+				new Object[]{GOOD_HORIZONTALLEVEL_ARRAY_WITH_OFFSET(OFFSET), OFFSET, GOOD_HORIZONTALLEVEL_OBJECT()}
 		};
 	}
 	/**
@@ -81,11 +83,23 @@ public class HorizontalLevelTemplateReaderTest {
 		return response;
 	};
 	
+	private static final byte[] GOOD_HORIZONTALLEVEL_ARRAY_WITH_OFFSET(int offSet) throws URISyntaxException, IOException {
+		byte[] bytes = GOOD_HORIZONTALLEVEL_ARRAY();
+		byte[] response = new byte[bytes.length+offSet];
+		for (int i=0; i<offSet; i++){
+			response[i] = (byte)1;	
+		}
+		for (int counter=0; counter<bytes.length; counter++){
+			response[offSet+counter] = bytes[counter];
+		}
+		return response;
+	}
+	
 	@Test(dataProvider = "goodHorizontalLevelDataSet")
 	public void testHorizontalLevel(byte[] testArray, int headerOffSet, HorizontalLevelTemplate expectedResponseObject) throws BinaryNumberConversionException, IOException {
 
 		
-		HorizontalLevelTemplate horizontalLevelTemplate = (HorizontalLevelTemplate) horizontalLevelReader.readTemplate(testArray);//,headerOffSet);
+		HorizontalLevelTemplate horizontalLevelTemplate = (HorizontalLevelTemplate) horizontalLevelReader.readTemplate(testArray,headerOffSet);//,headerOffSet);
 		assertThat(horizontalLevelTemplate).isNotNull();
 		assertThat(horizontalLevelTemplate).isInstanceOf(HorizontalLevelTemplate.class);
 		assertThat(horizontalLevelTemplate).isEqualTo(expectedResponseObject);

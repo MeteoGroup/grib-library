@@ -13,5 +13,5 @@ import org.meteogroup.griblibrary.grib2.model.drstemplates.DRSTemplate;
  */
 public interface DataTemplateReader {
 
-	public DRSTemplate readTemplate(byte[] bytes) throws GribReaderException;
+	public DRSTemplate readTemplate(byte[] bytes, int headerOffSet) throws GribReaderException;
 }
