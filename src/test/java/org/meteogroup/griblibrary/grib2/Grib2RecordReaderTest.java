@@ -5,6 +5,7 @@ import org.meteogroup.griblibrary.exception.GribReaderException;
 import org.meteogroup.griblibrary.grib.GribRecord;
 import org.meteogroup.griblibrary.grib2.model.Grib2Record;
 import org.meteogroup.griblibrary.util.FileChannelPartReader;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -16,10 +17,12 @@ import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
+import lombok.Cleanup;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by roijen on 29-Oct-15.
+ * Does the testing of the Grib2RecordReader
  */
 public class Grib2RecordReaderTest {
 
@@ -142,7 +145,7 @@ public class Grib2RecordReaderTest {
 		if (!f.exists()) {
 			throw new IOException("file does not exist at " + name);
 		}
-		RandomAccessFile raFile = new RandomAccessFile(f, "r");
+		@Cleanup RandomAccessFile raFile = new RandomAccessFile(f, "r");
 		FileChannel fc = raFile.getChannel();
 		fc.position(0);
 		ByteBuffer buffer = ByteBuffer.allocate((int) raFile.length());
@@ -160,4 +163,5 @@ public class Grib2RecordReaderTest {
 		 
 		return reader.readCompleteRecord(record,response,HEADER_LENGTH );
 	};
+	
 }
