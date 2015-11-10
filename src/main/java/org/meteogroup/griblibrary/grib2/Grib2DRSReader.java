@@ -1,6 +1,6 @@
 package org.meteogroup.griblibrary.grib2;
 
-import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 
 import org.meteogroup.griblibrary.exception.BinaryNumberConversionException;
 import org.meteogroup.griblibrary.exception.GribReaderException;
@@ -17,17 +17,8 @@ import org.meteogroup.griblibrary.util.BytesToPrimitiveHelper;
  * Reads out the grib2 data representation section
  *
  */
+@Slf4j
 public class Grib2DRSReader extends Grib2SectionReader {
-	
-	private static final int SECTIONID = 5;
-
-	static final int POSITION_NUMBER_DATAPOINTS1 = 5;
-	static final int POSITION_NUMBER_DATAPOINTS2 = 6;
-	static final int POSITION_NUMBER_DATAPOINTS3 = 7;
-	static final int POSITION_NUMBER_DATAPOINTS4 = 8;
-	
-	static final int POSITION_TEMPLATE_NUMBER1 = 9;
-	static final int POSITION_TEMPLATE_NUMBER2 = 10;
 	
 	public Grib2DRS readDRSValues(byte[] drsValues, int headerOffSet) throws GribReaderException {
 		
@@ -60,13 +51,22 @@ public class Grib2DRSReader extends Grib2SectionReader {
     	
     	
     	if(drsTemplate == TEMPLATE_PACKING_SIMPLE){
-    		System.out.println("simple packing");
+    		log.error("Simple packing, read in not implemented yet. Please do it!");
     	}
     	else if (drsTemplate == TEMPLATE_PACKING_BOUSTROPHEDONIC){
-    		System.out.println("boustrotemplate, second order complex packing");
+    		log.debug("Boustrotemplate read in, second order complex packing");
     		dataTemplateReader = new BoustrophedonicSecondOrderPackingReader();
     	}
-    	
     	return dataTemplateReader.readTemplate(drsValues,headerOffSet);
     }
+    
+	private static final int SECTIONID = 5;
+
+	static final int POSITION_NUMBER_DATAPOINTS1 = 5;
+	static final int POSITION_NUMBER_DATAPOINTS2 = 6;
+	static final int POSITION_NUMBER_DATAPOINTS3 = 7;
+	static final int POSITION_NUMBER_DATAPOINTS4 = 8;
+	
+	static final int POSITION_TEMPLATE_NUMBER1 = 9;
+	static final int POSITION_TEMPLATE_NUMBER2 = 10;
 }
