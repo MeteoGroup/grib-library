@@ -1,19 +1,23 @@
 package org.meteogroup.griblibrary.grib1;
 
-import org.meteogroup.griblibrary.exception.BinaryNumberConversionException;
-import org.meteogroup.griblibrary.exception.GribReaderException;
-import org.meteogroup.griblibrary.grib1.model.Grib1Record;
-import org.meteogroup.griblibrary.util.FileChannelPartReader;
-
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+import org.meteogroup.griblibrary.decoder.simplepacking.SimplePackingDecoder;
+import org.meteogroup.griblibrary.exception.BinaryNumberConversionException;
+import org.meteogroup.griblibrary.exception.GribReaderException;
+import org.meteogroup.griblibrary.grib1.model.Grib1Record;
+import org.meteogroup.griblibrary.util.FileChannelPartReader;
+
 /**
  * Created by roijen on 20-Oct-15.
  */
+@Slf4j
 public class Grib1CollectionReader {
 
     Grib1RecordReader recordReader;
@@ -23,8 +27,11 @@ public class Grib1CollectionReader {
     long fileLength = -1;
     FileChannel fc = null;
 
-    private static final int HEADER_LENGTH = 8;
-	private static final int GRIB_VERSION = 1;
+	public Grib1CollectionReader() {
+		recordReader = new Grib1RecordReader();
+		partReader = new FileChannelPartReader();
+		
+	}
 
     public List<Grib1Record> readFileFromFileName(String url) throws GribReaderException {
         try {
@@ -72,5 +79,33 @@ public class Grib1CollectionReader {
             gribRecordOffset += recordReader.readRecordLength(recordHeader);
         }
         return response;
+    }
+    
+    private static final int HEADER_LENGTH = 8;
+	private static final int GRIB_VERSION = 1;
+    
+    public static void main(String[] args){
+    	log.info("test read in started");
+    	
+    	Grib1CollectionReader grib1Reader = new Grib1CollectionReader();
+    	
+    	try {
+			List<Grib1Record> coll = grib1Reader.readFileFromFileName("d://data//grib//ECM_DSD_2015020200_0006");
+			System.out.println("List length = "+coll.size());
+			for (Grib1Record grib1Record : coll){
+				System.out.println(grib1Record.toString());
+				SimplePackingDecoder decoder = new SimplePackingDecoder();
+				double[] values = decoder.decodeFromGrib1(grib1Record);
+//				for (int i=110_000; i<110_500; i++){
+//					System.out.println(" val"+i+"= "+values[i]);
+//				}
+			}
+			
+    	
+    	} catch (GribReaderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     }
 }

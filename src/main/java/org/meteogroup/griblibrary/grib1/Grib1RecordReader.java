@@ -1,5 +1,7 @@
 package org.meteogroup.griblibrary.grib1;
 
+import java.util.Arrays;
+
 import org.meteogroup.griblibrary.exception.BinaryNumberConversionException;
 import org.meteogroup.griblibrary.exception.GribReaderException;
 import org.meteogroup.griblibrary.grib1.model.Grib1BDS;
@@ -37,6 +39,15 @@ public class Grib1RecordReader {
         short versionNumber = bufferValues[POSITION_GRIBVERSION];
         return (headerString.equals("GRIB") && versionNumber == 1);
     }
+    
+    public boolean checkIfGribFileEndsValid(byte[] bufferValues){
+    	for (int i=0; i<4; i++){
+    		if (bufferValues[bufferValues.length-1-i] != '7'){
+    			return false;
+    		}
+    	}
+    	return true;
+    }
 
     public int readRecordLength(byte[] bufferValues) throws GribReaderException {
         int length = 0;
@@ -51,16 +62,20 @@ public class Grib1RecordReader {
         return length;
     }
 
-    public Grib1Record readCompleteRecord(Grib1Record grib1Record, byte[] bufferValues, int headerOffSet) throws BinaryNumberConversionException {
+    public Grib1Record readCompleteRecord(Grib1Record grib1Record, byte[] bufferValues, int headerOffSet) throws BinaryNumberConversionException, GribReaderException  {
         Grib1PDS pds = pdsReader.readPDSValues(bufferValues, headerOffSet);
         grib1Record.setPds(pds);
-
-        Grib1GDS gds = gdsReader.readGDSValues(bufferValues, headerOffSet+pds.getPdsLenght());
+        headerOffSet+=pds.getPdsLenght();
+        Grib1GDS gds = gdsReader.readGDSValues(bufferValues, headerOffSet);
         grib1Record.setGds(gds);
-
-        Grib1BDS bds = bdsReader.readBDSValues(bufferValues,headerOffSet+pds.getPdsLenght()+gds.getGdsLenght());
+        headerOffSet += gds.getGdsLenght();
+        Grib1BDS bds = bdsReader.readBDSValues(bufferValues,headerOffSet);
         grib1Record.setBds(bds);
+
         return grib1Record;
+        
+        
+       
     }
 
 }

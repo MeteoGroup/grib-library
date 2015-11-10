@@ -36,6 +36,20 @@ public class Grib1RecordReaderTest {
                 new Object[]{WRONG_VERSION_NUMBER}
         };
     }
+    
+    @DataProvider(name = "goodEnd")
+    public static Object[][] goodEnd(){
+        return new Object[][]{
+                new Object[]{GOOD_END}
+        };
+    }
+
+    @DataProvider(name = "badEnd")
+    public static Object[][] badEnd(){
+        return new Object[][]{
+                new Object[]{WRONG_END}
+        };
+    }
 
     @DataProvider(name = "wrongLength")
     public static Object[][] wrongLength(){
@@ -67,6 +81,20 @@ public class Grib1RecordReaderTest {
         int headerLength = reader.readRecordLength(bufferValues);
         assertThat(headerLength).isEqualTo(1266918);
     }
+    
+    @Test(dataProvider = "goodEnd")
+    public void testValidEnd(byte[] bufferValues){
+
+        boolean validGribHeader = reader.checkIfGribFileEndsValid(bufferValues);
+        assertThat(validGribHeader).isTrue();
+    }
+
+    @Test(dataProvider = "badEnd")
+    public void testInvalidEnd(byte[] bufferValues){
+    	boolean validGribHeader = reader.checkIfGribFileEndsValid(bufferValues);
+        assertThat(validGribHeader).isFalse();
+    }
+    
 
     @Test(dataProvider = "wrongLength", expectedExceptions = GribReaderException.class)
     public void testInvalidLength(byte[] bufferValues) throws GribReaderException, BinaryNumberConversionException {
@@ -74,7 +102,7 @@ public class Grib1RecordReaderTest {
     }
 
     @Test
-    public void testReadOutCoordination() throws BinaryNumberConversionException {
+    public void testReadOutCoordination() throws Exception {
         reader.pdsReader = mock(Grib1PDSReader.class);
         reader.gdsReader = mock(Grib1GDSReader.class);
         reader.bdsReader = mock(Grib1BDSReader.class);
@@ -132,6 +160,11 @@ public class Grib1RecordReaderTest {
     private static final byte[] GOOD_HEADER = new byte[]{'G','R','I','B',19,84,-26,1};
 
     private static final byte[] WRONG_HEADER = new byte[]{'M','G','F','S',0,0,0,1};
+    
+    private static final byte[] GOOD_END = new byte[]{'a','g','7','7','7','7'};
+
+    private static final byte[] WRONG_END = new byte[]{'d','7','7','7'};
+    
     private static final byte[] WRONG_VERSION_NUMBER = new byte[]{'G','R','I','B',0,0,0,2};
     private static final byte[] LENGTH_TO_SHORT = new byte[]{'G','R','I','B',0,0,7,1};
 }
