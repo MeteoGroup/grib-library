@@ -17,29 +17,7 @@ import org.meteogroup.griblibrary.util.BytesToPrimitiveHelper;
  * Created by roijen on 28-Oct-15.
  */
 public class Grib2RecordReader {
-
 	
-	private Grib2IDSReader idsReader;
-	private Grib2LUSReader lusReader;
-	private Grib2PDSReader pdsReader;
-	private Grib2DRSReader drsReader;
-	private Grib2BMSReader bmsReader;
-	private Grib2DSReader dsReader;
-	
-
-    private static final int GRIB_WORD_LENGTH = 4;
-    private static final int POSITION_VERSION_NUMBER = 7;
-    private static final int CORRECT_VERSION_NUMBER = 2;
-    private static final int POSITION_LENGTH_1 = 8;
-    private static final int POSITION_LENGTH_2 = 9;
-    private static final int POSITION_LENGTH_3 = 10;
-    private static final int POSITION_LENGTH_4 = 11;
-    private static final int POSITION_LENGTH_5 = 12;
-    private static final int POSITION_LENGTH_6 = 13;
-    private static final int POSITION_LENGTH_7 = 14;
-    private static final int POSITION_LENGTH_8 = 15;
-    private static final int MINIMUM_REQUIRED_LENGTH_IN_BIT = 15;
-
 
     public Grib2RecordReader(){
     	idsReader = new Grib2IDSReader();
@@ -48,7 +26,6 @@ public class Grib2RecordReader {
     	drsReader = new Grib2DRSReader();
     	bmsReader = new Grib2BMSReader();
     	dsReader = new Grib2DSReader();
-    	
     }
     
     public boolean checkIfGribFileIsValidGrib2(byte[] recordHeader) {
@@ -94,7 +71,7 @@ public class Grib2RecordReader {
             dataRepresentationSection = drsReader.readDRSValues(recordAsByteArray, headerOffSet);
             headerOffSet+=dataRepresentationSection.getLength();
             bitmapSection = bmsReader.readBMSValues(recordAsByteArray, headerOffSet);
-            headerOffSet +=bitmapSection.getLength(); //2_909;//; //BMS
+            headerOffSet +=bitmapSection.getLength();
             dataSection = dsReader.readDSValues(recordAsByteArray, headerOffSet);
             
             
@@ -112,4 +89,24 @@ public class Grib2RecordReader {
         record.setDataSection(dataSection);
         return record;
     }
+    
+	private Grib2IDSReader idsReader;
+	private Grib2LUSReader lusReader;
+	private Grib2PDSReader pdsReader;
+	private Grib2DRSReader drsReader;
+	private Grib2BMSReader bmsReader;
+	private Grib2DSReader dsReader;
+	
+    private static final int GRIB_WORD_LENGTH = 4;
+    private static final int POSITION_VERSION_NUMBER = 7;
+    private static final int CORRECT_VERSION_NUMBER = 2;
+    private static final int POSITION_LENGTH_1 = 8;
+    private static final int POSITION_LENGTH_2 = 9;
+    private static final int POSITION_LENGTH_3 = 10;
+    private static final int POSITION_LENGTH_4 = 11;
+    private static final int POSITION_LENGTH_5 = 12;
+    private static final int POSITION_LENGTH_6 = 13;
+    private static final int POSITION_LENGTH_7 = 14;
+    private static final int POSITION_LENGTH_8 = 15;
+    private static final int MINIMUM_REQUIRED_LENGTH_IN_BIT = 15;
 }
