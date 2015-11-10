@@ -30,7 +30,7 @@ public class SimplePackingDecoder implements Decoder {
     			simpleDRSTemplate.getReferenceValue());
     }
 
-    double[] readAllValues(byte[] packedValues, int numberOfPoints, int bytesForDatum, int factorDivision, int binaryScale, float referenceValue) {
+    double[] readAllValues(byte[] packedValues, int numberOfPoints, int bitsForValue, int factorDivision, int binaryScale, float referenceValue) {
         double[] result = new double[numberOfPoints];
         double binaryScalePowered = Math.pow(2, binaryScale);
         double division = Math.pow(base10, factorDivision);
@@ -38,7 +38,7 @@ public class SimplePackingDecoder implements Decoder {
         BitReader bitReader = new BitReader(packedValues);
 
         for (int x = 0; x < result.length; x++) {
-            long packedValue = bitReader.readNext(bytesForDatum);
+            long packedValue = bitReader.readNext(bitsForValue);
             result[x] = this.decodeValue(packedValue, division, binaryScalePowered, referenceValue);
         }
 
