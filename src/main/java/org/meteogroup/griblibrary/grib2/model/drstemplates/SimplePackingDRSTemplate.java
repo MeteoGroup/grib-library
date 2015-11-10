@@ -9,18 +9,11 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class BoustrophedonicSecondOrderDRSTemplate extends DRSTemplate {
+public class SimplePackingDRSTemplate extends DRSTemplate {
 	float referenceValue;
 	int binaryScaleFactor;
 	int decimalScaleFactor;
 	int bitsPerValue;
 	int widthOfFirstOrderValues;
-	int numberOfGroups;
-	int numberOfSecondOrderPackedValues;
-	int widthOfWidth;
-	int widthOfLength;
-	int boustrophonic;
-	int orderOfSPD;
-	int widthOfSPD;
-	int spd;
+	int numberOfOriginalFieldValues;
 }

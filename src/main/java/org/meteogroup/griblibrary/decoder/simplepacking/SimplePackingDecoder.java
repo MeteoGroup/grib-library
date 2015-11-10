@@ -3,6 +3,7 @@ package org.meteogroup.griblibrary.decoder.simplepacking;
 import org.meteogroup.griblibrary.decoder.Decoder;
 import org.meteogroup.griblibrary.grib1.model.Grib1Record;
 import org.meteogroup.griblibrary.grib2.model.Grib2Record;
+import org.meteogroup.griblibrary.grib2.model.drstemplates.SimplePackingDRSTemplate;
 import org.meteogroup.griblibrary.util.BitReader;
 
 /**
@@ -20,7 +21,13 @@ public class SimplePackingDecoder implements Decoder {
 
     @Override
     public double[] decodeFromGrib2(Grib2Record record) {
-        return new double[0];
+    	SimplePackingDRSTemplate simpleDRSTemplate = (SimplePackingDRSTemplate) record.getDrs().getDataTemplate();
+    	return this.readAllValues(record.getDataSection().getPackedData(),
+    			record.getDrs().getNumberOfDataPoints(), 
+    			simpleDRSTemplate.getBitsPerValue(), 
+    			simpleDRSTemplate.getDecimalScaleFactor(), 
+    			simpleDRSTemplate.getBinaryScaleFactor(), 
+    			simpleDRSTemplate.getReferenceValue());
     }
 
     double[] readAllValues(byte[] packedValues, int numberOfPoints, int bytesForDatum, int factorDivision, int binaryScale, float referenceValue) {
@@ -38,7 +45,7 @@ public class SimplePackingDecoder implements Decoder {
         return result;
     }
 
-    double decodeValue(long value, double factorDivision, double binaryScalePowered, float referenceValue) {
+    protected double decodeValue(long value, double factorDivision, double binaryScalePowered, float referenceValue) {
         return (referenceValue + (value * binaryScalePowered)) / factorDivision;
     }
 }

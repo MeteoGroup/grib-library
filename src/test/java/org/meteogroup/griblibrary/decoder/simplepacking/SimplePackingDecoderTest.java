@@ -4,6 +4,10 @@ import org.meteogroup.griblibrary.grib1.model.Grib1BDS;
 import org.meteogroup.griblibrary.grib1.model.Grib1GDS;
 import org.meteogroup.griblibrary.grib1.model.Grib1PDS;
 import org.meteogroup.griblibrary.grib1.model.Grib1Record;
+import org.meteogroup.griblibrary.grib2.model.Grib2DRS;
+import org.meteogroup.griblibrary.grib2.model.Grib2DS;
+import org.meteogroup.griblibrary.grib2.model.Grib2Record;
+import org.meteogroup.griblibrary.grib2.model.drstemplates.SimplePackingDRSTemplate;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -49,6 +53,16 @@ public class SimplePackingDecoderTest {
         assertThat(unPackedValues[1]).isCloseTo(SECOND_VALUE, within(0.01));
         assertThat(unPackedValues[2]).isCloseTo(THIRD_VALUE, within(0.01));
     }
+    
+    @Test
+    public void testReadGrib2Record() throws IOException, URISyntaxException {
+        Grib2Record record = SIMPLE_GRIB_2_RECORD();
+        double[] unPackedValues = decoder.decodeFromGrib2(record);
+        assertThat(unPackedValues.length).isEqualTo(3);
+        assertThat(unPackedValues[0]).isCloseTo(FIRST_VALUE, within(0.01));
+        assertThat(unPackedValues[1]).isCloseTo(SECOND_VALUE, within(0.01));
+        assertThat(unPackedValues[2]).isCloseTo(THIRD_VALUE, within(0.01));
+    }
 
     @Test
     public void testReadPackedValues() throws IOException, URISyntaxException {
@@ -87,6 +101,25 @@ public class SimplePackingDecoderTest {
         record.setPds(pds);
         return record;
     }
+    
+    
+    private static final Grib2Record SIMPLE_GRIB_2_RECORD(){
+    	Grib2Record record = new Grib2Record();
+    	Grib2DRS drs = new Grib2DRS();
+    	drs.setNumberOfDataPoints(NUMBER_OF_POINTS);
+    	SimplePackingDRSTemplate simpleDRSTemplate = new SimplePackingDRSTemplate();
+    	simpleDRSTemplate.setBitsPerValue(BITS_PER_VALUE);
+    	simpleDRSTemplate.setBinaryScaleFactor(BINARY_SCALE_MINUS_6);
+    	simpleDRSTemplate.setDecimalScaleFactor(FACTOR_DIVISION_1);
+    	simpleDRSTemplate.setReferenceValue(REFERENCE_VALUE_4707);
+    	
+    	drs.setDataTemplate(simpleDRSTemplate);
+    	Grib2DS ds = new Grib2DS();
+    	ds.setPackedData(SIMPLE_BYTE_ARRAY);
+    	record.setDrs(drs);
+    	record.setDataSection(ds);
+    	return record;
+    }
 
     private static final int BITS_PER_VALUE = 16;
     private static final int NUMBER_OF_POINTS = 3;
@@ -94,6 +127,5 @@ public class SimplePackingDecoderTest {
     private static final float SECOND_VALUE = 470.77f;
     private static final float THIRD_VALUE = 474.86f;
     private static final byte[] SIMPLE_BYTE_ARRAY = new byte[]{23,39,0,25,10,80};
-
 
 }
