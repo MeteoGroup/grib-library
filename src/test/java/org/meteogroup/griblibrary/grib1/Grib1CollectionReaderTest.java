@@ -86,5 +86,4 @@ public class Grib1CollectionReaderTest {
         RandomAccessFile raf = new RandomAccessFile(fileName, "r");
         return raf.getChannel();
     }
-
 }

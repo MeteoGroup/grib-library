@@ -36,7 +36,6 @@ public class SimplePackingDecoder implements Decoder {
         double division = Math.pow(base10, decimalScale);
 
         BitReader bitReader = new BitReader(packedValues);
-
         for (int x = 0; x < result.length; x++) {
             long packedValue = bitReader.readNext(bitsForValue);
             result[x] = this.decodeValue(packedValue, division, binaryScalePowered, referenceValue);

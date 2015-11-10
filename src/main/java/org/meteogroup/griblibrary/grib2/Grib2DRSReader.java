@@ -52,8 +52,7 @@ public class Grib2DRSReader extends Grib2SectionReader {
     	
     	if(drsTemplate == TEMPLATE_PACKING_SIMPLE){
     		log.error("Simple packing, read in not implemented yet. Please do it!");
-    	}
-    	else if (drsTemplate == TEMPLATE_PACKING_BOUSTROPHEDONIC){
+    	} else if (drsTemplate == TEMPLATE_PACKING_BOUSTROPHEDONIC){
     		log.debug("Boustrotemplate read in, second order complex packing");
     		dataTemplateReader = new BoustrophedonicSecondOrderPackingReader();
     	}
