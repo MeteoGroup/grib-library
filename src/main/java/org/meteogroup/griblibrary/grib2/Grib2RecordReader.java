@@ -23,7 +23,7 @@ public class Grib2RecordReader {
 	private Grib2LUSReader lusReader;
 	private Grib2PDSReader pdsReader;
 	private Grib2DRSReader drsReader;
-	//private Grib2BMSReader bmsReader;
+	private Grib2BMSReader bmsReader;
 	private Grib2DSReader dsReader;
 	
 
@@ -46,6 +46,7 @@ public class Grib2RecordReader {
     	lusReader = new Grib2LUSReader();
     	pdsReader = new Grib2PDSReader();
     	drsReader = new Grib2DRSReader();
+    	bmsReader = new Grib2BMSReader();
     	dsReader = new Grib2DSReader();
     	
     }
@@ -92,8 +93,8 @@ public class Grib2RecordReader {
             headerOffSet+=productDefinitionSection.getLength();
             dataRepresentationSection = drsReader.readDRSValues(recordAsByteArray, headerOffSet);
             headerOffSet+=dataRepresentationSection.getLength();
-            //here we expect the bitmap section
-            headerOffSet +=6; //2_909;//; //BMS
+            bitmapSection = bmsReader.readBMSValues(recordAsByteArray, headerOffSet);
+            headerOffSet +=bitmapSection.getLength(); //2_909;//; //BMS
             dataSection = dsReader.readDSValues(recordAsByteArray, headerOffSet);
             
             
@@ -107,6 +108,7 @@ public class Grib2RecordReader {
         record.setLus(localUseSection);
         record.setPds(productDefinitionSection);
         record.setDrs(dataRepresentationSection);
+        record.setBms(bitmapSection);
         record.setDataSection(dataSection);
         return record;
     }

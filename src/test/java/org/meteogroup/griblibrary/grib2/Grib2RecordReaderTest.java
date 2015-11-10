@@ -132,7 +132,7 @@ public class Grib2RecordReaderTest {
 //    	assertThat(record.getGDS).isNotNull(); //@todo build @Lajos busy with it
     	assertThat(record.getPds()).isNotNull();
     	assertThat(record.getDrs()).isNotNull();
-    	//assertThat(record.getBms()).isNotNull(); @todo build, not needed yet
+    	assertThat(record.getBms()).isNotNull();
     	assertThat(record.getDataSection()).isNotNull();
     	
     }
