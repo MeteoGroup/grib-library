@@ -27,7 +27,7 @@ public class Grib1BDSReader {
     private static final int POSITION_BDS_REFERENCE_VALUE_3 = 8;
     private static final int POSITION_BDS_REFERENCE_VALUE_4 = 9;
     private static final int POSITION_BDS_DATUM = 10;
-    private static final int POSITION_BDS_SLICE_POINT_FOR_STANDARD_PACKING = 12;
+    private static final int POSITION_BDS_SLICE_POINT_FOR_STANDARD_PACKING = 11;
 
     public int readBDSLength(byte[] inputValues, int offSet) throws BinaryNumberConversionException {
         return BytesToPrimitiveHelper.bytesToInteger(inputValues[POSITION_BDS_LENGTH_1 + offSet], inputValues[POSITION_BDS_LENGTH_2 + offSet], inputValues[POSITION_BDS_LENGTH_3 + offSet]);

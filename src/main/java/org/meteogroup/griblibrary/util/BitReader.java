@@ -16,7 +16,7 @@ public class BitReader {
         this.data = bytes;
     }
 
-    public long readNext(int bitsToRead) {
+    public long readNext(int bitsToRead) throws ArrayIndexOutOfBoundsException{
         int bitsLeftToRead = bitsToRead;
         long result = 0;
 
