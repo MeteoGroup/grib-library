@@ -80,7 +80,6 @@ public class BoustrophedonicSecondOrderPackingReader implements DataTemplateRead
 			boustroTemplate.setNumberOfSecondOrderPackedValues(BytesToPrimitiveHelper.bytesToInteger(bytes[POSITION_NUMBEROFSECONDORDERPACKEDVALUES1+headerOffSet],bytes[POSITION_NUMBEROFSECONDORDERPACKEDVALUES2+headerOffSet],bytes[POSITION_NUMBEROFSECONDORDERPACKEDVALUES3+headerOffSet],bytes[POSITION_NUMBEROFSECONDORDERPACKEDVALUES4+headerOffSet]));
 			boustroTemplate.setBitsForSecondaryOrderWidth(bytes[POSITION_WIDTHOFWIDTHS+headerOffSet] &0xFF);
 			boustroTemplate.setBitsForSecondaryOrderLength(bytes[POSITION_WITHOFLENGTHS+headerOffSet] &0xFF);
-			//boustroTemplate.setBoustrophonic(bytes[POSITION_BOUSTROPHEDONIC+headerOffSet] &0xFF);
 			boustroTemplate.setOrderOfSPD(bytes[POSITION_ORDEROFSPD+headerOffSet] &0xFF);
 			boustroTemplate.setNumberOfBitsOfSPD(bytes[POSITION_NUMBEROFBITSOFSPD+headerOffSet] &0xFF);
 			
@@ -88,11 +87,10 @@ public class BoustrophedonicSecondOrderPackingReader implements DataTemplateRead
 				 
 				int[] spd = new int[boustroTemplate.getOrderOfSPD()];
 				BitReader bitReader = new BitReader(Arrays.copyOfRange(bytes, POSITION_WIDTH_SPD+headerOffSet,bytes.length));
-				//BitReader2 bitReader = new BitReader2(Arrays.copyOfRange(bytes, POSITION_WIDTH_SPD+headerOffSet,bytes.length));
 				for (int i = 0; i < boustroTemplate.getOrderOfSPD(); i++) {
 					
 					spd[i]  = (int) bitReader.readNext(boustroTemplate.getNumberOfBitsOfSPD());
-					//spd[i]  = (int) bitReader.get(boustroTemplate.getNumberOfBitsOfSPD());
+
 				}
 				boustroTemplate.setSpd(spd);
 				int spdBias = -1;
@@ -106,5 +104,4 @@ public class BoustrophedonicSecondOrderPackingReader implements DataTemplateRead
 		}
 		return boustroTemplate;
 		}
-	
 }
