@@ -46,12 +46,21 @@ public class BytesToPrimitiveHelperTest {
         };
     }
 
+    @DataProvider(name = "goodValueForIBMFloatTest")
+    public static Object[][] goodValueForIBMFloatTest(){
+        return new Object[][]{
+                new Object[]{FOUR_BYTES_FOR_IBM_FLOAT, 208.255f},
+        };
+    }
+    
     @DataProvider(name = "goodValueForFloatTest")
     public static Object[][] goodValueForFloatTest(){
         return new Object[][]{
-                new Object[]{FOUR_BYTES_FOR_FLOAT, 208.255f},
+                new Object[]{FOUR_BYTES_FOR_FLOAT, 216.003f},
         };
     }
+    
+    
 
     @DataProvider(name = "goodValueForLongTest")
     public static Object[][] goodValueForLongTest(){
@@ -97,9 +106,15 @@ public class BytesToPrimitiveHelperTest {
         assertThat(value).isEqualTo(expectedValue);
     }
 
+    @Test(dataProvider = "goodValueForIBMFloatTest")
+    public void testIBMFloatWithLengthOfFour(byte[] inputValues, float expectedValue) throws BinaryNumberConversionException {
+        float value = BytesToPrimitiveHelper.bytesToFloatAsIBM(inputValues);
+        assertThat(value).isCloseTo(expectedValue, within(0.001f));
+    }
+    
     @Test(dataProvider = "goodValueForFloatTest")
     public void testFloatWithLengthOfFour(byte[] inputValues, float expectedValue) throws BinaryNumberConversionException {
-        float value = BytesToPrimitiveHelper.bytesToFloatAsIBM(inputValues);
+        float value = BytesToPrimitiveHelper.bytesToFloat(inputValues);
         assertThat(value).isCloseTo(expectedValue, within(0.001f));
     }
 
@@ -117,7 +132,9 @@ public class BytesToPrimitiveHelperTest {
     private static final byte[] THREE_SIGNED_LAT_ARRAY_FOR_VALUE1 = new byte[]{1,95,36};
     private static final byte[] THREE_SIGNED_LAT_ARRAY_FOR_VALUE2 = new byte[]{-127,95,36};
 
-    private static final byte[] FOUR_BYTES_FOR_FLOAT = new byte[]{0b0100_0010, 0b1101_0000 - 256, 0b0100_0001, 0b0011_0100};
+    private static final byte[] FOUR_BYTES_FOR_IBM_FLOAT = new byte[]{0b0100_0010, 0b1101_0000 - 256, 0b0100_0001, 0b0011_0100};
+    private static final byte[] FOUR_BYTES_FOR_FLOAT = new byte[]{67, 88, 0, -57};
+    
 
     private static final byte[] EIGHT_BYTES_FOR_LONG = new byte[]{0,0,0,0,0,0,0,8};
     private static final byte[] EIGTH_BYTES_FOR_LONG_COMPLEX = new byte[]{0,5,0,1,7,-33,9,9};
