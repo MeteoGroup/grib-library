@@ -14,13 +14,14 @@ public class BoustrophedonicSecondOrderDRSTemplate extends DRSTemplate {
 	int binaryScaleFactor;
 	int decimalScaleFactor;
 	int bitsPerValue;
-	int widthOfFirstOrderValues;
+	int numberOfBitsForFirstOrderValues;
 	int numberOfGroups;
 	int numberOfSecondOrderPackedValues;
-	int widthOfWidth;
-	int widthOfLength;
-	int boustrophonic;
+	int bitsForSecondaryOrderWidth;
+	int bitsForSecondaryOrderLength;
+	//int boustrophonic;
 	int orderOfSPD;
-	int widthOfSPD;
-	int spd;
+	int numberOfBitsOfSPD;
+	int[] spd;
+	int spdBias;
 }

@@ -1,11 +1,13 @@
 package org.meteogroup.griblibrary.grib2.drstemplates;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.meteogroup.griblibrary.exception.BinaryNumberConversionException;
 import org.meteogroup.griblibrary.exception.GribReaderException;
 import org.meteogroup.griblibrary.grib2.model.drstemplates.BoustrophedonicSecondOrderDRSTemplate;
 import org.meteogroup.griblibrary.grib2.model.drstemplates.DRSTemplate;
+import org.meteogroup.griblibrary.util.BitReader;
 import org.meteogroup.griblibrary.util.BytesToPrimitiveHelper;
 
 /**
@@ -49,9 +51,9 @@ public class BoustrophedonicSecondOrderPackingReader implements DataTemplateRead
 	
 	static final int POSITION_ORDEROFSPD = 32;
 	
-	static final int POSITION_BOUSTROPHEDONIC = 33;
-	static final int POSITION_ORDER_SPD = 34;
-	static final int POSITION_WIDTH_SPD = 35;
+	static final int POSITION_NUMBEROFBITSOFSPD = 33;
+	//static final int POSITION_ORDER_SPD = 34;
+	static final int POSITION_WIDTH_SPD = 34;
 	
 
 	public BoustrophedonicSecondOrderPackingReader(){
@@ -65,7 +67,7 @@ public class BoustrophedonicSecondOrderPackingReader implements DataTemplateRead
     		throw new GribReaderException("section not read in yet");
     	}
 		try {
-			boustroTemplate.setReferenceValue(BytesToPrimitiveHelper.bytesToFloatAsIBM(
+			boustroTemplate.setReferenceValue(BytesToPrimitiveHelper.bytesToFloat(//.bytesToFloatAsIBM(
                     bytes[POSITION_REFERENCE_VALUE1+headerOffSet],
                     bytes[POSITION_REFERENCE_VALUE2+headerOffSet],
                     bytes[POSITION_REFERENCE_VALUE3+headerOffSet],
@@ -73,14 +75,32 @@ public class BoustrophedonicSecondOrderPackingReader implements DataTemplateRead
 			boustroTemplate.setBinaryScaleFactor(BytesToPrimitiveHelper.signedBytesToInt(bytes[POSITION_BINARYSCALEFACTOR1+headerOffSet] ,bytes[POSITION_BINARYSCALEFACTOR2+headerOffSet] ));
 			boustroTemplate.setDecimalScaleFactor(BytesToPrimitiveHelper.signedBytesToInt(bytes[POSITION_DECIMALSCALEFACTOR1+headerOffSet],bytes[POSITION_DECIMALSCALEFACTOR2+headerOffSet]));
 			boustroTemplate.setBitsPerValue(bytes[POSITION_BITSPERVALUE+headerOffSet] &0xFF);
-			boustroTemplate.setWidthOfFirstOrderValues(bytes[POSITION_WIDTHOFFIRSTORDERVALUES+headerOffSet] &0xFF);
+			boustroTemplate.setNumberOfBitsForFirstOrderValues(bytes[POSITION_WIDTHOFFIRSTORDERVALUES+headerOffSet] &0xFF);
 			boustroTemplate.setNumberOfGroups(BytesToPrimitiveHelper.bytesToInteger(bytes[POSITION_NUMBEROFGROUPS1+headerOffSet],bytes[POSITION_NUMBEROFGROUPS2+headerOffSet],bytes[POSITION_NUMBEROFGROUPS3+headerOffSet],bytes[POSITION_NUMBEROFGROUPS4+headerOffSet]));
 			boustroTemplate.setNumberOfSecondOrderPackedValues(BytesToPrimitiveHelper.bytesToInteger(bytes[POSITION_NUMBEROFSECONDORDERPACKEDVALUES1+headerOffSet],bytes[POSITION_NUMBEROFSECONDORDERPACKEDVALUES2+headerOffSet],bytes[POSITION_NUMBEROFSECONDORDERPACKEDVALUES3+headerOffSet],bytes[POSITION_NUMBEROFSECONDORDERPACKEDVALUES4+headerOffSet]));
-			boustroTemplate.setWidthOfWidth(bytes[POSITION_WIDTHOFWIDTHS+headerOffSet] &0xFF);
-			boustroTemplate.setWidthOfLength(bytes[POSITION_WITHOFLENGTHS+headerOffSet] &0xFF);
-			boustroTemplate.setBoustrophonic(bytes[POSITION_BOUSTROPHEDONIC+headerOffSet] &0xFF);
+			boustroTemplate.setBitsForSecondaryOrderWidth(bytes[POSITION_WIDTHOFWIDTHS+headerOffSet] &0xFF);
+			boustroTemplate.setBitsForSecondaryOrderLength(bytes[POSITION_WITHOFLENGTHS+headerOffSet] &0xFF);
+			//boustroTemplate.setBoustrophonic(bytes[POSITION_BOUSTROPHEDONIC+headerOffSet] &0xFF);
 			boustroTemplate.setOrderOfSPD(bytes[POSITION_ORDEROFSPD+headerOffSet] &0xFF);
-			boustroTemplate.setWidthOfSPD(bytes[POSITION_WIDTH_SPD+headerOffSet] &0xFF);
+			boustroTemplate.setNumberOfBitsOfSPD(bytes[POSITION_NUMBEROFBITSOFSPD+headerOffSet] &0xFF);
+			
+			if (boustroTemplate.getOrderOfSPD()>0){
+				 
+				int[] spd = new int[boustroTemplate.getOrderOfSPD()];
+				BitReader bitReader = new BitReader(Arrays.copyOfRange(bytes, POSITION_WIDTH_SPD+headerOffSet,bytes.length));
+				//BitReader2 bitReader = new BitReader2(Arrays.copyOfRange(bytes, POSITION_WIDTH_SPD+headerOffSet,bytes.length));
+				for (int i = 0; i < boustroTemplate.getOrderOfSPD(); i++) {
+					
+					spd[i]  = (int) bitReader.readNext(boustroTemplate.getNumberOfBitsOfSPD());
+					//spd[i]  = (int) bitReader.get(boustroTemplate.getNumberOfBitsOfSPD());
+				}
+				boustroTemplate.setSpd(spd);
+				int spdBias = -1;
+				
+					spdBias = (int) bitReader.bits2SInt(boustroTemplate.getNumberOfBitsOfSPD());
+				
+				boustroTemplate.setSpdBias(spdBias);
+			}
 		} catch (BinaryNumberConversionException e) {
 			throw new GribReaderException(e.getMessage(), e);
 		}
