@@ -1,5 +1,6 @@
 package org.meteogroup.griblibrary.decoder;
 
+import org.meteogroup.griblibrary.exception.GribReaderException;
 import org.meteogroup.griblibrary.grib1.model.Grib1Record;
 import org.meteogroup.griblibrary.grib2.model.Grib2Record;
 
@@ -8,7 +9,7 @@ import org.meteogroup.griblibrary.grib2.model.Grib2Record;
  */
 public interface Decoder {
 
-    double[] decodeFromGrib1(Grib1Record record);
-    double[] decodeFromGrib2(Grib2Record record);
+    double[] decodeFromGrib1(Grib1Record record) throws GribReaderException;
+    double[] decodeFromGrib2(Grib2Record record) throws GribReaderException;
 
 }

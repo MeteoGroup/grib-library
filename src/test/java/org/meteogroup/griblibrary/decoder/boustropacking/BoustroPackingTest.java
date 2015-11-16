@@ -29,25 +29,17 @@ import static org.assertj.core.api.Assertions.within;
 @Slf4j
 public class BoustroPackingTest {
     
-//    @DataProvider(name = "singleUnpackingTestCases")
-//    public Object[][] singleUnpackingTestCases(){
-//        return new Object[][]{
-//                new Object[]{BINARY_SCALE_MINUS_6,BITS_PER_VALUE, REFERENCE_VALUE_4707 ,EXPECTED_BLA}
-//        };
-//    }
-//    
+ 
     @DataProvider(name = "fullUnpackingTestCases")
     public Object[][] fullUnpackingTestCases() throws URISyntaxException, IOException, GribReaderException{
         return new Object[][]{
                 new Object[]{SAMPLE_GRIB2_RECORD(),SAMPLE_GRIB2_MIN, SAMPLE_GRIB2_MAX}
         };
     }
-    
-    
 
 	
 	@Test(dataProvider = "fullUnpackingTestCases")
-	public void testFullGoodValues(Grib2Record grib2Record,final double minExpectedValue, final double maxExpectedValue){
+	public void testFullGoodValues(Grib2Record grib2Record,final double minExpectedValue, final double maxExpectedValue) throws GribReaderException{
 		
 		BoustroPackingDecoder boustroDecoder = new BoustroPackingDecoder();
 		
@@ -104,14 +96,7 @@ public class BoustroPackingTest {
 	private static final int LENGTH_SECONDARYORDERLENGTH = 27246;
 	private static final int LENGTH_FIRSTORDERVALUE = 45410;
 	
-	
 	private static final int GRID_SIZE_N400 = 843_490;
-	private static final int GRIB_SIZE_N640 = 0000;
-	
-	private static final int BITS_PER_VALUE = 16;
-	private static final int BINARY_SCALE_MINUS_6 = -6;
-	private static final float REFERENCE_VALUE_4707 = 4707.0f;
-	private static final float EXPECTED_BLA = 34.5f;
 	
 	private static final double SAMPLE_GRIB2_MIN = 215.9;
 	private static final double SAMPLE_GRIB2_MAX = 292.3;
