@@ -40,6 +40,7 @@ public class Grib1BDSReaderTest {
     @DataProvider(name="valuesForBinayScaleFactor")
     public Object[][] valuesForBinayScaleFactor(){
         return new Object[][]{
+                new Object[]{BINARY_FOR_SCALE_FACTOR_WITH_VALUE_MINUS9,-9},
                 new Object[]{BINARY_FOR_SCALE_FACTOR_WITH_VALUE_9,9}
         };
     }
@@ -119,6 +120,7 @@ public class Grib1BDSReaderTest {
     }
 
     private static final byte[] BINARY_FOR_SLICING = new byte[]{0b0100_0010, 0b0100_0010, 0b0100_0001, 0b0100_0001};
-    private static final byte[] BINARY_FOR_SCALE_FACTOR_WITH_VALUE_9 = new byte[]{0b1000_0000 - 256, 0b0000_1001};
+    private static final byte[] BINARY_FOR_SCALE_FACTOR_WITH_VALUE_MINUS9 = new byte[]{0b1000_0000 - 256, 0b0000_1001};
+    private static final byte[] BINARY_FOR_SCALE_FACTOR_WITH_VALUE_9 = new byte[]{0b0000_0000 , 0b0000_1001};
     private static final int END_OF_META_DATA = 12;
 }
