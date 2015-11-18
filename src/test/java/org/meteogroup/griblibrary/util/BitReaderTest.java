@@ -42,7 +42,17 @@ public class BitReaderTest {
         assertThat(secondIncrement).isEqualTo(SECOND_BYTE);
 
     }
-
+    
+    @Test
+    public void testNextByteFollowedByBits2SInt() {
+    	byte[] bytes = new byte[]{-103, -45, 63, 107, -128};
+    	BitReader bitReader = new BitReader(bytes);
+    	assertThat(bitReader.readNext(11)).isEqualTo(1230);
+    	assertThat(bitReader.readNext(11)).isEqualTo(1231);
+    	
+		assertThat((int)bitReader.bits2SInt(11)).isEqualTo(-727);
+    }
+   
 
     private static final byte[] GOOD_BDS_VALUES_ARRAY() throws URISyntaxException, IOException {
         String filename = "/org/meteogroup/griblibrary/grib1/ecmwf-grib1-example-binary-data-section.grb";

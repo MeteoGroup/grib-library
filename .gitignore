@@ -9,3 +9,4 @@ GribReader.iml
 .settings/org.eclipse.m2e.core.prefs
 test-output/
 .gitignore.orig
+/.settings/

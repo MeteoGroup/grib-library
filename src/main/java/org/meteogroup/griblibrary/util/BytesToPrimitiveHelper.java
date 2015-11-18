@@ -79,6 +79,14 @@ public class BytesToPrimitiveHelper {
         }
         throw new BinaryNumberConversionException("Invalid length of input value in an attempt to convert byte array to int");
     }
+    
+    public static float bytesToFloat(byte... inputValue) throws BinaryNumberConversionException{
+    	if(inputValue.length == 4){
+    		int bits = bytes4ToInt(inputValue);
+    		return Float.intBitsToFloat(bits);
+    	}
+        throw new BinaryNumberConversionException("Invalid length of input value in an attempt to convert byte array to int");
+    }
 
     private static float byte4ToFloatAsIBM(byte[] values) {
         //TODO Check signing...

@@ -48,6 +48,7 @@ public class Grib1BDSReader {
 
         objectToWriteInto.setBinaryScaleFactor(this.readBinaryScaleFactor(inputValues[POSITION_BDS_BINARY_SCALE_1 + offSet], inputValues[POSITION_BDS_BINARY_SCALE_2 + offSet]));
         objectToWriteInto.setReferenceValue(BytesToPrimitiveHelper.bytesToFloatAsIBM(inputValues[POSITION_BDS_REFERENCE_VALUE_1 + offSet], inputValues[POSITION_BDS_REFERENCE_VALUE_2 + offSet], inputValues[POSITION_BDS_REFERENCE_VALUE_3 + offSet], inputValues[POSITION_BDS_REFERENCE_VALUE_4 + offSet]));
+        
         objectToWriteInto.setBytesForDatum(((short) (inputValues[POSITION_BDS_DATUM + offSet] & BytesToPrimitiveHelper.BYTE_MASK)));
         objectToWriteInto.setPackedValues(this.sliceArrayForGribField(inputValues, POSITION_BDS_SLICE_POINT_FOR_STANDARD_PACKING, objectToWriteInto.getBdsLength()));
 
@@ -55,9 +56,9 @@ public class Grib1BDSReader {
     }
 
     public int readBinaryScaleFactor(byte byte4, byte byte5){
-        boolean pos = BitChecker.testBit(byte4, BINARY_SCALE_SIGNING_BIT);
+        boolean neg = BitChecker.testBit(byte4, BINARY_SCALE_SIGNING_BIT);
         int absoluteValue = byte5;
-        return (pos ? absoluteValue : -1*absoluteValue);
+        return (neg ? -1*absoluteValue : absoluteValue);
     }
 
     public byte[] sliceArrayForGribField(byte[] inputValues, int slicePoint, int bdsLength) {

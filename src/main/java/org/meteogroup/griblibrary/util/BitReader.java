@@ -1,5 +1,7 @@
 package org.meteogroup.griblibrary.util;
 
+import java.io.IOException;
+
 /**
  * Created by roijen on 03-Nov-15.
  */
@@ -14,6 +16,11 @@ public class BitReader {
 
     public BitReader(byte[] bytes) {
         this.data = bytes;
+    }
+    
+    public BitReader(byte[] bytes, int startPosition) {
+        this.data = bytes;
+        this.bytePositionInByteArray = startPosition;
     }
 
     public long readNext(int bitsToRead) throws ArrayIndexOutOfBoundsException{
@@ -43,6 +50,36 @@ public class BitReader {
             }
         }
     }
+    
+    private static final long LONG_BITMASK = Long.MAX_VALUE;
+    
+    /**
+     * read a signed long
+     * @param nb
+     * @return
+     */
+	public long bits2SInt(int nb) {
+		long result = readNext(nb);
+
+		// check if we're negative
+		if (getBit(result, nb)) {
+			// it's negative! reset leading bit
+			result = setBit(result, nb, false);
+			// build 2's-complement
+			result = ~result & LONG_BITMASK;
+			result = result + 1;
+		}
+		return result;
+	}
+	
+	public static boolean getBit(long decimal, int N) {
+		int constant = 1 << (N - 1);
+		return (decimal & constant) > 0;
+	}
+
+	public static long setBit(long decimal, int N, boolean value) {
+		return value ? decimal | (1 << (N - 1)) : decimal & ~(1 << (N - 1));
+	}
 
     int nextByte() {
         int result = -1;
@@ -52,4 +89,5 @@ public class BitReader {
         bytePositionInByteArray++;
         return result;
     }
+    
 }

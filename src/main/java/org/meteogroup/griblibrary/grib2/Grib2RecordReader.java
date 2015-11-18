@@ -7,6 +7,7 @@ import org.meteogroup.griblibrary.exception.GribReaderException;
 import org.meteogroup.griblibrary.grib2.model.Grib2BMS;
 import org.meteogroup.griblibrary.grib2.model.Grib2DRS;
 import org.meteogroup.griblibrary.grib2.model.Grib2DS;
+import org.meteogroup.griblibrary.grib2.model.Grib2GDS;
 import org.meteogroup.griblibrary.grib2.model.Grib2IDS;
 import org.meteogroup.griblibrary.grib2.model.Grib2LUS;
 import org.meteogroup.griblibrary.grib2.model.Grib2PDS;
@@ -22,6 +23,7 @@ public class Grib2RecordReader {
     public Grib2RecordReader(){
     	idsReader = new Grib2IDSReader();
     	lusReader = new Grib2LUSReader();
+    	gdsReader = new Grib2GDSReader();
     	pdsReader = new Grib2PDSReader();
     	drsReader = new Grib2DRSReader();
     	bmsReader = new Grib2BMSReader();
@@ -53,6 +55,7 @@ public class Grib2RecordReader {
     public Grib2Record readCompleteRecord(Grib2Record record, byte[] recordAsByteArray, int headerLength) throws GribReaderException {
         Grib2IDS identificationSection = null;
         Grib2LUS localUseSection = null;
+        Grib2GDS gridDefinitionSection = null;
         Grib2PDS productDefinitionSection = null;
         Grib2DRS dataRepresentationSection = null;
         Grib2BMS bitmapSection = null;
@@ -64,8 +67,8 @@ public class Grib2RecordReader {
             headerOffSet+=identificationSection.getLength();
             localUseSection = lusReader.readLUSValues(recordAsByteArray, headerOffSet);
             headerOffSet+=localUseSection.getLength();
-            //Here we expect the PDS part
-            headerOffSet+=1672; //from GDS <- @todo to be changed of course
+            gridDefinitionSection = gdsReader.readGDSValues(recordAsByteArray, headerOffSet);
+            headerOffSet += gridDefinitionSection.getLength();
             productDefinitionSection = pdsReader.readPDSValues(recordAsByteArray, headerOffSet);
             headerOffSet+=productDefinitionSection.getLength();
             dataRepresentationSection = drsReader.readDRSValues(recordAsByteArray, headerOffSet);
@@ -73,9 +76,6 @@ public class Grib2RecordReader {
             bitmapSection = bmsReader.readBMSValues(recordAsByteArray, headerOffSet);
             headerOffSet +=bitmapSection.getLength();
             dataSection = dsReader.readDSValues(recordAsByteArray, headerOffSet);
-            
-            
-            
         } catch (BinaryNumberConversionException e) {
             throw new GribReaderException(e.getMessage(),e);
         } catch (IOException e) {
@@ -90,12 +90,13 @@ public class Grib2RecordReader {
         return record;
     }
     
-	private Grib2IDSReader idsReader;
-	private Grib2LUSReader lusReader;
-	private Grib2PDSReader pdsReader;
-	private Grib2DRSReader drsReader;
-	private Grib2BMSReader bmsReader;
-	private Grib2DSReader dsReader;
+	private final Grib2IDSReader idsReader;
+	private final Grib2LUSReader lusReader;
+	private final Grib2GDSReader gdsReader;
+	private final Grib2PDSReader pdsReader;
+	private final Grib2DRSReader drsReader;
+	private final Grib2BMSReader bmsReader;
+	private final Grib2DSReader dsReader;
 	
     private static final int GRIB_WORD_LENGTH = 4;
     private static final int POSITION_VERSION_NUMBER = 7;

@@ -90,14 +90,22 @@ public class Grib1CollectionReader {
     	Grib1CollectionReader grib1Reader = new Grib1CollectionReader();
     	
     	try {
-			List<Grib1Record> coll = grib1Reader.readFileFromFileName("d://data//grib//ECM_DSD_2015020200_0006");
+			//List<Grib1Record> coll = grib1Reader.readFileFromFileName("d://data//grib//ECM_DSD_2015020200_0006");
+    		List<Grib1Record> coll = grib1Reader.readFileFromFileName("d://data//grib//ECM_DPD_2015021912_0048");
+			//ECM_DPD_2015021912_0048
 			System.out.println("List length = "+coll.size());
+			int counter = 0;
 			for (Grib1Record grib1Record : coll){
-				System.out.println(grib1Record.toString());
-				SimplePackingDecoder decoder = new SimplePackingDecoder();
-				double[] values = decoder.decodeFromGrib1(grib1Record);
-//				for (int i=110_000; i<110_500; i++){
-//					System.out.println(" val"+i+"= "+values[i]);
+				counter++;
+//				if (grib1Record.getPds().getIdenticatorOfParameterAndUnit() != 167) {
+//					System.out.println("Temperature 2m: Grib nr " + counter);
+					
+					System.out.println(grib1Record.toString());
+					SimplePackingDecoder decoder = new SimplePackingDecoder();
+					double[] values = decoder.decodeFromGrib1(grib1Record);
+					for (int i = 110_000; i < 110_004; i++) {
+						System.out.println(" val " + i + "= " + values[i]);
+					}
 //				}
 			}
 			
