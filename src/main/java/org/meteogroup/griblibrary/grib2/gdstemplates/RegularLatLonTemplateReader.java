@@ -5,11 +5,6 @@ import org.meteogroup.griblibrary.grib2.model.gdstemplates.GDSTemplate;
 import org.meteogroup.griblibrary.grib2.model.gdstemplates.RegularLatLonGDSTemplate;
 import org.meteogroup.griblibrary.util.BytesToPrimitiveHelper;
 
-/**
- * 
- * @author MvdP
- *
- */
 public class RegularLatLonTemplateReader implements GridTemplateReader {
 
 	private static final int POSITION_SHAPE_OF_EARTH = 14;
