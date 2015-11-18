@@ -76,13 +76,13 @@ public class Grib1CollectionReaderTest {
         assertThat(records.size()).isEqualTo(2);
     }
 
-    private static final String VERY_SIMPLE_TEXT_FILE_LOCATION = "/grib1test/samplefiles/VerySimpleSampleFile.txt";
+    private static final String VERY_SIMPLE_TEXT_FILE_LOCATION = "VerySimpleSampleFile.txt";
 
     private static final String NOT_EXISTING_FILE_LOCATION = "/dev/null/doesnotexist.txt";
 
     private static final byte[] SIMULATED_BYTE_ARRAY = new byte[]{'G','R','I','B',19,84,-26,1};
     private static FileChannel SIMULATED_FILE_CHANNEL() throws FileNotFoundException {
-        String fileName = Grib1CollectionReaderTest.class.getClass().getResource("/grib1test/samplefiles/VerySimpleSampleFile.txt").getPath();
+        String fileName = Grib1CollectionReaderTest.class.getResource("VerySimpleSampleFile.txt").getPath();
         RandomAccessFile raf = new RandomAccessFile(fileName, "r");
         return raf.getChannel();
     }

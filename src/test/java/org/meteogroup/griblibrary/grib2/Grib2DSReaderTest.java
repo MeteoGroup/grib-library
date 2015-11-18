@@ -40,7 +40,7 @@ public class Grib2DSReaderTest {
 	
 
 	private static final byte[] GOOD_DS_ARRAY() throws URISyntaxException, IOException {
-		String filename = "/grib2test/samplefiles/ec-grib2-example-data-section.grb";
+		String filename = "ecmwf-grib2-example-data-section.grb";
 
 		String name = Grib2DSReader.class.getResource(filename).toString();
 		File f = new File(Grib2DSReader.class.getResource(filename).toURI());

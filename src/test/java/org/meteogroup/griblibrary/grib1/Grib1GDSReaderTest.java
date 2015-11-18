@@ -120,7 +120,7 @@ public class Grib1GDSReaderTest {
 	private static final byte[] GOOD_SHORT_GDS_ARRAY_FOR_LENGTH_ONLY = new byte[]{0,0,28};
 
 	private static final byte[] GOOD_GDS_ARRAY() throws URISyntaxException, IOException {
-		String filename = "/grib1test/samplefiles/ec-grib1-example-grid-definition-section.grb";
+		String filename = "ecmwf-grib1-example-grid-definition-section.grb";
 
 		String name = Grib1GDSReader.class.getResource(filename).toString();
 		File f = new File(Grib1GDSReader.class.getResource(filename).toURI());

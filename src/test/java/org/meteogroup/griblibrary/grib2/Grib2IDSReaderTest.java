@@ -61,7 +61,7 @@ public class Grib2IDSReaderTest {
 	}
 	
 	private static final byte[] GOOD_GID_ARRAY() throws URISyntaxException, IOException {
-		String filename = "/grib2test/samplefiles/ec-grib2-example-identification-section.grb";
+		String filename = "ecmwf-grib2-example-identification-section.grb";
 
 		String name = Grib2IDSReader.class.getResource(filename).toString();
 		File f = new File(Grib2IDSReader.class.getResource(filename).toURI());

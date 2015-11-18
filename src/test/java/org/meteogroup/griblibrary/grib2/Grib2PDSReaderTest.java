@@ -57,7 +57,7 @@ public class Grib2PDSReaderTest {
 	}
 	
 	private static final byte[] GOOD_PDS_ARRAY() throws URISyntaxException, IOException {
-		String filename = "/grib2test/samplefiles/ec-grib2-example-product-definition-section.grb";
+		String filename = "ecmwf-grib2-example-product-definition-section.grb";
 
 		String name = Grib2PDSReader.class.getResource(filename).toString();
 		File f = new File(Grib2PDSReader.class.getResource(filename).toURI());

@@ -42,7 +42,7 @@ public class Grib2BMSReaderTest {
 	}
 	
 	private static final byte[] GOOD_BMS_ARRAY() throws URISyntaxException, IOException {
-		String filename = "/grib2test/samplefiles/ec-grib2-example-bitmap-section.grb";
+		String filename = "ecmwf-grib2-example-bitmap-section.grb";
 
 		String name = Grib2BMSReader.class.getResource(filename).toString();
 		File f = new File(Grib2BMSReader.class.getResource(filename).toURI());

@@ -84,7 +84,7 @@ public class Grib1BDSReaderTest {
 
     private static final byte[] ARRAY_WITH_LENGTH_OF_28 = new byte[]{0,0,28};
     private static final byte[] GOOD_BDS_ARRAY() throws URISyntaxException, IOException {
-        String filename = "/grib1test/samplefiles/ec-grib1-example-binary-data-section.grb";
+        String filename = "ecmwf-grib1-example-binary-data-section.grb";
 
         String name = Grib1BDSReader.class.getResource(filename).toString();
         File f = new File(Grib1BDSReader.class.getResource(filename).toURI());
@@ -120,5 +120,7 @@ public class Grib1BDSReaderTest {
 
     private static final byte[] BINARY_FOR_SLICING = new byte[]{0b0100_0010, 0b0100_0010, 0b0100_0001, 0b0100_0001};
     private static final byte[] BINARY_FOR_SCALE_FACTOR_WITH_VALUE_9 = new byte[]{0b1000_0000 - 256, 0b0000_1001};
-    private static final int END_OF_META_DATA = 12;
+
+    //TODO Check this. was twelve
+    private static final int END_OF_META_DATA = 11;
 }

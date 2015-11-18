@@ -45,7 +45,7 @@ public class BitReaderTest {
 
 
     private static final byte[] GOOD_BDS_VALUES_ARRAY() throws URISyntaxException, IOException {
-        String filename = "/grib1test/samplefiles/ec-grib1-example-binary-data-section.grb";
+        String filename = "/org/meteogroup/griblibrary/grib1/ecmwf-grib1-example-binary-data-section.grb";
 
         String name = Grib1BDSReader.class.getResource(filename).toString();
         File f = new File(Grib1BDSReader.class.getResource(filename).toURI());

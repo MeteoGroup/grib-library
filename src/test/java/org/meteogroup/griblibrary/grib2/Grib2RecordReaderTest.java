@@ -2,10 +2,8 @@ package org.meteogroup.griblibrary.grib2;
 
 import org.meteogroup.griblibrary.exception.BinaryNumberConversionException;
 import org.meteogroup.griblibrary.exception.GribReaderException;
-import org.meteogroup.griblibrary.grib.GribRecord;
 import org.meteogroup.griblibrary.grib2.model.Grib2Record;
 import org.meteogroup.griblibrary.util.FileChannelPartReader;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -103,7 +101,7 @@ public class Grib2RecordReaderTest {
     private static final byte[] LENGTH_TO_SHORT = new byte[]{'G','R','I','B',0,0,14,2,0,0,0,0,0,0,0,8};
 
     private static final byte[] GOOD_IDENTICATOR_SECTOR() throws URISyntaxException, IOException {
-        String filename = "/grib2test/samplefiles/ec-grib2-example-indicator-section.grb";
+        String filename = "/org/meteogroup/griblibrary/grib2/ecmwf-grib2-example-indicator-section.grb";
 
         String name = Grib2RecordReaderTest.class.getResource(filename).toString();
         File f = new File(Grib2RecordReaderTest.class.getResource(filename).toURI());
@@ -138,7 +136,7 @@ public class Grib2RecordReaderTest {
     }
     
 	private Grib2Record readSampleGribFile() throws URISyntaxException, IOException, GribReaderException {
-		String filename = "/grib2test/samplefiles/ec-grib2-example.grb";
+		String filename = "ecmwf-grib2-example.grb";
 
 		String name = Grib2RecordReaderTest.class.getResource(filename).toString();
 		File f = new File(Grib2RecordReaderTest.class.getResource(filename).toURI());

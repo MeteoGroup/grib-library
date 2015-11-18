@@ -44,7 +44,7 @@ public class Grib2LUSReaderTest {
 	}
 	
 	private static final byte[] GOOD_LUS_ARRAY() throws URISyntaxException, IOException {
-		String filename = "/grib2test/samplefiles/ec-grib2-example-local-use-section.grb";
+		String filename = "ecmwf-grib2-example-local-use-section.grb";
 
 		String name = Grib2LUSReader.class.getResource(filename).toString();
 		File f = new File(Grib2LUSReader.class.getResource(filename).toURI());
