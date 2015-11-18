@@ -73,9 +73,29 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
-                <version>1.2</version>
+                <version>2.2</version>
+            </plugin>
+            <!-- plugin to change add tags to git -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>1.9.4</version>
             </plugin>
         </plugins>
     </build>
+
+    <!-- Currently internal MeteoGroup nexus only. Working on Maven Central.-->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>meteonexus</id>
+            <name>MeteoNexus</name>
+            <url>http://ci.de.meteogroup.net/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>meteonexus</id>
+            <name>MeteoNexus</name>
+            <url>http://ci.de.meteogroup.net/nexus/content/repositories/releases/</url>
+        </repository>
+    </distributionManagement>
 
 </project>
