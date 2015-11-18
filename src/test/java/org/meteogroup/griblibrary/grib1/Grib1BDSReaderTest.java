@@ -40,7 +40,7 @@ public class Grib1BDSReaderTest {
     @DataProvider(name="valuesForBinayScaleFactor")
     public Object[][] valuesForBinayScaleFactor(){
         return new Object[][]{
-                new Object[]{BINARY_FOR_SCALE_FACTOR_WITH_VALUE_9,9}
+                new Object[]{BINARY_FOR_SCALE_FACTOR_WITH_VALUE_9,-9}
         };
     }
 
@@ -105,7 +105,7 @@ public class Grib1BDSReaderTest {
     private static final Grib1BDS GOOD_EXAMPLE_SIMPLE_PACKING_BDS_OBJECT(){
         Grib1BDS bds = new Grib1BDS();
         bds.setBdsLength(4281416);
-        bds.setBinaryScaleFactor((short) 9);
+        bds.setBinaryScaleFactor((short) -9);
         bds.setReferenceValue(208.2547f);
         bds.setBytesForDatum(16);
         bds.setGridPointData(true);
