@@ -84,18 +84,4 @@
         </plugins>
     </build>
 
-    <!-- Currently internal MeteoGroup nexus only. Working on Maven Central.-->
-    <distributionManagement>
-        <snapshotRepository>
-            <id>meteonexus</id>
-            <name>MeteoNexus</name>
-            <url>http://ci.de.meteogroup.net/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>meteonexus</id>
-            <name>MeteoNexus</name>
-            <url>http://ci.de.meteogroup.net/nexus/content/repositories/releases/</url>
-        </repository>
-    </distributionManagement>
-
 </project>
