@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class Grib2RecordReaderTest {
 
     private Grib2RecordReader reader;
-    FileChannelPartReader partReader;
+    private FileChannelPartReader partReader;
 
     @DataProvider(name = "goodHeader")
     public static Object[][] goodHeader() throws IOException, URISyntaxException {
@@ -127,7 +127,7 @@ public class Grib2RecordReaderTest {
     	Grib2Record record = this.readSampleGribFile();
     	assertThat(record).isNotNull();
     	assertThat(record.getIds()).isNotNull();
-//    	assertThat(record.getGDS).isNotNull(); //@todo build @Lajos busy with it
+    	assertThat(record.getGds()).isNotNull();
     	assertThat(record.getPds()).isNotNull();
     	assertThat(record.getDrs()).isNotNull();
     	assertThat(record.getBms()).isNotNull();
