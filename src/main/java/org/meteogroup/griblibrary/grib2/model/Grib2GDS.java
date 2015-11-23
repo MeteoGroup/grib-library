@@ -29,7 +29,7 @@ public class Grib2GDS {
 
     private double Dj;
 
-    private LatLon[] latLons;
+//    private LatLon[] latLons;
 
     private int ni;
     private int[] nis;
