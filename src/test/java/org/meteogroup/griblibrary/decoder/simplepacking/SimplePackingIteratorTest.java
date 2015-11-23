@@ -29,7 +29,6 @@ public class SimplePackingIteratorTest {
     @BeforeMethod()
     public void setUp() throws IOException, URISyntaxException {
         grib1Iterator = new SimplePackingIterator(SIMPLE_GRIB_1_RECORD());
-        grib2Iterator = new SimplePackingIterator(SIMPLE_GRIB_1_RECORD());
     }
 
     @DataProvider(name = "unpackingTestCases")
@@ -51,13 +50,6 @@ public class SimplePackingIteratorTest {
         assertThat(grib1Iterator.nextDouble()).isCloseTo(FIRST_VALUE, within(0.01));
         assertThat(grib1Iterator.nextDouble()).isCloseTo(SECOND_VALUE, within(0.01));
         assertThat(grib1Iterator.nextDouble()).isCloseTo(THIRD_VALUE, within(0.01));
-    }
-
-    @Test
-    public void testReadGrib2Record() throws IOException, URISyntaxException {
-        assertThat(grib2Iterator.nextDouble()).isCloseTo(FIRST_VALUE, within(0.01));
-        assertThat(grib2Iterator.nextDouble()).isCloseTo(SECOND_VALUE, within(0.01));
-        assertThat(grib2Iterator.nextDouble()).isCloseTo(THIRD_VALUE, within(0.01));
     }
 
     private static final double EXPECTED_VALUE_4800 = 4800;
@@ -87,23 +79,6 @@ public class SimplePackingIteratorTest {
         return record;
     }
 
-    private static final Grib2Record SIMPLE_GRIB_2_RECORD(){
-        Grib2Record record = new Grib2Record();
-        Grib2DRS drs = new Grib2DRS();
-        drs.setNumberOfDataPoints(NUMBER_OF_POINTS);
-        SimplePackingDRSTemplate simpleDRSTemplate = new SimplePackingDRSTemplate();
-        simpleDRSTemplate.setBitsPerValue(BITS_PER_VALUE);
-        simpleDRSTemplate.setBinaryScaleFactor(BINARY_SCALE_MINUS_6);
-        simpleDRSTemplate.setDecimalScaleFactor(FACTOR_DIVISION_1);
-        simpleDRSTemplate.setReferenceValue(REFERENCE_VALUE_4707);
-
-        drs.setDataTemplate(simpleDRSTemplate);
-        Grib2DS ds = new Grib2DS();
-        ds.setPackedData(SIMPLE_BYTE_ARRAY);
-        record.setDrs(drs);
-        record.setDataSection(ds);
-        return record;
-    }
 
     private static final int BITS_PER_VALUE = 16;
     private static final int NUMBER_OF_POINTS = 3;
