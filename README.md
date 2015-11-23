@@ -3,7 +3,7 @@ This is still very much a **work in progress**. As work on the library is contin
 
 This library will allow you to read grib files into JAVA objects. Grib files (commonly found with the extentions .grb, .grib or .grib2) are binary files used in meteorology to store historical and forecast weather data.
 
-[libraries](libraries)
+[libraries][libs]
 
 The readout of the file will be as close to the source as possible, not altering any data and following the documentation as described in:
 * Grib 1: http://www.wmo.int/pages/prog/www/WMOCodes/Guides/GRIB/GRIB1-Contents.html
@@ -30,6 +30,7 @@ And for grib2:
 	}
 ```
   
+  [libs]
   <h2>Libraries</h2>
   <h3>Lombok</h3>
   [Lombok](https://projectlombok.org/download.html) is a nice library. It's a library that uses annotations to reduce the amount of code you have to write.
