@@ -83,6 +83,7 @@ public class Grib2RecordReader {
         }
         record.setIds(identificationSection);
         record.setLus(localUseSection);
+        record.setGds(gridDefinitionSection);
         record.setPds(productDefinitionSection);
         record.setDrs(dataRepresentationSection);
         record.setBms(bitmapSection);

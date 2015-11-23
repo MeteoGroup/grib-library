@@ -27,7 +27,7 @@ public class Grib2CollectionReaderTest {
 
     Grib2CollectionReader collectionReader;
 
-    @DataProvider(name = "goodGDSDataSet")
+    @DataProvider(name = "simpleFileLocation")
     public static Object[][] simpleFileLocation(){
         return new Object[][]{
                 new Object[]{VERY_SIMPLE_TEXT_FILE_LOCATION}

@@ -16,7 +16,7 @@ public class Grib1PDSReaderTest {
     private Grib1PDSReader pdsReader;
 
     @DataProvider(name = "goodPDSDataSet")
-    public static Object[][] goodPDSArray(){
+    public static Object[][] goodPDSDataSet(){
         return new Object[][]{
                 new Object[]{GOOD_PDS_ARRAY,0,GOOD_PDS_OBJECT()},
                 new Object[]{GOOD_PDS_ARRAY_WITH_HEADER,8,GOOD_PDS_OBJECT()}
@@ -43,7 +43,7 @@ public class Grib1PDSReaderTest {
     }
 
 
-    @Test(dataProvider = "goodPDSArray")
+    @Test(dataProvider = "goodPDSDataSet")
     public void testReadPDS(byte[] testArray, int headerOffSet, Grib1PDS expectedResponseObject) throws BinaryNumberConversionException {
         Grib1PDS pds = pdsReader.readPDSValues(testArray,headerOffSet);
         assertThat(pds).isEqualTo(expectedResponseObject);

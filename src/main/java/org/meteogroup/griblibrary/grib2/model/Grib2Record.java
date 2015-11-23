@@ -14,23 +14,21 @@ import org.meteogroup.griblibrary.grib.GribRecord;
 @Getter
 @Setter
 public class Grib2Record extends GribRecord {
-
 	
-	private Grib2IDS ids = null;
+	private Grib2IDS ids;
 
-	private Grib2LUS lus = null;
+	private Grib2LUS lus;
 
-	//
-	// private GDS gds = null;
+	private Grib2GDS gds;
 
-	private Grib2PDS pds = null;
+	private Grib2PDS pds;
 
-	private Grib2DRS drs = null;
+	private Grib2DRS drs;
 
-	private Grib2BMS bms = null;
+	private Grib2BMS bms;
 
-	private Grib2DS dataSection = null;
+	private Grib2DS dataSection;
 
-	private Grib2Endsection endSection = null;
+	private Grib2Endsection endSection;
 
 }
