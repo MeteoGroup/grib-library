@@ -87,20 +87,25 @@ public class Grib2CollectionReader {
     	Grib2CollectionReader grib2Reader = new Grib2CollectionReader();
     	
     	try {
-			//List<Grib1Record> coll = grib1Reader.readFileFromFileName("d://data//grib//ECM_DSD_2015020200_0006");
     		List<Grib2Record> coll = grib2Reader.readFileFromFileName("d://data//grib//ECM_DMD_2015111512_0024");
+    		//List<Grib2Record> coll = grib2Reader.readFileFromFileName("d://data//grib//ecmwf-2016//tt12.grb");
 			//ECM_DPD_2015021912_0048
 			System.out.println("List length = "+coll.size());
 			int counter = 0;
 			for (Grib2Record grib2Record : coll){
 				counter++;
 				System.out.println("Grib nr "+counter);
+				
+				
+				if (grib2Record.getPds().getTemplate().getParameterNumber() != 0) {
+				System.out.println("Temperature : Grib nr " + counter);
 				System.out.println(grib2Record.toString());
 				BoustroPackingDecoder decoder = new BoustroPackingDecoder();
 				double[] values = decoder.decodeFromGrib2(grib2Record);
 				for (int i=110_000; i<110_004; i++){
 					System.out.println(" val "+i+"= "+values[i]);
 				}
+			}
 			}
 			
     	

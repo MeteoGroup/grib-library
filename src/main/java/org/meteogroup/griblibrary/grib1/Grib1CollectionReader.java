@@ -59,7 +59,9 @@ public class Grib1CollectionReader {
 
     public List<Grib1Record> readAllRecords(FileChannel fileChannel) throws GribReaderException {
         ArrayList<Grib1Record> response = new ArrayList<Grib1Record>();
+        int tempcounter =0;
         while (gribRecordOffset < fileLength){
+        	
             byte[] recordHeader = new byte[0];
             recordHeader = partReader.readPartOfFileChannel(fileChannel, gribRecordOffset, HEADER_LENGTH);
             if (!recordReader.checkIfGribFileIsValidGrib1(recordHeader)){
@@ -75,6 +77,8 @@ public class Grib1CollectionReader {
             } catch (BinaryNumberConversionException e) {
                 throw new GribReaderException(e.getMessage(),e);
             }
+            System.out.println("counter---- "+tempcounter+" with length "+record.getLength() +" ===== "+Integer.toBinaryString(record.getLength()));
+        	tempcounter++;
             response.add(record);
             gribRecordOffset += recordReader.readRecordLength(recordHeader);
         }
@@ -91,21 +95,18 @@ public class Grib1CollectionReader {
     	
     	try {
 			//List<Grib1Record> coll = grib1Reader.readFileFromFileName("d://data//grib//ECM_DSD_2015020200_0006");
-    		List<Grib1Record> coll = grib1Reader.readFileFromFileName("d://data//grib//ECM_DPD_2015021912_0048");
-			//ECM_DPD_2015021912_0048
-			System.out.println("List length = "+coll.size());
-			int counter = 0;
+    		//List<Grib1Record> coll = grib1Reader.readFileFromFileName("d://data//grib//ECM_DPD_2015021912_0048");
+    		List<Grib1Record> coll = grib1Reader.readFileFromFileName("d://data//grib//ecmwf-2016//tt12.grb");
 			for (Grib1Record grib1Record : coll){
-				counter++;
 //				if (grib1Record.getPds().getIdenticatorOfParameterAndUnit() != 167) {
 //					System.out.println("Temperature 2m: Grib nr " + counter);
 					
-					System.out.println(grib1Record.toString());
+
 					SimplePackingDecoder decoder = new SimplePackingDecoder();
 					double[] values = decoder.decodeFromGrib1(grib1Record);
-					for (int i = 110_000; i < 110_004; i++) {
-						System.out.println(" val " + i + "= " + values[i]);
-					}
+//					for (int i = 110_000; i < 110_004; i++) {
+//						System.out.println(" val " + i + "= " + values[i]);
+//					}
 //				}
 			}
 			

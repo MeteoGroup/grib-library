@@ -66,7 +66,7 @@ public class BoustroPackingTest {
 	
 	private Grib2Record SAMPLE_GRIB2_RECORD() throws URISyntaxException, IOException, GribReaderException {
 		Grib2RecordReader reader = new Grib2RecordReader();
-		String filename = "/grib2test/samplefiles/ec-grib2-example.grb";
+		String filename = "/org/meteogroup/griblibrary/grib2/ecmwf-grib2-example.grb";
 
 		String name = BoustroPackingTest.class.getResource(filename).toString();
 		File f = new File(BoustroPackingTest.class.getResource(filename).toURI());
