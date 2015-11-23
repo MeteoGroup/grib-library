@@ -9,7 +9,6 @@ import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
-import org.meteogroup.griblibrary.exception.BinaryNumberConversionException;
 import org.meteogroup.griblibrary.exception.GribReaderException;
 import org.meteogroup.griblibrary.grib2.Grib2DRSReader;
 import org.meteogroup.griblibrary.grib2.drstemplates.BoustrophedonicSecondOrderPackingReader;
@@ -116,10 +115,9 @@ public class BoustrophedonicSecondOrderPackingReaderTest {
 	}
 	
 	private static final byte[] GOOD_BOUSTRO_ARRAY_FROMFILE1() throws URISyntaxException, IOException {
-		//String filename = "/grib2test/samplefiles/ec-grib2-example-datarepresentation-section.grb";
-		String filename = "/grib2test/samplefiles/ec-grib2-example-datarepresentation-section.grb";
-		String name = Grib2DRSReader.class.getResource(filename).toString();
-		File f = new File(Grib2DRSReader.class.getResource(filename).toURI());
+		String filename = "ecmwf-grib2-boustro-example-datarepresentation-section.grb";
+		String name = BoustrophedonicSecondOrderPackingReaderTest.class.getResource(filename).toString();
+		File f = new File(BoustrophedonicSecondOrderPackingReaderTest.class.getResource(filename).toURI());
 		if (!f.exists()) {
 			throw new IOException("file does not exist at " + name);
 		}
@@ -135,10 +133,10 @@ public class BoustrophedonicSecondOrderPackingReaderTest {
 	};
 	
 	private static final byte[] GOOD_BOUSTRO_ARRAY_FROMFILE2() throws URISyntaxException, IOException {
-		String filename = "/grib2test/samplefiles/ec-grib2-boustro-example-datarepresentation-section.grb";
+		String filename = "ecmwf-grib2-boustro-example-datarepresentation-section.grb";
 
-		String name = Grib2DRSReader.class.getResource(filename).toString();
-		File f = new File(Grib2DRSReader.class.getResource(filename).toURI());
+		String name = BoustrophedonicSecondOrderPackingReaderTest.class.getResource(filename).toString();
+		File f = new File(BoustrophedonicSecondOrderPackingReaderTest.class.getResource(filename).toURI());
 		if (!f.exists()) {
 			throw new IOException("file does not exist at " + name);
 		}

@@ -25,8 +25,7 @@ public class Grib1BDSReaderTest {
     @DataProvider(name="goodBDSArrayForLengthCheck")
     public Object[][] goodBDSArrayForLengthCheck() throws IOException, URISyntaxException {
         return new Object[][]{
-                new Object[]{GOOD_BDS_ARRAY(),0, 4281416},
-                new Object[]{ARRAY_WITH_LENGTH_OF_28,0,28}
+                new Object[]{GOOD_BDS_ARRAY(),0, 4281416}
         };
     }
 
