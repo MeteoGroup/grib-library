@@ -9,26 +9,24 @@ The readout of the file will be as close to the source as possible, not altering
   
 A very basic example on how to read grib data from a Grib1 file:
 
-<code>
+```
 	List<Grib1Record> coll = grib1Reader.readFileFromFileName("d://data//grib//ecmwf-2016//tt12.grb");
 	for (Grib1Record grib1Record : coll){
 			SimplePackingDecoder decoder = new SimplePackingDecoder();
 			double[] values = decoder.decodeFromGrib1(grib1Record);
 	}
-</code> 
+```
 
 And for grib2:
 
-<code>
-	List<Grib2Record> coll = grib2Reader.readFileFromFileName("d://data//grib//ECM_DMD_2015111512_0024");
-	    		
+```
+	List<Grib2Record> coll = grib2Reader.readFileFromFileName("d://data//grib//ECM_DMD_2015111512_0024");  		
 	int counter = 0;
 	for (Grib2Record grib2Record : coll) {
 		BoustroPackingDecoder decoder = new BoustroPackingDecoder();
 		double[] values = decoder.decodeFromGrib2(grib2Record);
 	}
-
-</code>
+```
   
   
 
