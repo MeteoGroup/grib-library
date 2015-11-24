@@ -93,9 +93,7 @@ public class BoustrophedonicSecondOrderPackingReader implements DataTemplateRead
 
 				}
 				boustroTemplate.setSpd(spd);
-				int spdBias = -1;
-				
-					spdBias = (int) bitReader.bits2SInt(boustroTemplate.getNumberOfBitsOfSPD());
+				int spdBias = (int) bitReader.bits2SInt(boustroTemplate.getNumberOfBitsOfSPD());
 				
 				boustroTemplate.setSpdBias(spdBias);
 			}
