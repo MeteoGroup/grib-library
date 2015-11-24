@@ -77,8 +77,7 @@ public class Grib1CollectionReader {
             } catch (BinaryNumberConversionException e) {
                 throw new GribReaderException(e.getMessage(),e);
             }
-            System.out.println("counter---- "+tempcounter+" with length "+record.getLength() +" ===== "+Integer.toBinaryString(record.getLength()));
-        	tempcounter++;
+            tempcounter++;
             response.add(record);
             gribRecordOffset += recordReader.readRecordLength(recordHeader);
         }
