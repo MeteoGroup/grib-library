@@ -52,7 +52,6 @@ public class Grib1RecordReader {
     public int readRecordLength(byte[] bufferValues) throws GribReaderException {
         int length = 0;
         try {
-        	System.out.println("===== "+(bufferValues[POSITION_RECORDLENGTH1] )+"  "+bufferValues[POSITION_RECORDLENGTH2]+" "+bufferValues[POSITION_RECORDLENGTH3]);
             length = BytesToPrimitiveHelper.bytesToInteger(bufferValues[POSITION_RECORDLENGTH1], bufferValues[POSITION_RECORDLENGTH2], bufferValues[POSITION_RECORDLENGTH3]);
         	//length = BytesToPrimitiveHelper.signedBytesToInt(bufferValues[POSITION_RECORDLENGTH1], bufferValues[POSITION_RECORDLENGTH2], bufferValues[POSITION_RECORDLENGTH3]);
             byte[] tmp = new byte[3];
@@ -60,7 +59,6 @@ public class Grib1RecordReader {
             tmp[1] = bufferValues[POSITION_RECORDLENGTH2];
             tmp[2] = bufferValues[POSITION_RECORDLENGTH3];
             int i = (tmp[0]&0xFF) << 16 | (tmp[1]&0xFF) << 8 | (tmp[2]&0xFF);
-            System.out.println("total = "+i+" aaaaaa "+Integer.toBinaryString((tmp[2])));
             
         } catch (BinaryNumberConversionException e) {
             throw new GribReaderException(e.getMessage(),e);
