@@ -5,7 +5,6 @@ This library will allow you to read grib files into JAVA objects. Grib files (co
 #contents
 - [Roadmap](#roadmap) 
 - [Libraries](#libraries) 
-- - [Lombok](#lombok)
 - [Example code](#example-code) 
 
 
