@@ -2,9 +2,11 @@ package org.meteogroup.griblibrary.grib2.model.gdstemplates;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @Setter
+@Slf4j
 public class RegularLatLonGDSTemplate extends GDSTemplate{
 
 	private int shapeOfEarth;
@@ -36,7 +38,7 @@ public class RegularLatLonGDSTemplate extends GDSTemplate{
 					regularTemplate.getNi() == this.getNi() &&
 					regularTemplate.getNj() == this.getNj()) {
 				// TODO Handle RegularLatLonGDSTemplate comparison
-				System.out.println("WARNING:::: STILL NOT ENOUGH INFO TO SAY IF EQUALS");
+				log.warn("WARNING:::: STILL NOT ENOUGH INFO TO SAY IF EQUALS");
 				return true;
 			}
 		}

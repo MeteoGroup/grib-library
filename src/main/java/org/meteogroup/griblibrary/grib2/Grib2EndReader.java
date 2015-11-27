@@ -19,7 +19,7 @@ public class Grib2EndReader extends Grib2SectionReader {
 	
 	public Grib2Endsection readEndValues(byte[] endValues, int headerOffSet) throws BinaryNumberConversionException, IOException{
 		if (this.checkEndSection(endValues)==false){
-        	System.out.println("some error in endsection");
+        	log.error("some error in endsection");
         	return null;
         }
         return new Grib2Endsection();
