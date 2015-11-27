@@ -5,6 +5,7 @@ import org.meteogroup.griblibrary.exception.GribReaderException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 
 /**
  * Created by roijen on 21-Oct-15.
@@ -32,4 +33,21 @@ public class FileChannelPartReader {
         }
         return buffer.array();
     }
+
+    //S3 comes with a readablebytechannel
+    public byte[] readPartOfFileChannel(ReadableByteChannel fileChannel, long lengthToRead) throws GribReaderException {
+        ByteBuffer buffer = null;
+        try {
+            buffer = ByteBuffer.allocate((int) lengthToRead);
+            fileChannel.read(buffer);
+            buffer.rewind();
+        } catch (IOException e) {
+            throw new GribReaderException(e.getMessage(),e);
+        }
+        if (buffer == null){
+            throw new GribReaderException("Buffer was not filled. This indicates a very vague problem in the FileChannelPartReader...");
+        }
+        return buffer.array();
+    }
+
 }

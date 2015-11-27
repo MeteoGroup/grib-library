@@ -3,6 +3,7 @@ package org.meteogroup.griblibrary.grib1;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,9 +84,38 @@ public class Grib1CollectionReader {
         }
         return response;
     }
-    
+
+    public List<Grib1Record> readAllRecords(ReadableByteChannel fileChannel, long fileLength) throws GribReaderException {
+        ArrayList<Grib1Record> response = new ArrayList<Grib1Record>();
+        int tempcounter =0;
+        while (gribRecordOffset < fileLength){
+
+            byte[] recordHeader = new byte[0];
+            recordHeader = partReader.readPartOfFileChannel(fileChannel, HEADER_LENGTH);
+            if (!recordReader.checkIfGribFileIsValidGrib1(recordHeader)){
+                throw new GribReaderException ("Attempted to read invalid grib record");
+            }
+            Grib1Record record = new Grib1Record();
+            record.setVersion(GRIB_VERSION);
+            byte[] recordAsByteArray = new byte[0];
+            try {
+                record.setLength(recordReader.readRecordLength(recordHeader));
+                recordAsByteArray = partReader.readPartOfFileChannel(fileChannel,record.getLength()-HEADER_LENGTH);
+                record = recordReader.readCompleteRecord(record,recordAsByteArray, NO_HEADER);
+            } catch (BinaryNumberConversionException e) {
+                throw new GribReaderException(e.getMessage(),e);
+            }
+            tempcounter++;
+            response.add(record);
+            gribRecordOffset += recordReader.readRecordLength(recordHeader);
+        }
+        return response;
+    }
+
+
     private static final int HEADER_LENGTH = 8;
 	private static final int GRIB_VERSION = 1;
+    private static final int NO_HEADER = 0;
     
     public static void main(String[] args){
     	log.info("test read in started");
