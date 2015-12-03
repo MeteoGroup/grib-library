@@ -28,7 +28,7 @@ The readout of the file will be as close to the source as possible, not altering
 Take a look at the [Lombok](https://projectlombok.org/download.html) page to find instructions on how to integrate Lombok within Eclipse and IntelliJ.
    
    
-## Example code
+## Example code - reading Grib
 A very basic example on how to read grib data from a Grib1 file:
 
 ```
