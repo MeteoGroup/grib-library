@@ -93,7 +93,9 @@ public class Grib1CollectionReader {
             byte[] recordHeader = new byte[0];
             recordHeader = partReader.readPartOfFileChannel(fileChannel, HEADER_LENGTH);
             if (!recordReader.checkIfGribFileIsValidGrib1(recordHeader)){
-                throw new GribReaderException ("Attempted to read invalid grib record");
+                //throw new GribReaderException ("Attempted to read invalid grib record");
+                log.warn("Something went wrong with the grib records. Possible trailing empty byte. Returning with what we've got.");
+                return response;
             }
             Grib1Record record = new Grib1Record();
             record.setVersion(GRIB_VERSION);

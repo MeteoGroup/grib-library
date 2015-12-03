@@ -78,7 +78,7 @@ public class Grib1RecordReader {
         headerOffSet += gds.getGdsLenght();
         Grib1BDS bds = bdsReader.readBDSValues(bufferValues,headerOffSet);
         grib1Record.setBds(bds);
-
+        this.checkIfGribFileEndsValid(bufferValues);
         return grib1Record;
         
         
