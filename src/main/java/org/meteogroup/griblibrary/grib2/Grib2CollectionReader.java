@@ -65,7 +65,7 @@ public class Grib2CollectionReader {
     public List<Grib2Record> readAllRecords(FileChannel fileChannel) throws GribReaderException {
         ArrayList<Grib2Record> response = new ArrayList<Grib2Record>();
         while (gribRecordOffset < fileLength){
-        	System.out.println("next record");
+        	log.debug("next record");
             byte[] recordHeader = partReader.readPartOfFileChannel(fileChannel, gribRecordOffset, HEADER_LENGTH);
             if (!recordReader.checkIfGribFileIsValidGrib2(recordHeader)){
                 throw new GribReaderException("Attempted to read invalid grib record");
@@ -90,19 +90,19 @@ public class Grib2CollectionReader {
     		List<Grib2Record> coll = grib2Reader.readFileFromFileName("d://data//grib//ECM_DMD_2015111512_0024");
     		//List<Grib2Record> coll = grib2Reader.readFileFromFileName("d://data//grib//ecmwf-2016//tt12.grb");
 			//ECM_DPD_2015021912_0048
-			System.out.println("List length = "+coll.size());
+			log.debug("List length = "+coll.size());
 			int counter = 0;
 			for (Grib2Record grib2Record : coll) {
 				counter++;
-				System.out.println("Grib nr " + counter);
+				log.debug("Grib nr " + counter);
 
 				if (grib2Record.getPds().getTemplate().getParameterNumber() != 0) {
-					System.out.println("Temperature : Grib nr " + counter);
-					System.out.println(grib2Record.toString());
+					log.debug("Temperature : Grib nr " + counter);
+					log.debug(grib2Record.toString());
 					BoustroPackingDecoder decoder = new BoustroPackingDecoder();
 					double[] values = decoder.decodeFromGrib2(grib2Record);
 					for (int i = 110_000; i < 110_004; i++) {
-						System.out.println(" val " + i + "= " + values[i]);
+						log.debug(" val " + i + "= " + values[i]);
 					}
 				}
 			}
