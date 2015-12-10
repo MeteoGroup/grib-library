@@ -46,7 +46,7 @@ public class Grib1BDSReaderTest {
     @DataProvider(name="valuesForSlicing")
     public Object[][] valuesForSlicing(){
         return new Object[][]{
-                new Object[]{BINARY_FOR_SLICING,1,4, new byte[]{0b0100_0001, 0b0100_0001}}
+                new Object[]{BINARY_FOR_SLICING,2,3, new byte[]{0b0100_0001, 0b0100_0001}}
         };
     }
 
@@ -121,5 +121,5 @@ public class Grib1BDSReaderTest {
     private static final byte[] BINARY_FOR_SCALE_FACTOR_WITH_VALUE_9 = new byte[]{0b1000_0000 - 256, 0b0000_1001};
 
     //TODO Check this. was twelve
-    private static final int END_OF_META_DATA = 12;
+    private static final int END_OF_META_DATA = 10;
 }
