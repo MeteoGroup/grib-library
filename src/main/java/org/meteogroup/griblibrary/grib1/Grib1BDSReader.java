@@ -7,9 +7,6 @@ import org.meteogroup.griblibrary.util.BytesToPrimitiveHelper;
 
 import java.util.Arrays;
 
-/**
- * Created by roijen on 27-Oct-15.
- */
 public class Grib1BDSReader {
 
     private static final int POSITION_BDS_LENGTH_1 = 0;
@@ -50,7 +47,7 @@ public class Grib1BDSReader {
         objectToWriteInto.setReferenceValue(BytesToPrimitiveHelper.bytesToFloatAsIBM(inputValues[POSITION_BDS_REFERENCE_VALUE_1 + offSet], inputValues[POSITION_BDS_REFERENCE_VALUE_2 + offSet], inputValues[POSITION_BDS_REFERENCE_VALUE_3 + offSet], inputValues[POSITION_BDS_REFERENCE_VALUE_4 + offSet]));
         
         objectToWriteInto.setBytesForDatum(((short) (inputValues[POSITION_BDS_DATUM + offSet] & BytesToPrimitiveHelper.BYTE_MASK)));
-        objectToWriteInto.setPackedValues(this.sliceArrayForGribField(inputValues, POSITION_BDS_SLICE_POINT_FOR_STANDARD_PACKING, objectToWriteInto.getBdsLength()));
+        objectToWriteInto.setPackedValues(this.sliceArrayForGribField(inputValues, POSITION_BDS_SLICE_POINT_FOR_STANDARD_PACKING+offSet, objectToWriteInto.getBdsLength()));
 
         return objectToWriteInto;
     }
