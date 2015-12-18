@@ -2,6 +2,9 @@
 This is still very much a **work in progress**. 
 This library will allow you to read grib files into JAVA objects. Grib files (commonly found with the extentions .grb, .grib or .grib2) are binary files used in meteorology to store historical and forecast weather data.
 
+# Build status
+[![Build Status]https://travis-ci.org/MeteoGroup/grib-library.svg?branch=master](https://travis-ci.org/MeteoGroup/grib-library/)
+
 #contents
 - [Roadmap](#roadmap) 
 - [Libraries](#libraries) 
