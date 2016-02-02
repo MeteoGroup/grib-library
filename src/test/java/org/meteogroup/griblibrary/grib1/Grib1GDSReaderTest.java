@@ -143,6 +143,7 @@ public class Grib1GDSReaderTest {
 
 	private static final Grib1GDS GDS_FOR_GAUSSIAN_COORDINATE_READOUT(){
 		Grib1GDS gds = new Grib1GDS();
+		gds.setRepresentationType(Grib1GDS.REPRESENTATIONTYPE_GAUSSIAN);
 		gds.setPointsAlongLongitudeMeridian((short) 3);
 		gds.setLocationOfVerticalCoordinateParams((short) 1);
 		return gds;
