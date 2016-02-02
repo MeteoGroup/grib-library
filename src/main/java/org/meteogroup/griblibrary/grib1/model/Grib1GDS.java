@@ -20,6 +20,10 @@ public class Grib1GDS {
     private int locationOfVerticalCoordinateParams;
     private int locationListPer;
     private int representationType;
+    
+    public static final int REPRESENTATIONTYPE_RECTANGULAR = 0;
+    public static final int REPRESENTATIONTYPE_GAUSSIAN = 4;
+    
     private int numberOfPoints;
 
     private float north;
