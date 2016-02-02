@@ -41,7 +41,7 @@ public class Grib1GDSReader {
     private static final int SCANNING_MODE_I_BIT = 1;
     private static final int SCANNING_MODE_J_BIT = 2;
     private static final int SCANNING_MODE_DIRECTION_BIT = 3;
-    private static final int GRID_REPRESENTATIONTYPE_RECTANGULAR = 0;
+
 
     public int readGDSLength(byte[] inputValues, int offSet) throws BinaryNumberConversionException {
         return BytesToPrimitiveHelper.bytesToInteger(inputValues[POSITION_GDS_LENGTH_1 + offSet], inputValues[POSITION_GDS_LENGTH_2 + offSet], inputValues[POSITION_GDS_LENGTH_3 + offSet]);
@@ -86,7 +86,7 @@ public class Grib1GDSReader {
 
     public Grib1GDS generateNisAndNumberOfPoints(Grib1GDS gds, byte[] inputValues, int offSet) throws BinaryNumberConversionException {
         int numberOfPoints = 0;
-        if (gds.getRepresentationType() == GRID_REPRESENTATIONTYPE_RECTANGULAR){
+        if (gds.getRepresentationType() == Grib1GDS.REPRESENTATIONTYPE_RECTANGULAR){
             gds.setNumberOfPoints(gds.getPointsAlongLongitudeMeridian() * gds.getPointsAlongLatitudeCircle());
         }
         else{
