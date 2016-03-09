@@ -88,14 +88,35 @@ public class Grib1CollectionReader {
     public List<Grib1Record> readAllRecords(ReadableByteChannel fileChannel, long fileLength) throws GribReaderException {
         ArrayList<Grib1Record> response = new ArrayList<Grib1Record>();
         int tempcounter =0;
-        while (gribRecordOffset < fileLength){
+        while (gribRecordOffset < fileLength - HEADER_LENGTH){
 
             byte[] recordHeader = new byte[0];
             recordHeader = partReader.readPartOfFileChannel(fileChannel, HEADER_LENGTH);
+            boolean allWereZero = true;
+            for (byte b : recordHeader){
+                if (allWereZero) {
+                    if (b != 0) {
+                        allWereZero = false;
+                    }
+                }
+            }
+            if (allWereZero){
+                gribRecordOffset += HEADER_LENGTH;
+                continue;
+            }
             if (!recordReader.checkIfGribFileIsValidGrib1(recordHeader)){
+                int attemptOffsetUpdate = 0;
+                for (byte b : recordHeader){
+                    if (b == 0){
+                        attemptOffsetUpdate ++;
+                    }
+                }
+                if (attemptOffsetUpdate != 0){
+                    log.info("Strange bit shifting detected.Attempting to recover.");
+                    recordHeader = this.attemptRecovery(recordHeader, attemptOffsetUpdate, fileChannel);
+                    gribRecordOffset += attemptOffsetUpdate;
+                }
                 //throw new GribReaderException ("Attempted to read invalid grib record");
-                log.warn("Something went wrong with the grib records. Possible trailing empty byte. Returning with what we've got.");
-                return response;
             }
             Grib1Record record = new Grib1Record();
             record.setVersion(GRIB_VERSION);
@@ -112,6 +133,26 @@ public class Grib1CollectionReader {
             gribRecordOffset += recordReader.readRecordLength(recordHeader);
         }
         return response;
+    }
+
+    byte[] attemptRecovery(byte[] recordHeader, int attemptOffsetUpdate, ReadableByteChannel fileChannel) throws GribReaderException {
+        byte[] recoveryBits =  partReader.readPartOfFileChannel(fileChannel, attemptOffsetUpdate);
+        byte[] potentialResult = new byte[HEADER_LENGTH];
+        for (int x = 0; x < HEADER_LENGTH; x++){
+            if (x < HEADER_LENGTH - attemptOffsetUpdate){
+                potentialResult[x] = recordHeader[x+attemptOffsetUpdate];
+            }
+            else{
+                potentialResult[x] = recoveryBits[(x-HEADER_LENGTH)+attemptOffsetUpdate];
+            }
+        }
+        if (!recordReader.checkIfGribFileIsValidGrib1(potentialResult)){
+            throw new GribReaderException("Unable to determine valid header");
+        }
+        else{
+            return potentialResult;
+        }
+
     }
 
 
