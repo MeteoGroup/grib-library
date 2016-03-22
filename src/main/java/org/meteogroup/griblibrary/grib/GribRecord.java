@@ -7,14 +7,14 @@ package org.meteogroup.griblibrary.grib;
  */
 public class GribRecord {
 
-	protected int length;
+	protected long length;
 	protected int version;
 	
-	public int getLength() {
+	public long getLength() {
         return length;
     }
 
-    public void setLength(int length) {
+    public void setLength(long length) {
         this.length = length;
     }
 
