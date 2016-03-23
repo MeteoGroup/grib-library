@@ -1,6 +1,8 @@
 package org.meteogroup.griblibrary.decoder.simplepacking;
 
 import org.meteogroup.griblibrary.grib1.model.Grib1Record;
+import org.meteogroup.griblibrary.grib2.model.Grib2Record;
+import org.meteogroup.griblibrary.grib2.model.drstemplates.SimplePackingDRSTemplate;
 import org.meteogroup.griblibrary.util.BitReader;
 
 import java.util.Iterator;
@@ -26,6 +28,16 @@ public class SimplePackingIterator implements PrimitiveIterator.OfDouble {
     public SimplePackingIterator(Grib1Record record){
         initValues(record.getBds().getPackedValues(), record.getGds().getNumberOfPoints(), record.getBds().getBytesForDatum(), record.getPds().getDecimalScaleFactor(),
                 record.getBds().getBinaryScaleFactor(), record.getBds().getReferenceValue());
+    }
+
+    public SimplePackingIterator(Grib2Record record) {
+        SimplePackingDRSTemplate simpleDRSTemplate = (SimplePackingDRSTemplate) record.getDrs().getDataTemplate();
+        initValues(record.getDataSection().getPackedData(),
+                record.getDrs().getNumberOfDataPoints(),
+                simpleDRSTemplate.getBitsPerValue(),
+                simpleDRSTemplate.getDecimalScaleFactor(),
+                simpleDRSTemplate.getBinaryScaleFactor(),
+                simpleDRSTemplate.getReferenceValue());
     }
 
     private void initValues(byte[] packedValues, int numberOfPoints, int bitsForValue, int decimalScale, int binaryScale, float referenceValue){

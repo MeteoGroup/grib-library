@@ -152,7 +152,7 @@ public class GaussianTemplateReader implements GridTemplateReader{
     }
 	
 	protected float readLa2(byte[] gdsValues, int headerOffSet) throws BinaryNumberConversionException {
-    	return BytesToPrimitiveHelper.bytesToInteger(
+    	return BytesToPrimitiveHelper.signedBytesToInt(
     			gdsValues[POSITION_LA2_1 + headerOffSet],
     			gdsValues[POSITION_LA2_2 + headerOffSet],
     			gdsValues[POSITION_LA2_3 + headerOffSet],
@@ -196,7 +196,7 @@ public class GaussianTemplateReader implements GridTemplateReader{
 	
 
 	@Override
-	public GDSTemplate readTemplate(byte[] gdsValues, int headerOffSet) throws BinaryNumberConversionException {
+	public GaussianGDSTemplate readTemplate(byte[] gdsValues, int headerOffSet) throws BinaryNumberConversionException {
 		GaussianGDSTemplate gaussianTemplate = new GaussianGDSTemplate();
 
 		gaussianTemplate.setShapeOfEarth(readShapeOfEarth(gdsValues, headerOffSet));

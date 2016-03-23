@@ -119,10 +119,18 @@ public class BytesToPrimitiveHelperTest {
     }
 
 
+    @Test
+    public void testSignedForLengthIn() throws BinaryNumberConversionException {
+        int value = BytesToPrimitiveHelper.signedBytesToInt(FOUR_LENGTH_SIGNED);
+        assertThat(value).isEqualTo(-89892396);
+    }
+
     private static final byte[] FOUR_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,0,0,28};
     private static final byte[] THREE_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,0,28};
     private static final byte[] TWO_LENGTH_ARRAY_FOR_VALUE_28 = new byte[]{0,28};
     private static final byte[] TWO_LENGTH_ARRAY_FOR_VALUE_50002 = new byte[]{-30,61};
+
+    private static final byte[] FOUR_LENGTH_SIGNED = new byte[]{-123,91,-90,44};
 
     private static final byte[] TWO_LENGTH_FOR_SIGNED_TEST_MINUS_5 = new byte[]{-128,5};
     private static final byte[] TWO_LENGTH_FOR_SIGNED_TEST_PLUS_5 = new byte[]{0,5};

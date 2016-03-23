@@ -40,4 +40,6 @@ public class Grib2GDS {
     private int gridDefinitionTemplateNumber;
     
     private GDSTemplate gdsTemplate;
+
+
 }

@@ -110,6 +110,9 @@ public class Grib2CollectionReader {
                     if (b == 0){
                         attemptOffsetUpdate ++;
                     }
+                    else{
+                        break;
+                    }
                 }
                 if (attemptOffsetUpdate != 0){
                     log.info("Strange bit shifting detected.Attempting to recover.");

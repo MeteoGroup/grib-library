@@ -9,20 +9,21 @@ public class BytesToPrimitiveHelper {
 
     public static final int BYTE_MASK = 0xff;
 
-    private BytesToPrimitiveHelper(){}
+    private BytesToPrimitiveHelper() {
+    }
 
-    public static int bytesToInteger(byte ... inputValue) throws BinaryNumberConversionException {
-        if (inputValue.length == 2){
+    public static int bytesToInteger(byte... inputValue) throws BinaryNumberConversionException {
+        if (inputValue.length == 2) {
             return bytes2ToInt(inputValue);
-        } else if (inputValue.length == 3){
+        } else if (inputValue.length == 3) {
             return bytes3ToInt(inputValue);
-        } else if(inputValue.length == 4){
+        } else if (inputValue.length == 4) {
             return bytes4ToInt(inputValue);
         }
         throw new BinaryNumberConversionException("Invalid length of input value in an attempt to convert byte array to int");
     }
 
-    private static int bytes3ToInt(byte... values){
+    private static int bytes3ToInt(byte... values) {
         return (((values[0] & BYTE_MASK) << 8) | (values[1] & BYTE_MASK)) << 8 | (values[2] & BYTE_MASK);
     }
 
@@ -35,13 +36,13 @@ public class BytesToPrimitiveHelper {
     }
 
     /**
-     *@deprecated SIGNING ISSUE, DO NOT USE!
+     * @deprecated SIGNING ISSUE, DO NOT USE!
      */
     @Deprecated
     public static short bytesToShort(byte... inputValues) throws BinaryNumberConversionException {
-        if (inputValues.length == 2){
+        if (inputValues.length == 2) {
             return (short) bytes2ToInt(inputValues);
-        } else{
+        } else {
             throw new BinaryNumberConversionException("Invalid length of input value in an attempt to convert byte array to short");
         }
     }
@@ -51,10 +52,12 @@ public class BytesToPrimitiveHelper {
     }
 
     public static int signedBytesToInt(byte... values) throws BinaryNumberConversionException {
-        if (values.length == 2){
+        if (values.length == 2) {
             return BytesToPrimitiveHelper.signedBytes2ToInt(values);
-        } else if (values.length == 3){
+        } else if (values.length == 3) {
             return BytesToPrimitiveHelper.signedBytes3ToInt(values);
+        } else if (values.length == 4) {
+            return BytesToPrimitiveHelper.getIntForFour(values);
         }
         throw new BinaryNumberConversionException("Failed to convert to integer.");
     }
@@ -64,7 +67,7 @@ public class BytesToPrimitiveHelper {
         //return ((values[0] & 0xff) | (values[1] << 8)) << 16 >> 16;
     }
 
-    private static int signedBytes3ToInt(byte ... values){
+    private static int signedBytes3ToInt(byte... values) {
         int value = bytes3ToInt(values);
         if ((value & 0x800000) != 0) {
             value = value & 0x7FFFFF;
@@ -73,25 +76,34 @@ public class BytesToPrimitiveHelper {
         return value;
     }
 
+    private static int signedBytes4ToInt(byte... values) {
+        int value = bytes4ToInt(values);
+        if ((value & 0x800000) != 0) {
+            value = value & 0x7FFFFF;
+            value = -value;
+        }
+        return value;
+    }
+
     public static float bytesToFloatAsIBM(byte... inputValue) throws BinaryNumberConversionException {
-        if(inputValue.length == 4){
+        if (inputValue.length == 4) {
             return byte4ToFloatAsIBM(inputValue);
         }
         throw new BinaryNumberConversionException("Invalid length of input value in an attempt to convert byte array to int");
     }
-    
-    public static float bytesToFloat(byte... inputValue) throws BinaryNumberConversionException{
-    	if(inputValue.length == 4){
-    		int bits = bytes4ToInt(inputValue);
-    		return Float.intBitsToFloat(bits);
-    	}
+
+    public static float bytesToFloat(byte... inputValue) throws BinaryNumberConversionException {
+        if (inputValue.length == 4) {
+            int bits = bytes4ToInt(inputValue);
+            return Float.intBitsToFloat(bits);
+        }
         throw new BinaryNumberConversionException("Invalid length of input value in an attempt to convert byte array to int");
     }
 
     private static float byte4ToFloatAsIBM(byte[] values) {
         //TODO Check signing...
         int sgn, mant, exp;
-        mant = (values[1] & 0xff) << 16 | (values[2] &0xff) << 8 | (values[3]) &0xff;
+        mant = (values[1] & 0xff) << 16 | (values[2] & 0xff) << 8 | (values[3]) & 0xff;
         if (mant == 0) {
             return 0.0f;
         }
@@ -102,7 +114,7 @@ public class BytesToPrimitiveHelper {
     }
 
     public static long bytesToLong(byte... inputValues) throws BinaryNumberConversionException {
-        if (inputValues.length == 8){
+        if (inputValues.length == 8) {
             return BytesToPrimitiveHelper.bytes8ToLong(inputValues);
         }
         throw new BinaryNumberConversionException("Invalid length of input value in an attempt to convert byte array to int");
@@ -114,5 +126,26 @@ public class BytesToPrimitiveHelper {
             value = (value << 8) + (inputValues[i] & 0xff);
         }
         return value;
+    }
+
+    private static int getIntForFour(byte[] inputValues) {
+        int valueAt0 = getBit(inputValues[0],8);
+        byte newByte = (byte) (inputValues[0] & ~(1 << 7));
+        if (valueAt0 == 1){
+            byte[] values = new byte[4];
+            values[0] = newByte;
+            values[1] = inputValues[1];
+            values[2] = inputValues[2];
+            values[3] = inputValues[3];
+            return -1 * bytes4ToInt(values);
+        }
+        else{
+            return bytes4ToInt(inputValues);
+        }
+    }
+
+    public static int getBit(int value, int position)
+    {
+        return (value >> position) & 1;
     }
 }

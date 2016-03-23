@@ -197,7 +197,7 @@ public class RegularLatLonTemplateReader implements GridTemplateReader {
 
 	
 	@Override
-	public GDSTemplate readTemplate(byte[] gdsValues, int headerOffSet) throws BinaryNumberConversionException {
+	public RegularLatLonGDSTemplate readTemplate(byte[] gdsValues, int headerOffSet) throws BinaryNumberConversionException {
 		RegularLatLonGDSTemplate regularlatlonTemplate = new RegularLatLonGDSTemplate();
 		regularlatlonTemplate.setShapeOfEarth(readShapeOfEarth(gdsValues, headerOffSet));
 		regularlatlonTemplate.setScaleFactorRadiusEarth(readScaleFactorRadiusEarth(gdsValues, headerOffSet));

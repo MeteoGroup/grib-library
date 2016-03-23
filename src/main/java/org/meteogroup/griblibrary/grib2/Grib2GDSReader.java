@@ -8,6 +8,8 @@ import org.meteogroup.griblibrary.grib2.gdstemplates.GridTemplateReader;
 import org.meteogroup.griblibrary.grib2.gdstemplates.RegularLatLonTemplateReader;
 import org.meteogroup.griblibrary.grib2.model.Grib2GDS;
 import org.meteogroup.griblibrary.grib2.model.gdstemplates.GDSTemplate;
+import org.meteogroup.griblibrary.grib2.model.gdstemplates.GaussianGDSTemplate;
+import org.meteogroup.griblibrary.grib2.model.gdstemplates.RegularLatLonGDSTemplate;
 import org.meteogroup.griblibrary.util.BytesToPrimitiveHelper;
 
 public class Grib2GDSReader extends Grib2SectionReader {
@@ -39,7 +41,7 @@ public class Grib2GDSReader extends Grib2SectionReader {
 		gds.setGridDefinitionTemplateNumber(BytesToPrimitiveHelper.bytesToInteger(gdsValues[POSITION_GRID_DEFINITION_TEMPLATE_NUMBER_1 + headerOffSet],
 				gdsValues[POSITION_GRID_DEFINITION_TEMPLATE_NUMBER_2 + headerOffSet]));
 		
-		gds.setGdsTemplate(readGDSTemplate(gds.getGridDefinitionTemplateNumber(), gdsValues, headerOffSet));
+		gds.setGdsTemplate(readGDSTemplate(gds.getGridDefinitionTemplateNumber(), gdsValues, headerOffSet, gds));
 
 		return gds;
 	}
@@ -50,15 +52,27 @@ public class Grib2GDSReader extends Grib2SectionReader {
 	 * @return
 	 * @throws IOException
 	 */
-	private GDSTemplate readGDSTemplate(int gdsTemplateNumber, byte[] gdsValues, int headerOffSet) throws BinaryNumberConversionException {
-		GridTemplateReader tReader = null;
+	private GDSTemplate readGDSTemplate(int gdsTemplateNumber, byte[] gdsValues, int headerOffSet, Grib2GDS gds) throws BinaryNumberConversionException {
 		if (gdsTemplateNumber == TEMPLATE_REGULAR_LATLON) {
-			tReader = new RegularLatLonTemplateReader();
+			RegularLatLonTemplateReader tReader = new RegularLatLonTemplateReader();
+			RegularLatLonGDSTemplate template = tReader.readTemplate(gdsValues, headerOffSet);
+			return template;
 		}
 		else if (gdsTemplateNumber == TEMPLATE_GAUSSIAN) {
-			tReader = new GaussianTemplateReader();
+			GaussianTemplateReader tReader = new GaussianTemplateReader();
+			GaussianGDSTemplate template = tReader.readTemplate(gdsValues, headerOffSet);
+			gds.setNorth(this.getNorth(template.getLa1(), template.getLa2()));
+			gds.setSouth(this.getSouth(template.getLa1(), template.getLa2()));
+			return template;
 		}
-		return tReader == null ? null : tReader.readTemplate(gdsValues, headerOffSet);
+		return null;
 	}
-   
+
+	private float getNorth(float lat1, float lat2) {
+		return (lat1 < lat2 ? lat1 : lat2);
+	}
+
+	private float getSouth(float lat1, float lat2) {
+		return (lat1 > lat2 ? lat1 : lat2);
+	}
 }

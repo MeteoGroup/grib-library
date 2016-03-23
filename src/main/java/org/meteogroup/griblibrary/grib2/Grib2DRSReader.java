@@ -6,6 +6,7 @@ import org.meteogroup.griblibrary.exception.BinaryNumberConversionException;
 import org.meteogroup.griblibrary.exception.GribReaderException;
 import org.meteogroup.griblibrary.grib2.drstemplates.BoustrophedonicSecondOrderPackingReader;
 import org.meteogroup.griblibrary.grib2.drstemplates.DataTemplateReader;
+import org.meteogroup.griblibrary.grib2.drstemplates.SimplePackingReader;
 import org.meteogroup.griblibrary.grib2.model.Grib2DRS;
 import org.meteogroup.griblibrary.grib2.model.drstemplates.DRSTemplate;
 import org.meteogroup.griblibrary.util.BytesToPrimitiveHelper;
@@ -51,7 +52,8 @@ public class Grib2DRSReader extends Grib2SectionReader {
     	
     	
     	if(drsTemplate == TEMPLATE_PACKING_SIMPLE){
-    		log.error("Simple packing, read in not implemented yet. Please do it!");
+			log.debug("Simple packing read in, second order complex packing");
+			dataTemplateReader = new SimplePackingReader();
     	} else if (drsTemplate == TEMPLATE_PACKING_BOUSTROPHEDONIC){
     		log.debug("Boustrotemplate read in, second order complex packing");
     		dataTemplateReader = new BoustrophedonicSecondOrderPackingReader();
