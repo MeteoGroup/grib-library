@@ -20,18 +20,19 @@
 
     <dependencies>
 
-        <!-- Getters/setters/equals/tostring -->
+        <!-- Getters/setters/equals/tostring/logging/cleanup -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.6</version>
+            <version>1.16.8</version>
         </dependency>
 
         <!-- Logging -->
+
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.12</version>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.10</version>
         </dependency>
 
         <!-- Testing -->
@@ -53,6 +54,7 @@
             <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>

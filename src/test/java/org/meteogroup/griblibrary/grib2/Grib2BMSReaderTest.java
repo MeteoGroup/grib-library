@@ -9,12 +9,13 @@ import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
+import lombok.extern.slf4j.Slf4j;
 import org.meteogroup.griblibrary.exception.BinaryNumberConversionException;
 import org.meteogroup.griblibrary.grib2.model.Grib2BMS;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
+@Slf4j
 public class Grib2BMSReaderTest {
 
 	private static final int EXPECTEDLENGTH = 6;
@@ -81,5 +82,6 @@ public class Grib2BMSReaderTest {
 		Grib2BMS bms = bmsReader.readBMSValues(testArray,headerOffSet);
 		assertThat(bms).isNotNull();
 		assertThat(bms).isEqualTo(expectedResponseObject);
+		log.info("test finished");
 	}
 }
