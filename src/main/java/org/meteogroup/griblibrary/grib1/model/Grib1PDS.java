@@ -14,7 +14,7 @@ import lombok.ToString;
 @ToString
 public class Grib1PDS {
 
-    private int pdsLenght;
+    private int pdsLength;
 
     private int parameterTableVersionNumber;
     private int identificationOfCentre;

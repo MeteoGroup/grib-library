@@ -48,7 +48,7 @@ public class Grib1GDSReader {
 
     public Grib1GDS readGDSValues(byte[] inputValues, int offSet) throws BinaryNumberConversionException {
         Grib1GDS objectToWriteInto= new Grib1GDS();
-        objectToWriteInto.setGdsLenght(this.readGDSLength(inputValues, offSet));
+        objectToWriteInto.setGdsLength(this.readGDSLength(inputValues, offSet));
         objectToWriteInto.setNumberOfVerticalsCoordinateParams((short) (inputValues[POSITION_GDS_NUMBER_OF_VERTICAL_COORDINATE_PARAMS + offSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToWriteInto.setLocationOfVerticalCoordinateParams((short) (inputValues[POSITION_GDS_LOCATION_OF_VERTICAL_PARAMS + offSet] & BytesToPrimitiveHelper.BYTE_MASK));
         objectToWriteInto.setRepresentationType((short) (inputValues[POSITION_GDS_REPRESENTATION_TYPE + offSet] & BytesToPrimitiveHelper.BYTE_MASK));

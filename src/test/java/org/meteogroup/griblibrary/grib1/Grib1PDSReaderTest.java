@@ -54,7 +54,7 @@ public class Grib1PDSReaderTest {
 
     private static final Grib1PDS GOOD_PDS_OBJECT(){
         Grib1PDS pds = new Grib1PDS();
-        pds.setPdsLenght(28);
+        pds.setPdsLength(28);
         pds.setParameterTableVersionNumber(128);
         pds.setIdentificationOfCentre(98);
         pds.setGeneratingProcessIdNumber(145);

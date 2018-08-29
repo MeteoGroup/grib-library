@@ -15,7 +15,7 @@ import org.meteogroup.griblibrary.util.LatLon;
 @ToString(exclude = {"latLons", "pointsAlongLatitudeCircleForGaussian"})
 public class Grib1GDS {
 
-    private int gdsLenght;
+    private int gdsLength;
     private int numberOfVerticalsCoordinateParams;
     private int locationOfVerticalCoordinateParams;
     private int locationListPer;

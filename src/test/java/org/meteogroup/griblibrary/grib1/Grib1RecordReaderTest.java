@@ -135,13 +135,13 @@ public class Grib1RecordReaderTest {
 
     private static final Grib1PDS LENGTH_ONLY_PDS(){
         Grib1PDS pds = new Grib1PDS();
-        pds.setPdsLenght(8);
+        pds.setPdsLength(8);
         return pds;
     }
 
     private static final Grib1GDS LENGTH_ONLY_GDS(){
         Grib1GDS gds = new Grib1GDS();
-        gds.setGdsLenght(8);
+        gds.setGdsLength(8);
         return gds;
     }
 

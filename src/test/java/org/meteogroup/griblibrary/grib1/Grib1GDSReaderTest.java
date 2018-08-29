@@ -94,7 +94,7 @@ public class Grib1GDSReaderTest {
 
 	private static final Grib1GDS GOOD_GDS_OBJECT(){
 		Grib1GDS gds = new Grib1GDS();
-		gds.setGdsLenght(2592);
+		gds.setGdsLength(2592);
 		gds.setNumberOfVerticalsCoordinateParams(0);
 		gds.setLocationOfVerticalCoordinateParams(33);
 		gds.setLocationListPer(0);
